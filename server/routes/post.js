@@ -1,0 +1,313 @@
+const express = require("express");
+const routes = express.Router();
+const multer = require("multer");
+const path = require("path");
+const moment = require("moment");
+const Postjob = require("../models/Postjob");
+const fs = require("fs");
+const adminAccess = require("../middleware/adminAccess");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./images");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = moment()
+      .subtract(10, "days")
+      .calendar()
+      .replaceAll("/", "-");
+    cb(
+      null,
+      file.fieldname +
+        "-" +
+        uniqueSuffix +
+        "-" +
+        Math.random() * 10000 +
+        "-" +
+        file.originalname
+    );
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  const filetypes = /jpeg|jpg|png/;
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (extname && mimetype) {
+    cb(null, true);
+  } else {
+    cb(new Error("File must be a JPG or PNG format!"));
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: fileFilter,
+});
+
+routes.post("/post-job", (req, res) => {
+  upload.single("logo")(req, res, async (err) => {
+    if (err) {
+      return res.status(400).json({ success: false, message: err.message });
+    }
+    try {
+      const { name, schedule, state, code, city, zip, overview, position } =
+        req.body;
+      const existingPost = await Postjob.findOne({
+        name,
+        position,
+        state,
+        city,
+        zip,
+      });
+
+      if (existingPost) {
+        fs.readdir("./images", (err, file) => {
+          if (err) {
+            console.log("Error reading file ./images");
+          } else {
+            file.forEach((file) => {
+              if (file === req.file.filename) {
+                const filePath = path.join("./images", file);
+                fs.unlink(filePath, (err) => {
+                  if (err) {
+                    return;
+                  }
+                });
+              }
+            });
+          }
+        });
+        return res.status(409).json({
+          success: false,
+          message: "Duplicate post: A job with similar details already exists.",
+        });
+      }
+
+      await Postjob.create({
+        name,
+        schedule,
+        state,
+        code,
+        city,
+        zip,
+        overview,
+        position,
+        logo: req.file,
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Post has been successfully sent for review",
+      });
+    } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  });
+});
+routes.put("/post-job/edit/:id", adminAccess, async (req, res) => {
+  upload.single("logo")(req, res, async (err) => {
+    if (err) {
+      return res.status(400).json({ success: false, message: err.message });
+    }
+    try {
+      const { name, schedule, state, code, city, zip, overview, position } =
+        req.body;
+      const { id } = req.params;
+      let post = await Postjob.findById(id);
+      if (!post) {
+        return res
+          .status(404)
+          .json({ success: false, message: "Post not found using given id" });
+      } else {
+        post = await Postjob.findByIdAndUpdate(
+          id,
+          {
+            $set: {
+              name,
+              schedule,
+              state,
+              code,
+              city,
+              zip,
+              overview,
+              position,
+              logo: req.file ? req.file : post.logo,
+            },
+          },
+          { new: true }
+        );
+        post.save();
+        return res.status(200).json({
+          success: true,
+          message: "Post has been edited successfully",
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({ success: false, message: error.message });
+    }
+  });
+});
+routes.get("/post-job/fetch-all", async (req, res) => {
+  try {
+    const jobs = await Postjob.find();
+    if (!jobs) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No jobs has been posted yet." });
+    } else {
+      return res.status(200).json({ success: true, total: jobs.length, jobs });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+routes.get("/post-job/fetch-approved", async (req, res) => {
+  try {
+    const jobs = await Postjob.find({ isApproved: true });
+    if (!jobs) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No jobs has been posted yet." });
+    } else {
+      return res.status(200).json({ success: true, total: jobs.length, jobs });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+routes.post("/action/post/:id/:action", adminAccess, async (req, res) => {
+  try {
+    const { action, id } = req.params;
+    const pendingPosts = await Postjob.find({ isApproved: false });
+
+    let postFound = false;
+
+    if (action.toLowerCase() === "accept") {
+      pendingPosts.forEach((post) => {
+        if (post.id === id) {
+          postFound = true;
+          post.isApproved = true;
+          post.save();
+        }
+      });
+
+      if (!postFound) {
+        return res.status(404).json({
+          success: false,
+          message: "Post ID not found.",
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "Post approved successfully.",
+      });
+    } else if (action.toLowerCase() === "reject") {
+      pendingPosts.forEach((post) => {
+        if (post.id === id) {
+          postFound = true;
+        }
+      });
+
+      if (postFound) {
+        const postDetails = await Postjob.findById(id);
+        fs.readdir("./images", (err, files) => {
+          if (err) {
+            console.error("Error reading image directory.");
+          } else {
+            files.forEach((file) => {
+              if (postDetails.logo.filename !== undefined) {
+                if (file === postDetails.logo.filename) {
+                  const filePath = path.join("./images", file);
+                  fs.unlink(filePath, (err) => {
+                    if (err) {
+                      console.error("Error deleting image file.");
+                    }
+                  });
+                }
+              }
+            });
+          }
+        });
+
+        await Postjob.findByIdAndDelete(id);
+        return res.status(200).json({
+          success: true,
+          message: "Post rejected and deleted successfully.",
+        });
+      } else {
+        return res.status(404).json({
+          success: false,
+          message: "Post ID not found.",
+        });
+      }
+    } else if (action.toLowerCase() === "delete") {
+      const postDetails = await Postjob.findById(id);
+      fs.readdir("./images", (err, files) => {
+        if (err) {
+          console.error("Error reading image directory.");
+        } else {
+          files.forEach((file) => {
+            if (postDetails.logo.filename !== undefined) {
+              if (file === postDetails.logo.filename) {
+                const filePath = path.join("./images", file);
+                fs.unlink(filePath, (err) => {
+                  if (err) {
+                    console.error("Error deleting image file.");
+                  }
+                });
+              }
+            }
+          });
+        }
+      });
+      await Postjob.findByIdAndDelete(id);
+      return res.status(200).json({
+        success: true,
+        message: "Post deleted successfully",
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: `Server error: ${error.message}`,
+    });
+  }
+});
+
+routes.post("/action/post/:state", async (req, res) => {
+  try {
+    let { state } = req.params;
+    let { position } = req.body;
+    let post = await Postjob.find({ isApproved: true });
+
+    if (!post || post.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No post available" });
+    } else {
+      let searchedPost = post.filter((e) => {
+        return (
+          e.position.some((element) =>
+            position.includes(element.toLowerCase())
+          ) && e.state.toLowerCase() === state.toLowerCase()
+        );
+      });
+      return res
+        .status(200)
+        .json({
+          success: true,
+          total: searchedPost.length,
+          data: searchedPost,
+        });
+    }
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+module.exports = routes;

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stumble Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Light Mode */
+        :root {
+            --bg-color: #f9fafb;
+            --text-color: #1f2937;
+            --button-bg: #3b82f6;
+            --button-text: #fff;
+            --card-bg: #fff;
+            --card-shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dark Mode */
+        [data-theme="dark"] {
+            --bg-color: #1f2937;
+            --text-color: #e5e7eb;
+            --button-bg: #10b981;
+            --button-text: #fff;
+            --card-bg: #374151;
+            --card-shadow: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        .stumble-btn {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            box-shadow: 0 10px 15px var(--card-shadow);
+        }
+
+        /* Cool animations */
+        .fade-in {
+            opacity: 0;
+            transform: scale(0.95);
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6 transition-all">
+    <!-- Header -->
+    <header class="mb-8 text-center">
+        <h1 class="text-5xl font-bold tracking-wide">Discover Something New</h1>
+        <p class="text-xl mt-4 text-gray-500 dark:text-gray-400">A modern content discovery experience</p>
+    </header>
+
+    <!-- Stumble Button -->
+    <button id="stumble-btn" class="stumble-btn px-8 py-3 text-lg font-semibold rounded-full shadow-lg transform transition-transform hover:scale-105 active:scale-95 focus:ring-4 focus:ring-blue-500 dark:focus:ring-green-400">
+        Stumble!
+    </button>
+
+    <!-- Stumbled Content -->
+    <div id="stumble-result" class="mt-10 p-6 w-full max-w-2xl card rounded-lg shadow-lg transform transition hidden fade-in">
+        <p class="text-2xl text-center font-semibold">Random Content Goes Here!</p>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="mt-8 flex items-center space-x-2">
+        <label for="theme-toggle" class="text-lg font-medium">Dark Mode</label>
+        <input type="checkbox" id="theme-toggle" class="toggle-checkbox w-6 h-6 rounded-full">
+    </div>
+
+    <script>
+        // Example array of websites to "stumble" upon
+        const websites = [
+            { title: 'Tech News Today', url: 'https://techcrunch.com' },
+            { title: 'Epic Travel Blog', url: 'https://lonelyplanet.com' },
+            { title: 'Delicious Food Recipes', url: 'https://allrecipes.com' },
+            { title: 'Photography Guide', url: 'https://dpreview.com' }
+        ];
+
+        // Stumble button functionality
+        const stumbleBtn = document.getElementById('stumble-btn');
+        const stumbleResult = document.getElementById('stumble-result');
+
+        stumbleBtn.addEventListener('click', function () {
+            const randomSite = websites[Math.floor(Math.random() * websites.length)];
+            stumbleResult.innerHTML = `
+                <div class="fade-in">
+                    <p class="text-3xl text-center font-semibold mb-4">${randomSite.title}</p>
+                    <p class="text-center">
+                        <a href="${randomSite.url}" target="_blank" class="text-blue-500 dark:text-green-400 underline text-xl">Visit Site</a>
+                    </p>
+                </div>
+            `;
+            stumbleResult.classList.remove('hidden');
+            stumbleResult.classList.add('fade-in');
+        });
+
+        // Dark mode toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('change', function () {
+            if (this.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>

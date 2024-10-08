@@ -1,0 +1,604 @@
+section.jobPosting {
+  padding: 0rem 3rem 3rem 3rem;
+}
+.postHeaderText {
+  font-size: 2rem;
+  font-weight: bold;
+  padding-left: 1rem;
+  border-left: 0.7rem solid var(--primary-colour);
+  font-family: optima-font-bold;
+  color: #101010;
+  margin:2rem 2rem 0rem 3rem;
+}
+
+section.jobPosting .formSection form .all-inputs {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.3rem;
+}
+section.jobPosting .formSection form .labels {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  font-size: 1.6rem;
+}
+section.jobPosting .formSection form .labels span.requiredField {
+  color: var(--primary-colour);
+  font-size: 1.8rem;
+}
+section.jobPosting .formSection form .labels input {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 0.3rem;
+  border: 0.15rem solid rgb(177 177 193);
+  border-radius: 0;
+  color: #101010;
+  height: 4rem;
+  outline: none;
+  font-weight: bold;
+}
+section.jobPosting .formSection form textarea::placeholder {
+  font-size: 1.5rem;
+}
+section.jobPosting
+  .formSection
+  form
+  .labels
+  input[type="number"]::-webkit-inner-spin-button,
+section.jobPosting
+  .formSection
+  form
+  .labels
+  input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+section.jobPosting .formSection form .labels label span {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+section.jobPosting .formSection form .labels input:focus {
+  border: 0.1rem solid #101010;
+}
+section.jobPosting .formSection form .state {
+  position: relative;
+}
+section.jobPosting .formSection form .stateSuggestion {
+  background: rgb(220, 220, 230);
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 6.7rem;
+  padding: 1rem;
+  max-height: 30rem;
+  overflow-y: scroll;
+}
+section.jobPosting .formSection form .stateSuggestion ul li {
+  padding: 0.7rem 1rem;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+section.jobPosting .formSection form .stateSuggestion ul li:hover {
+  background: #10101033;
+  color: #101010;
+  font-weight: bold;
+}
+section.jobPosting .formSection form p {
+  display: flex;
+  font-size: 0.9rem;
+  margin: 0.2rem;
+  color: #ff0000;
+  font-weight: bold;
+}
+section.jobPosting .formSection form p span.invalidId {
+  display: flex;
+  margin-right: 0.3rem;
+}
+section.jobPosting .formSection form .labels .double {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+section.jobPosting .formSection form .labels .double .inp {
+  width: 100%;
+}
+/* section.jobPosting .formSection form .stateSuggestion {
+  background: #101010;
+  width: 100%;
+  padding: 1rem;
+  color: #ffffff;
+  position: absolute;
+  bottom: 0;
+  z-index: 999;
+}
+section.jobPosting .formSection form .stateSuggestion ul li {
+  margin: 1rem 0;
+  cursor: pointer;
+} */
+section.jobPosting .formSection form .selection {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+section.jobPosting .formSection form .options {
+  position: absolute;
+  padding: 1.2rem 1rem;
+  border: 0.15rem solid rgb(177 177 193);
+  background: #ffffff;
+  width: 100%;
+  border-radius: 0;
+  transition: 0.2s ease;
+  transform: scale(0);
+  z-index: 999;
+  top: 4.5rem;
+}
+section.jobPosting .formSection form .checkOptions input {
+  display: none;
+}
+section.jobPosting .formSection form .checkOptions .checkBox label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  transition: 0.2s ease;
+}
+section.jobPosting .formSection form .checkOptions .checkBox label:hover {
+  background-color: #10101029;
+  color: #101010;
+}
+section.jobPosting .formSection form .checkOptions .checkBox .titleBox {
+  margin-bottom: 1rem;
+}
+section.jobPosting
+  .formSection
+  form
+  .options
+  .checkOptions
+  .checkBox
+  label
+  span {
+  background: transparent;
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0;
+  border: 0.15rem solid #101010;
+  transition: 0.3s ease;
+}
+section.jobPosting .formSection form .selection .selectionPlaceholder {
+  width: 100%;
+  padding: 1rem;
+  border: 0.15rem solid rgb(177 177 193);
+  border-radius: 0;
+  color: #101010;
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  height: 4rem;
+  margin-top: 0.3rem;
+}
+section.jobPosting
+  .formSection
+  form
+  .selection
+  .selectionPlaceholder
+  .type-tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+section.jobPosting
+  .formSection
+  form
+  .selection
+  .selectionPlaceholder
+  .type-tags
+  span {
+  font-size: 1.2rem;
+  background: transparent;
+  color: #101010;
+  padding: 0.2rem 0.7rem;
+  margin: 0.2rem 0.2rem 0.2rem 0;
+  font-weight: bold;
+  border-right: 0.1rem solid #101010;
+  font-weight: bold;
+}
+section.jobPosting
+  .formSection
+  form
+  .selection
+  .selectionPlaceholder
+  .type-tags
+  span:last-child {
+  border: none;
+}
+
+section.jobPosting
+  .formSection
+  form
+  .selection
+  .selectionPlaceholder
+  .type-tags
+  span:nth-child(5) {
+  color: #ff8225;
+  background: #ff832533;
+}
+section.jobPosting .formSection form .textArea {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+  width: auto;
+}
+section.jobPosting .formSection form .textArea label {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+section.jobPosting .formSection form .textArea .textarea {
+  height: 10.8rem;
+  border: 0.15rem solid rgb(177 177 193);
+  padding: .5rem;
+  margin-top: .7rem;
+}
+section.jobPosting .formSection form .textArea textarea {
+  width: 100%;
+  border-radius: 0;
+  color: #101010;
+  outline: none;
+  height: 6.8rem;
+  resize: none;
+  border: none;
+  border-bottom: .1rem solid #9a9aa0;
+  font-weight: bold;
+}
+/* section.jobPosting .formSection form .textArea textarea:focus {
+  border: 0.1rem solid #101010;
+} */
+section.jobPosting .formSection form .textArea .notice {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  color: #101010;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  justify-content: space-between;
+  padding-right: 0.5rem;
+}
+section.jobPosting .formSection form .textArea .notice span {
+  display: flex;
+  margin-right: 0.5rem;
+}
+section.jobPosting .formSection form .btns button {
+  padding: 1rem;
+  border: none;
+  background: transparent;
+  font-weight: bold;
+  height: 4rem;
+  color: #ffffff;
+  cursor: pointer;
+  margin-right: 1rem;
+  width: 13rem;
+  transition: 0.3s ease;
+  border: 0.15rem solid #101010;
+  color: #101010;
+}
+section.jobPosting .formSection form .btns button:hover {
+  background: #101010;
+  color: #ffffff;
+}
+section.jobPosting .formSection form .btns {
+  display: flex;
+  margin: 3rem 0;
+}
+section.jobPosting .formSection form .image-textarea {
+  display: flex;
+}
+section.jobPosting .formSection form .form {
+  border: 0.15rem solid rgb(177 177 193);
+  border-radius: 0.5rem;
+  padding: 2rem 0.7rem 0.7rem 0.7rem;
+  text-align: center;
+  font-size: 1.125rem;
+  width: 100%;
+  margin-top: 4.3rem;
+  height: 19rem;
+}
+
+.imageSelection {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+  width: auto;
+}
+.imageSelection .title {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+section.jobPosting .formSection form .uploadPreviewSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.buttonLoader {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.buttonLoader .dot {
+  height: 1rem;
+  width: 1rem;
+  background: #101010;
+  margin: 0 0.4rem;
+  border-radius: 50%;
+  position: relative;
+}
+.buttonLoader .dot:nth-child(1) {
+  animation: dotOne 1.4s linear infinite;
+}
+.buttonLoader .dot:nth-child(2) {
+  animation: dotTwo 1.6s linear infinite;
+}
+.buttonLoader .dot:nth-child(3) {
+  animation: dotThree 1.8s linear infinite;
+}
+@keyframes dotOne {
+  0% {
+    height: 1rem;
+    width: 1rem;
+    background: #101010;
+  }
+  50% {
+    height: 1.5rem;
+    width: 1.5rem;
+    background: #1010109a;
+  }
+  100% {
+    height: 1rem;
+    width: 1rem;
+    background: #10101046;
+  }
+}
+@keyframes dotTwo {
+  0% {
+    height: 1rem;
+    width: 1rem;
+    background: #101010;
+  }
+  50% {
+    height: 1.5rem;
+    width: 1.5rem;
+    background: #1010109a;
+  }
+  100% {
+    height: 1rem;
+    width: 1rem;
+    background: #10101046;
+  }
+}
+@keyframes dotThree {
+  0% {
+    height: 1rem;
+    width: 1rem;
+    background: #101010;
+  }
+  50% {
+    height: 1.5rem;
+    width: 1.5rem;
+    background: #1010109a;
+  }
+  100% {
+    height: 1rem;
+    width: 1rem;
+    background: #10101046;
+  }
+}
+
+section.jobPosting .formSection form .uploadPreviewSection .imagePrevSection {
+  background: #eaebed;
+  height: 12rem;
+  width: 20rem;
+  margin-right: 1rem;
+  border-radius: 0.5rem;
+  position: relative;
+  margin-top: 0.6rem;
+  display: none;
+}
+section.jobPosting
+  .formSection
+  form
+  .uploadPreviewSection
+  .imagePrevSection
+  img {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+section.jobPosting
+  .formSection
+  form
+  .uploadPreviewSection
+  .imagePrevSection
+  .remove {
+  position: absolute;
+  padding: 0.5rem;
+  background: rgb(0 0 0 / 10%);
+  height: 2rem;
+  width: 2rem;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  top: 0.5rem;
+  right: 0.5rem;
+  backdrop-filter: blur(0.5rem);
+  cursor: pointer;
+  color: #101010;
+}
+section.jobPosting .formSection form .form-title {
+  color: #000000;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+section.jobPosting .formSection form .drop-container {
+  background-color: #fff;
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 0;
+  border: 0.15rem solid rgb(177 177 193);
+  color: #444;
+  cursor: pointer;
+  transition: 0.3s ease;
+  width: 100%;
+  margin-top: 1rem;
+  height: 10.8rem;
+}
+section.jobPosting .formSection form .drop-container .placeHolder {
+  position: absolute;
+  background: #10101080;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  backdrop-filter: blur(0.5rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  transition: 0.2s ease;
+  transform: scale(0);
+  flex-direction: column;
+}
+section.jobPosting
+  .formSection
+  form
+  .drop-container
+  .placeHolder
+  .drop-here-text {
+  font-size: 1.5rem;
+  color: #ffffff8f;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  margin-right: 1rem;
+}
+section.jobPosting .formSection form .drop-container .placeHolder img {
+  height: 6rem;
+}
+section.jobPosting .formSection form .drop-container:hover {
+  background: rgba(0, 140, 255, 0.164);
+  border-color: rgba(17, 17, 17, 0.616);
+}
+
+section.jobPosting .formSection form .drop-container:hover .drop-title {
+  color: #222;
+}
+
+section.jobPosting .formSection form .drop-title {
+  color: #444;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  transition: color 0.2s ease-in-out;
+}
+
+section.jobPosting .formSection form #file-input {
+  width: 97%;
+  max-width: 100%;
+  color: #444;
+  padding: 0.2rem;
+  background: #fff;
+  border-radius: 0;
+  border: 0.1rem solid rgba(8, 8, 8, 0.288);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+section.jobPosting .formSection form #file-input span {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+section.jobPosting .formSection form #file-input button {
+  margin-right: 2rem;
+  border: none;
+  background: #101010;
+  padding: 1rem 2rem;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+section.jobPosting .formSection form #file-input::button:hover {
+  background: #0d45a5;
+}
+
+/* Message popUp  */
+.popup-container .success-failure-container {
+  margin: auto;
+  position: fixed;
+  top: -15rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  padding: 1rem;
+  transition: 0.3s ease;
+  z-index: 2;
+}
+
+.popup-container .success-failure-container .icon {
+  font-size: 1.5rem;
+  display: flex;
+}
+.popup-container .success-failure-container .message {
+  margin-left: 1rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.popup-container .success-failure-container .success {
+  display: flex;
+  align-items: center;
+  background: #1fd65628;
+  color: #008631;
+  border: 0.1rem solid #1fd655;
+  width: 40rem;
+  backdrop-filter: blur(2rem);
+  height: 4rem;
+  border-radius: 0.5rem;
+  padding: 0 1rem;
+}
+.popup-container .success-failure-container .failure {
+  display: flex;
+  align-items: center;
+  color: #ff0000;
+  border: 0.15rem solid rgb(255, 0, 0);
+  background: rgba(255, 0, 0, 0.12);
+  width: 40rem;
+  backdrop-filter: blur(2rem);
+  height: 4rem;
+  border-radius: 0.5rem;
+  padding: 0 1rem;
+}

@@ -1,0 +1,716 @@
+/* Navigation bar style  */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2.5rem;
+  height: 9rem;
+  width: 100%;
+}
+#loginButton {
+  background: #101010;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  height: 4rem;
+}
+nav .menuOption {
+  display: none;
+}
+nav .navigation-links ul .crossBar {
+  display: none;
+}
+nav .nav-bar-logo a {
+  font-size: 2.7rem;
+  text-decoration: none;
+  color: #101010;
+  font-weight: bold;
+  font-family: optima-font-bold;
+}
+nav .navigation-links ul {
+  list-style: none;
+  display: flex;
+}
+nav .navigation-links ul li {
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0 4rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+  position: relative;
+}
+nav .navigation-links ul li a {
+  text-decoration: none;
+  color: #101010;
+  font-family: optima-font-bold;
+  font-weight: bold;
+  transition: 0.2s ease;
+  text-transform: uppercase;
+}
+
+nav .navigation-links ul li span {
+  height: 0.8rem;
+  width: 0.8rem;
+  background: var(--primary-colour);
+  bottom: 0rem;
+  position: absolute;
+  border-radius: 3rem;
+  transition: 0.2s ease;
+}
+nav .navigation-links ul li:hover {
+  color: var(--primary-colour) !important;
+}
+nav .navigation-links ul .profile:hover {
+  color: #101010 !important;
+}
+
+nav .profile .tooltipProfile {
+  position: absolute;
+  top: 5rem;
+  background: #fff;
+  width: 30rem;
+  right: 0;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  transform: scale(0);
+  transition: 0.2s ease all;
+  z-index: 99999;
+}
+nav .profile .tooltipProfile .nameSetting-loader {
+  margin-bottom: 2rem;
+}
+nav .profile .tooltipProfile .name-loader {
+  height: 1.5rem;
+  width: 100%;
+  background: #445;
+  border-radius: 2rem;
+  animation: loaderprofile 2s linear infinite;
+}
+nav .profile .tooltipProfile .email-loader {
+  height: 1.3rem;
+  width: 90%;
+  background: #445;
+  border-radius: 2rem;
+  margin-top: 0.5rem;
+  animation: loaderprofile 2s linear infinite;
+}
+nav .profile .tooltipProfile .setting-loader {
+  height: 3.7rem;
+  width: 3.7rem;
+  background: #445;
+  border-radius: 5px;
+  margin-left: 1rem;
+  animation: loaderprofile 2s linear infinite;
+}
+@keyframes loaderprofile {
+  0% {
+    background: #445;
+  }
+  25% {
+    background: rgb(99, 99, 122);
+  }
+  50% {
+    background: rgb(135, 135, 161);
+  }
+  75% {
+    background: rgb(99, 99, 122);
+  }
+  100% {
+    background: #445;
+  }
+}
+nav .profile .tooltipProfile .nameSetting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+nav .profile .tooltipProfile .name {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+nav .profile .tooltipProfile .email {
+  font-size: 1.5rem;
+  color: #666;
+  margin-bottom: 2rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
+nav .profile .tooltipProfile .setting {
+  display: flex;
+  background: transparent;
+  padding: 1rem;
+  font-size: 2rem;
+  height: 3.7rem;
+  width: 3.7rem;
+  justify-content: center;
+  align-items: center;
+  color: #101010;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+nav .profile .tooltipProfile .setting:hover {
+  background-color: #333;
+  color: #ffffff;
+}
+
+/* Logout Button Styling */
+nav .profile .tooltipProfile button {
+  padding: 1rem;
+  height: 4rem;
+  width: 100%;
+  cursor: pointer;
+  background: #101010;
+  border: none;
+  color: #ffffff;
+  font-size: 1.7rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+nav .profile .tooltipProfile button:hover {
+  background: #383737;
+}
+#profileButton {
+  background: #101010;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  height: 4rem;
+}
+nav .profile:hover > .tooltipProfile {
+  transform: scale(1);
+}
+/* Header styling  */
+header {
+  height: 28rem;
+  width: auto;
+  margin: 0;
+  /* background: linear-gradient(to top, #dfe9f3 0%, white 100%); */
+}
+header .head-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 4rem;
+}
+header .head-container .text-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+header .head-container .text-section h1 {
+  font-family: optima-font-bold;
+  font-size: 4rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  color: #101010;
+}
+header .head-container .text-section h1 span {
+  padding: 0 1.2rem;
+  color: var(--primary-colour);
+  font-weight: bold;
+  font-family: optima-font-bold;
+  position: relative;
+}
+
+header .head-container .text-section p {
+  font-family: optima-font;
+  font-size: 1.8rem;
+  margin: 1rem 0 0.5rem 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #101010;
+}
+
+section.trending-post-container {
+  position: relative;
+  padding: 0rem 3rem;
+}
+h1.titleHead {
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: optima-font-bold;
+  color: #101010;
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
+}
+.line {
+  height: 2.5rem;
+  width: 0.7rem;
+  background: var(--primary-colour);
+  margin-right: 0.8rem;
+}
+.line span {
+  margin-bottom: -5rem;
+}
+
+/* Loader for card */
+
+section.trending-post-container .card-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  margin: 5rem 0;
+  gap: 3rem;
+}
+section.trending-post-container .job-card {
+  display: flex;
+  border-radius: 0rem;
+  height: 15rem;
+  cursor: pointer;
+  background: transparent;
+}
+section.trending-post-container .job-card .image {
+  height: 15rem;
+  width: 15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section.trending-post-container .job-card img {
+  height: 100%;
+  border-radius: 0rem;
+  border: 0.1rem solid rgb(177 177 193 / 53%);
+}
+section.trending-post-container .job-card .details-section {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  height: 100%;
+  width: 100%;
+  padding: 0 1.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  background: transparent;
+}
+section.trending-post-container .job-card .details-section .first-details {
+  width: 100%;
+}
+section.trending-post-container .job-card .details-section .first-details h2 {
+  font-family: optima-font-bold;
+  font-weight: bold;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+section.trending-post-container .job-card .details-section h3 {
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 0.5rem;
+  font-size: 1.3rem;
+}
+section.trending-post-container
+  .job-card
+  .details-section
+  .first-details
+  .locationTag {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+section.trending-post-container
+  .job-card
+  .details-section
+  .first-details
+  .locationTag
+  .dot {
+  color: rgb(111, 111, 130);
+  display: flex;
+}
+section.trending-post-container
+  .job-card
+  .details-section
+  .first-details
+  .tags {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+section.trending-post-container
+  .job-card
+  .details-section
+  .first-details
+  .tags
+  span.tag {
+  display: flex;
+  color: #101010;
+  background: #ffffff;
+  border-radius: 0;
+  margin-right: 1rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  width: auto;
+  align-items: center;
+}
+section.trending-post-container
+  .job-card
+  .details-section
+  .first-details
+  .tags
+  span.tag:first-child {
+  border-right: 0.1rem solid #101010;
+  padding-right: 1rem;
+}
+section.trending-post-container
+  .job-card
+  .details-section
+  .first-details
+  .tags
+  .tag-cont {
+  display: flex;
+}
+section.trending-post-container
+  .job-card
+  .details-section
+  .first-details
+  .tags
+  .type {
+  display: flex;
+}
+section.trending-post-container
+  .job-card
+  .details-section
+  .first-details
+  .tags
+  .type
+  h3:nth-child(2) {
+  margin-left: 1.5rem;
+  position: relative;
+}
+section.trending-post-container
+  .job-card
+  .details-section
+  .first-details
+  .tags
+  .type
+  h3:nth-child(2)::before {
+  content: "";
+  height: 0.8rem;
+  width: 0.8rem;
+  background: var(--primary-colour);
+  border-radius: 50%;
+  position: absolute;
+  left: -1.4rem;
+}
+section.trending-post-container .job-card .details-section .first-details p {
+  font-size: 1.4rem;
+  font-weight: bold;
+  opacity: 0.7;
+}
+section.trending-post-container
+  .job-card
+  .details-section
+  .first-details
+  .items-group {
+  margin-bottom: 1rem;
+}
+section.notFound {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15rem;
+}
+section.notFound .text {
+  font-size: 10rem;
+  color: #101010;
+  font-weight: bold;
+}
+section.notFound .details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+section.notFound .details h3 {
+  font-size: 1.8rem;
+  opacity: 0.5;
+  width: 40rem;
+  text-align: center;
+  line-height: 1.5;
+}
+section.notFound .details button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  margin: 3rem 0;
+  cursor: pointer;
+}
+section.notFound .details button span {
+  background: #101010;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0.5rem;
+  padding: 1rem;
+  height: 3.7rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  transition: 0.3s ease;
+  color: #ffffff;
+}
+section.notFound .details button span:hover {
+  background: #101010;
+  color: #ffffff;
+}
+section.notFound .details button span.goBackText {
+  padding: 0 4rem;
+}
+section.auth {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60rem;
+}
+
+section.auth .card {
+  padding: 2rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 44rem;
+}
+
+section.auth .errorPopup {
+  position: absolute;
+  transition: 0.3s ease;
+  top: -15rem;
+}
+
+section.auth .errorPopup .error-card {
+  background: #ef665b;
+  padding: 0 2rem;
+  color: #ffffff;
+  height: 4.5rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  min-width: 40rem;
+}
+section.auth .errorPopup .error-card svg {
+  fill: #ffffff;
+}
+section.auth .errorPopup .error-card span {
+  display: flex;
+  font-size: 2.4rem;
+  margin-right: 1rem;
+}
+section.auth .card .label {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 0;
+}
+section.auth .top-section-title {
+  margin-bottom: 2rem;
+}
+section.auth .top-section-title h1 {
+  padding-left: 0.5rem;
+  border-left: 0.7rem solid var(--primary-colour);
+  font-size: 2.3rem;
+}
+section.auth .top-section-title p {
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
+  color: #1010109c;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+section.auth .top-section-title p span {
+  color: var(--primary-colour);
+  font-weight: bold;
+}
+section.auth .card form {
+  width: 40rem;
+}
+section.auth .card form .label label {
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+section.auth .card form .label input {
+  padding: 0.7rem;
+  font-weight: bold;
+  border: 0.1rem solid #565353;
+  height: 4rem;
+}
+section.auth .card form .label .errorMessage {
+  margin-top: 0.2rem;
+  margin-left: 0.2rem;
+  font-weight: bold;
+}
+section.auth form .remember {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+}
+section.auth form .remember a {
+  text-decoration: none;
+  font-weight: bold;
+}
+section.auth form .remember .checkIcon {
+  display: flex;
+  height: 1.3rem;
+  width: 1.3rem;
+  border: 0.15rem solid #101010;
+}
+section.auth form .remember .rememberMe {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+}
+section.auth form .remember .rememberMe span {
+  margin-right: 0.5rem;
+}
+section.auth form button {
+  width: 100%;
+  padding: 1rem 0;
+  font-size: 1.6rem;
+  border: none;
+  background: #101010;
+  color: #ffffff;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  transition: 0.2s ease;
+  height: 4rem;
+}
+section.auth form button:hover {
+  background: #101010d3;
+}
+section.auth form .no-account {
+  font-size: 1.5rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  text-align: center;
+}
+section.auth form .no-account a {
+  font-weight: bold;
+  text-decoration: none;
+}
+section.auth form .btns {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+section.auth form .btns button {
+  margin: 0;
+  width: auto;
+  padding: 0 3rem;
+  text-transform: uppercase;
+  height: 3.6rem;
+}
+section.auth form .btns button:first-child {
+  margin-right: 1rem;
+  background: transparent;
+  border: 0.1rem solid #101010;
+  color: #101010;
+}
+footer {
+  background: rgba(219, 219, 219, 1);
+  padding: 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0rem;
+  color: #101010;
+}
+footer .first-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: self-end;
+  padding: 0 2rem;
+}
+
+footer .first-section a {
+  margin: 0 1rem;
+  font-size: 1.4rem;
+  color: #101010;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+footer .first-section a:hover {
+  text-decoration: underline;
+}
+footer .first-section .second-section {
+  /* width: 40rem; */
+  width: auto;
+}
+footer .first-section .second-section form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 2rem 0;
+  width: 100%;
+}
+footer .first-section .second-section form .contactText {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+footer .first-section .second-section form input,
+footer .first-section .second-section form textarea {
+  padding: 0.8rem 0.5rem;
+  margin: 0.5rem 0;
+  background: #44445540;
+  border: none;
+  border-bottom: 0.2rem solid #101010;
+  color: #ffffff;
+  outline: none;
+  transition: 0.3s ease all;
+}
+.errorMessage {
+  margin-top: -0.3rem;
+  margin-bottom: 1rem;
+  color: #ee0000;
+}
+footer .first-section .second-section form button {
+  width: 20rem;
+  padding: 1rem 0.7rem;
+  margin-top: 2rem;
+  cursor: pointer;
+  background: #101010;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+}
+footer p.copyright {
+  color: #101010;
+  font-size: 1.4rem;
+  font-weight: bold;
+}

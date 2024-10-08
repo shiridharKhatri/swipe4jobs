@@ -1,0 +1,49 @@
+.aboutHeaderText {
+  font-size: 2rem;
+  font-weight: bold;
+  padding-left: 1rem;
+  border-left: 0.7rem solid var(--primary-colour);
+  font-family: optima-font-bold;
+  color: #101010;
+  margin: 2rem 2rem 0 2rem;
+}
+
+section.about-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 4rem 2rem;
+}
+section.about-container .item {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(245, 245, 245, 0.9)
+  );
+  padding: 2rem;
+  transition: 0.2s ease;
+  border: .1rem solid rgb(217, 217, 232);
+  cursor:grab;
+}
+section.about-container .item:hover {
+  transform: translateY(-5px);
+}
+
+section.about-container .item h2 {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+section.about-container .item .lowOpacity {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #555;
+  opacity: 0.7;
+}
+
+section.about-container h2 a {
+  color: var(--primary-colour);
+  text-decoration: underline;
+}

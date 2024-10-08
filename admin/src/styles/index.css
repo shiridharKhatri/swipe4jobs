@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: optima-font;
+}
+
+@font-face {
+  font-family: optima-font;
+  src: url(/src/assets/opitima/OPTIMA.TTF);
+}
+@font-face {
+  font-family: optima-font-bold;
+  src: url(/src/assets/opitima/unicode.optima.ttf);
+}
+:root {
+  --primary-colour: #0000ee;
+}
+html {
+  font-size: 62.5%;
+  background: #f9f9f9;
+  height: 100%;
+}
+body {
+  height: 100%;
+}
+::selection {
+  background: var(--primary-colour);
+  color: #ffffff;
+}
