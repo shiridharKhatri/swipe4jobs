@@ -8,7 +8,7 @@ section.jobPosting {
   border-left: 0.7rem solid var(--primary-colour);
   font-family: optima-font-bold;
   color: #101010;
-  margin:2rem 2rem 0rem 3rem;
+  margin: 2rem 2rem 0rem 2rem;
 }
 
 section.jobPosting .formSection form .all-inputs {
@@ -23,6 +23,84 @@ section.jobPosting .formSection form .labels {
   align-items: start;
   width: 100%;
   font-size: 1.6rem;
+}
+#schedule {
+  margin-right: 1rem;
+}
+section.jobPosting .formSection form .labels .selectionPlaceholder {
+  width: 100%;
+  padding: 1rem;
+  border: 0.15rem solid rgb(177 177 193);
+  border-radius: 0;
+  color: #101010;
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  height: 4rem;
+  margin-top: 0.3rem;
+  position: relative;
+}
+section.jobPosting .formSection form .labels .selectionPlaceholder span:first-child{
+  font-weight: bold;
+}
+section.jobPosting
+  .formSection
+  form
+  .labels
+  .selectionPlaceholderPosition:hover
+  .absoluteSelectionOptions {
+  transform: scale(1);
+}
+section.jobPosting
+  .formSection
+  form
+  .labels
+  .selectionPlaceholder
+  .absoluteSelectionOptions {
+  position: absolute;
+  border: 0.15rem solid rgb(177 177 193);
+  z-index: 999;
+  height: 30rem;
+  top: 4rem;
+  width: 100%;
+  left: 0;
+  padding: 1rem;
+  overflow-y: scroll;
+  background: #ffffff;
+  transform: scale(0);
+  transition: 0.3s ease;
+}
+section.jobPosting
+  .formSection
+  form
+  .labels
+  .selectionPlaceholder
+  .absoluteSelectionOptions
+  .item {
+  font-size: 1.6rem;
+  padding: 0.5rem;
+  transition: 0.3s ease;
+}
+
+section.jobPosting
+  .formSection
+  form
+  .labels
+  .selectionPlaceholder
+  .absoluteSelectionOptions
+  .item:hover {
+  background: #44445545 !important;
+}
+
+section.jobPosting
+  .formSection
+  form
+  .labels
+  .selectionPlaceholder
+  .absoluteSelectionOptions::-webkit-scrollbar {
+  display: none;
 }
 section.jobPosting .formSection form .labels span.requiredField {
   color: var(--primary-colour);
@@ -246,8 +324,8 @@ section.jobPosting .formSection form .textArea label {
 section.jobPosting .formSection form .textArea .textarea {
   height: 10.8rem;
   border: 0.15rem solid rgb(177 177 193);
-  padding: .5rem;
-  margin-top: .7rem;
+  padding: 0.5rem;
+  margin-top: 0.7rem;
 }
 section.jobPosting .formSection form .textArea textarea {
   width: 100%;
@@ -257,7 +335,7 @@ section.jobPosting .formSection form .textArea textarea {
   height: 6.8rem;
   resize: none;
   border: none;
-  border-bottom: .1rem solid #9a9aa0;
+  border-bottom: 0.1rem solid #9a9aa0;
   font-weight: bold;
 }
 /* section.jobPosting .formSection form .textArea textarea:focus {
@@ -581,24 +659,24 @@ section.jobPosting .formSection form #file-input::button:hover {
 .popup-container .success-failure-container .success {
   display: flex;
   align-items: center;
-  background: #1fd65628;
-  color: #008631;
-  border: 0.1rem solid #1fd655;
+  color: #ffffff;
   width: 40rem;
+  background: #008631;
   backdrop-filter: blur(2rem);
   height: 4rem;
   border-radius: 0.5rem;
   padding: 0 1rem;
+  font-size: 1.7rem;
 }
 .popup-container .success-failure-container .failure {
   display: flex;
   align-items: center;
-  color: #ff0000;
-  border: 0.15rem solid rgb(255, 0, 0);
-  background: rgba(255, 0, 0, 0.12);
+  color: #ffffff;
+  background: #EF665B;
   width: 40rem;
   backdrop-filter: blur(2rem);
   height: 4rem;
   border-radius: 0.5rem;
   padding: 0 1rem;
+  font-size: 1.7rem;
 }

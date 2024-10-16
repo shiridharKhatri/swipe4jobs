@@ -107,9 +107,6 @@ export default function Postform(props) {
   };
   const jobPosting = async (id) => {
     setIsButtonLoading(true);
-    let headersList = {
-      Accept: "*/*",
-    };
     let formdata = new FormData();
     formdata.append("name", val.name);
     selectSchedule.forEach((schedule) => {
@@ -127,9 +124,9 @@ export default function Postform(props) {
     let bodyContent = formdata;
     if (id === "" || id.length <= 0) {
       let reqOptions = {
-        url: `${host}/api/jobs/post-job/${id}`,
+        url: `${host}/api/jobs/post-job/admin/${Cookies.get("id")}`,
         method: "POST",
-        headers: headersList,
+        headers: { Accept: "*/*", "auth-token": Cookies.get("token") },
         data: bodyContent,
       };
       let respose = await axios.request(reqOptions);

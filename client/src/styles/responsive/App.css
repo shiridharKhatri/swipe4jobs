@@ -48,6 +48,7 @@
 @media screen and (max-width: 720px) {
   header {
     height: 30rem;
+    background: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%);
   }
   nav .menuOption {
     display: flex;
@@ -70,6 +71,7 @@
     border: none;
     font-size: 3.5rem;
     cursor: pointer;
+     color: #ffffff;
   }
   nav .navigation-links ul li span {
     display: none;
@@ -86,8 +88,15 @@
     margin: 3rem;
     font-size: 2rem;
   }
+  #loginButton{
+    width: 90% !important;
+  }
   header .head-container .text-section h1 {
     font-size: 3.5rem !important;
+    color: #ffffff;
+  }
+  header .head-container .text-section p{
+    color: #ffffff;
   }
   section.trending-post-container {
     padding: 0rem 1rem 5rem 1rem;
@@ -150,7 +159,7 @@
     margin-top: 0 !important;
   }
   section.jobPosting .formSection form .btns {
-    margin: 4rem 0 3rem 0 !important;
+    margin: 2rem 0 3rem 0 !important;
   }
   section.postDescription h1 img {
     height: 10rem !important;
@@ -175,14 +184,14 @@
   section.notFound .details button span {
     height: 3.5rem;
   }
-  section.auth .card{
+  section.auth .card {
     width: 100% !important;
     box-shadow: none;
   }
-  section.auth .card form{
+  section.auth .card form {
     width: 100%;
   }
-  section.auth .errorPopup .error-card{
+  section.auth .errorPopup .error-card {
     min-width: 95%;
   }
   footer p.copyright {
@@ -243,6 +252,10 @@
     .first-details
     h1 {
     font-size: 2.2rem !important;
+  }
+  section.jobPosting .formSection form .all-inputs .combineSection{
+    flex-direction: column;
+    gap: 1rem;
   }
   .popup-container .success-failure-container {
     width: 100%;
@@ -346,7 +359,7 @@
     font-size: 1.2rem !important;
     width: auto !important;
     padding-left: 0 !important;
-    margin: 0.2rem .5rem 0.5rem 0 !important;
+    margin: 0.2rem 0.5rem 0.5rem 0 !important;
   }
   section.trending-post-container
     .card-container
@@ -454,10 +467,22 @@
   section.notFound .text {
     font-size: 8rem !important;
   }
+  section.searchHeader .mobile .options .first{
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  .popup-alert .card {
+    width: 95% !important;
+  }
+  .popup-alert .header{
+    height: auto !important;
+  }
+  #profileButton{
+    width: 90% !important;
+    height: 4.2rem !important;
+  }
   .loaderCard .cards-loader {
     flex-direction: column;
     height: auto !important;
-
   }
   .loaderCard .cards-loader .image-loader {
     width: 100% !important;
@@ -469,7 +494,7 @@
   .loaderCard {
     grid-template-columns: repeat(1, 1fr) !important;
   }
-  section.searchContainer .defaultJobsContainer .job-card .image{
+  section.searchContainer .defaultJobsContainer .job-card .image {
     width: 100% !important;
     height: auto !important;
   }
@@ -491,13 +516,12 @@
     justify-content: center;
     align-items: center;
   }
-  footer .first-section .second-section{
+  footer .first-section .second-section {
     text-align: center;
   }
-  footer .first-section a{
+  footer .first-section a {
     font-size: 1.7rem;
   }
-
 }
 @media screen and (max-width: 360px) {
   section.searchContainer .loaderCard .cards-loader .image-loader:before {

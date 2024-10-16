@@ -18,7 +18,7 @@ import {
 } from "react-icons/io5";
 import { AiOutlineEdit } from "react-icons/ai";
 import { IoMdAddCircle, IoMdTime } from "react-icons/io";
-import { FaChevronLeft, FaCheck } from "react-icons/fa6";
+import { FaChevronLeft, FaCheck, FaFilePdf  } from "react-icons/fa6";
 import { BsThreeDots, BsPersonFillX } from "react-icons/bs";
 import { RiVerifiedBadgeFill, RiMoneyDollarCircleFill  } from "react-icons/ri";
 import { HiMenuAlt3 } from "react-icons/hi";
@@ -43,6 +43,7 @@ const BsIcons = {
 const Fa6icons = {
   FaChevronLeft,
   FaCheck,
+  FaFilePdf 
 };
 const FaIcons = {
   FaEye,

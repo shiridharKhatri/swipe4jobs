@@ -89,13 +89,15 @@ section.searchHeader .searchFormSection form.searchForm .lists {
   top: 6.5rem;
   background: #ffffff;
   transition: 0.2s ease;
-  width: auto;
+  min-width: 100rem;
   height: auto;
   transform: translate(-50%, -50%);
   border: 0.1rem solid #e0e0e9;
   z-index: 9999;
 }
-
+section.searchHeader .searchFormSection form.searchForm .stateList {
+  min-width: 100% !important;
+}
 section.searchHeader .searchFormSection form.searchForm .lists ul {
   list-style: none;
   position: relative;
@@ -132,7 +134,7 @@ section.searchHeader .searchFormSection form.searchForm .lists ul li {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 400;
 }
-section.searchHeader .searchFormSection form.searchForm .lists ul li .dot {
+section.searchHeader .searchFormSection .dot {
   background: var(--primary-colour);
   height: 0.7rem;
   width: 0.7rem;
@@ -397,9 +399,7 @@ section.searchHeader .mobile .options {
   position: absolute;
   width: 100%;
   z-index: 9999;
-  display: grid;
-  grid-template-columns: repeat(4, 2fr);
-  background: #e1dede;
+  background: #fefafa;
   left: 0;
   top: 6rem;
   padding: 0.5rem;
@@ -407,19 +407,18 @@ section.searchHeader .mobile .options {
   transform: scale(0);
   transition: 0.2s ease;
 }
+section.searchHeader .mobile .options .first {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  font-weight: bold;
+  padding: 1rem;
+}
 section.searchHeader .mobile .dd span {
   display: flex;
   margin-left: 0.5rem;
 }
-section.searchHeader .mobile .options .item {
-  margin: 0.5rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-section.searchHeader .mobile .options .item:hover {
-  color: var(--primary-colour);
-}
+
 section.searchHeader .mobile form .dropDown {
   font-size: 1.7rem;
   margin-left: 0.5rem;
@@ -481,7 +480,6 @@ section.searchHeader .mobile form .itemsCollection {
   display: flex;
   flex-direction: column;
   padding: 1rem 2rem;
-  
 }
 .loaderCard .cards-loader .others-loader .headTitle-loader {
   height: 1.7rem;
@@ -556,20 +554,20 @@ section.searchHeader .mobile form .itemsCollection {
   grid-gap: 1rem;
   gap: 1rem;
 }
-.popup-alert .payment-limit{
+.popup-alert .payment-limit {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: .5rem 0rem 2rem 0rem;
+  margin: 0.5rem 0rem 2rem 0rem;
 }
-.popup-alert .payment-limit .limit-option{
+.popup-alert .payment-limit .limit-option {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 2rem;
-  border: .15rem solid rgb(189, 189, 206);
+  border: 0.15rem solid rgb(189, 189, 206);
 }
-.popup-alert .payment-limit .limit-option button{
+.popup-alert .payment-limit .limit-option button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -577,28 +575,34 @@ section.searchHeader .mobile form .itemsCollection {
   width: 3.5rem;
   background: transparent;
   border: none;
-cursor: pointer;
+  cursor: pointer;
 }
-.popup-alert .payment-limit .limit-option button:disabled{
+.popup-alert .payment-limit .limit-option button:disabled {
   color: rgb(189, 189, 206);
   cursor: not-allowed;
 }
-.popup-alert .payment-limit .limit-option input{
-height: 3.5rem;
-text-align: center;
-font-weight: bold;
-font-size: 2rem;
-width: 15rem;
-background: transparent;
-border: none;
-outline: none;
+.popup-alert .payment-limit .limit-option input {
+  height: 3.5rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 2rem;
+  width: 15rem;
+  background: transparent;
+  border: none;
+  outline: none;
 }
-.popup-alert .payment-limit .limit-option input[type="number"]::-webkit-outer-spin-button,
-.popup-alert .payment-limit .limit-option input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+.popup-alert
+  .payment-limit
+  .limit-option
+  input[type="number"]::-webkit-outer-spin-button,
+.popup-alert
+  .payment-limit
+  .limit-option
+  input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
-.popup-alert .payment-limit .price{
+.popup-alert .payment-limit .price {
   font-size: 2rem;
   font-weight: bold;
 }
@@ -630,7 +634,8 @@ outline: none;
   margin-top: 1rem;
   color: rgba(107, 114, 128, 1);
   font-size: 1.3rem;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-weight: 500;
 }
 
@@ -726,11 +731,4 @@ outline: none;
   }
 }
 @media screen and (max-width: 500px) {
-  section.searchHeader .mobile .options {
-    grid-template-columns: repeat(3, 2fr);
-  }
-  section.searchHeader .mobile .options .item {
-    margin: 0.8rem 1rem;
-    font-size: 1rem;
-  }
 }

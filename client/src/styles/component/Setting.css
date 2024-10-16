@@ -1,0 +1,269 @@
+section.setting {
+  background: #10101012;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  backdrop-filter: blur(0.2rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section.setting .container {
+  background: #292929;
+  padding: 2rem;
+  height: 55rem;
+  width: 70%;
+  border-radius: 0.5rem;
+  display: flex;
+}
+section.setting .container .first-nav-section {
+  width: 25rem;
+  border-right: 0.1rem solid #445;
+  padding-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+section.setting .container .first-nav-section ul {
+  list-style: none;
+}
+section.setting .container .first-nav-section ul li {
+  font-size: 1.7rem;
+  margin: 2rem 0rem;
+  color: #ffffff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  transition: 0.2s ease;
+}
+section.setting .container .first-nav-section ul li:hover {
+  background: #4a4a4b !important;
+}
+section.setting .container .second-nav-section {
+  width: 75%;
+  position: relative;
+}
+section.setting .container .second-nav-section .body-sec {
+  overflow-y: scroll;
+  height: 48rem;
+}
+section.setting .container .second-nav-section .noPay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+section.setting .container .second-nav-section .noPay .ico {
+  font-size: 7rem;
+  color: #ffffff;
+}
+section.setting .container .second-nav-section .noPay .par {
+  font-size: 1.7rem;
+  margin-top: 2rem;
+  color: #ffffff;
+}
+section.setting .container .second-nav-section .body-sec::-webkit-scrollbar {
+  display: none;
+}
+section.setting .container .second-nav-section .body-sec .card-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0 1rem 1rem;
+  padding: 1rem;
+  border-bottom: 0.1rem solid #445;
+}
+section.setting .container .second-nav-section .body-sec .card-section .item p {
+  font-size: 1.4rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #ffffff;
+  opacity: 0.5;
+}
+section.setting
+  .container
+  .second-nav-section
+  .body-sec
+  .card-section
+  .item
+  h3 {
+  font-size: 1.5rem;
+  margin-top: 0.3rem;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+section.setting .container .second-nav-section .body-sec .card-section button {
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  transition: 0.3s ease;
+}
+section.setting
+  .container
+  .second-nav-section
+  .body-sec
+  .card-section
+  button:hover {
+  color: #18b218;
+}
+section.setting .container .second-nav-section .cross-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.8rem;
+  font-size: 1.2rem;
+  color: #c4c0c0;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+section.setting .container .second-nav-section .cross-icon:hover {
+  background: #445;
+}
+section.setting .container .second-nav-section .header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.1rem solid #445;
+}
+#logout {
+  background: #ffffff;
+  color: #101010;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  height: 4rem;
+  font-size: 1.7rem;
+  font-weight: 500;
+  font-family: sans-serif;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+#logout:hover {
+  background: rgb(173, 173, 186);
+}
+section.setting .container .second-nav-section .header h2 {
+  color: #fff;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+}
+section.setting .container .second-nav-section .body-sec .top {
+  margin: 1rem 0 1rem 1rem;
+  display: flex;
+  justify-content: start;
+  background: #383737;
+  padding: 1.5rem;
+}
+section.setting .container .second-nav-section .body-sec .top img {
+  height: 7rem;
+  width: 7rem;
+  border-radius: 50rem;
+  margin-right: 2rem;
+}
+section.setting .container .second-nav-section .body-sec .top .name {
+  font-size: 2rem;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+section.setting .container .second-nav-section .body-sec .top .mail {
+  font-size: 1.4rem;
+  color: #ffffff;
+  opacity: 0.6;
+}
+section.setting .container .second-nav-section .body-sec .middle {
+  margin: 1rem;
+}
+section.setting .container .second-nav-section .body-sec .middle .item {
+  margin: 2rem 0;
+}
+section.setting .container .second-nav-section .body-sec .middle .item h3 {
+  font-size: 1.6rem;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  opacity: 0.4;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+section.setting .container .second-nav-section .body-sec .middle .item p {
+  font-size: 1.5rem;
+  margin-top: 0.3rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #ffffff;
+}
+section.setting .container .second-nav-section .body-sec .postContainer{
+  padding: 2rem 0 2rem 2rem;
+}
+section.setting .container .second-nav-section .body-sec .postContainer .card
+{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+section.setting .container .second-nav-section .body-sec .postContainer .card .first img{
+  height: 10rem;
+  width: 10rem;
+  background: #ffffff;
+  margin-right: 1rem;
+}
+section.setting .container .second-nav-section .body-sec .postContainer .card .first.title{
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+section.setting .container .second-nav-section .body-sec .postContainer .card .first{
+  display: flex;
+}
+
+section.setting .container .second-nav-section .body-sec .postContainer .card .first .details .title{
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  margin-top: .5rem;
+  color: #ffffff;
+}
+section.setting .container .second-nav-section .body-sec .postContainer .card .first .details .code{
+  font-size: 1.3rem;
+  color: #ffffff;
+}
+section.setting .container .second-nav-section .body-sec .postContainer .card .first .details .date{
+  font-size: 1.3rem;
+  color: #ffffff;
+  margin: .5rem 0;
+}
+section.setting .container .second-nav-section .body-sec .postContainer .card .first .details .overview{
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+section.setting .container .second-nav-section .body-sec .postContainer .card .second{
+  background: #e25858;
+    padding: .5rem 1rem;
+    height: fit-content;
+    font-size: 1.4rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

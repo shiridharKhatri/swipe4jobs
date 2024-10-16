@@ -1416,12 +1416,32 @@ section.admin-management .mainContainer .cards-container .item .third .setting {
   font-size: 1.5rem;
   cursor: pointer;
 }
+section.admin-management .mainContainer .user-not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 40rem;
+  margin-top: 3rem;
+}
+section.admin-management .mainContainer .user-not-found img {
+  height: 20rem;
+}
+section.admin-management .mainContainer .user-not-found p {
+  font-size: 1.8rem;
+  margin-top: 2rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  opacity: 0.7;
+}
 section.admin-management .mainContainer .cards-container .item .first div.name {
   font-weight: bold;
   font-size: 1.6rem;
   margin-bottom: 0.3rem;
   display: flex;
   align-items: center;
+  text-transform: capitalize;
 }
 section.admin-management
   .mainContainer
@@ -1455,15 +1475,21 @@ section.admin-management .mainContainer .cards-container .item .second {
   justify-content: center;
   align-items: center;
 }
-section.admin-management .mainContainer .cards-container .item .first div.time{
+section.admin-management .mainContainer .cards-container .item .first div.time {
   font-size: 1.2rem;
   display: flex;
-  margin: .5rem 0 .5rem 0;
+  margin: 0.5rem 0 0.5rem 0;
   opacity: 0.7;
   font-weight: bold;
 }
-section.admin-management .mainContainer .cards-container .item .first div.time span{
-  margin-right: .2rem;
+section.admin-management
+  .mainContainer
+  .cards-container
+  .item
+  .first
+  div.time
+  span {
+  margin-right: 0.2rem;
   display: flex;
 }
 section.admin-management .mainContainer .cards-container .item .second .tags {
@@ -1476,13 +1502,24 @@ section.admin-management .mainContainer .cards-container .item .second .tags {
   color: #ffffff;
   width: fit-content;
 }
-section.admin-management .mainContainer .cards-container .item .second .tags div.items{
-  margin: .5rem 0;
+section.admin-management
+  .mainContainer
+  .cards-container
+  .item
+  .second
+  .tags
+  div.items {
+  margin: 0.5rem 0;
   font-size: 1.4rem;
 }
-section.admin-management .mainContainer .cards-container .item .second .user-tags{
+section.admin-management
+  .mainContainer
+  .cards-container
+  .item
+  .second
+  .user-tags {
   border-radius: 1rem;
-  border: .1rem dashed #101010;
+  border: 0.1rem dashed #101010;
 }
 section.admin-management .mainContainer .cards-container .item .select {
   width: fit-content;
@@ -1840,11 +1877,191 @@ section.setting .setting-card .details .item button {
 section.setting .setting-card .details .item button:hover {
   background: #e00a0a;
 }
+section.manage-payment .paymentDetails {
+  margin: 2rem;
+}
+section.manage-payment .paymentDetails .noPayment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 45rem;
+}
+section.manage-payment .paymentDetails .noPayment img {
+  height: 20rem;
+}
+section.manage-payment .paymentDetails .noPayment  p{
+  font-size: 1.8rem;
+  margin-top: 3rem;
+  opacity: 0.7;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+section.manage-payment .paymentDetails .head h1 {
+  font-size: 2rem;
+  margin: 4rem 0 1rem 0;
+  padding-left: 1rem;
+  border-left: 1rem solid #101010;
+}
+section.manage-payment .paymentDetails .head p{
+  font-size: 1.5rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+section.manage-payment .paymentDetails .head p span{
+  font-weight: bold;
+  font-size: 1.7rem;
+}
+section.manage-payment .paymentDetails .card-container {
+  margin-top: 2rem;
+  overflow-y: scroll;
+  height: 51rem;
+}
+section.manage-payment .paymentDetails .card-container::-webkit-scrollbar {
+  display: none;
+}
+section.manage-payment .paymentDetails .card-container .cardItem {
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
 
+section.manage-payment .paymentDetails .card-container .cardItem .c-item {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+}
+
+section.manage-payment
+  .paymentDetails
+  .card-container
+  .cardItem
+  .profile-details
+  .name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+section.manage-payment
+  .paymentDetails
+  .card-container
+  .cardItem
+  .profile-details
+  .det {
+  font-size: 1.4rem;
+  margin: 1rem 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #101010a6;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+section.manage-payment
+  .paymentDetails
+  .card-container
+  .cardItem
+  .profile-details:first-child
+  .det {
+  margin-top: 0.3rem;
+}
+section.manage-payment
+  .paymentDetails
+  .card-container
+  .cardItem
+  .profile-details
+  .method
+  span {
+  color: #ffffffff !important;
+  background: #5167fc;
+  height: 1.8rem;
+  padding: 0.5rem 2rem;
+  margin: 0.5rem 0 0 0;
+  border-radius: 0.5rem;
+  font-size: 1.2rem !important;
+}
+section.manage-payment
+  .paymentDetails
+  .card-container
+  .cardItem
+  .profile-details
+  .det
+  span {
+  display: flex;
+  font-size: 1.4rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  text-transform: capitalize;
+  width: fit-content;
+  color: #101010;
+}
+section.manage-payment
+  .paymentDetails
+  .card-container
+  .cardItem
+  .profile-details
+  .price
+  span {
+  font-size: 2rem;
+  margin-top: 0.5rem;
+}
+section.manage-payment .paymentDetails .card-container .cardItem .status span {
+  font-size: 1.3rem;
+  background: #198754;
+  padding: 0.5rem 2rem;
+  height: 2rem;
+  border-radius: 0.3rem;
+  font-weight: bold;
+  color: #ffffff !important;
+  margin-top: 0.5rem;
+}
+
+section.manage-payment
+  .paymentDetails
+  .card-container
+  .cardItem
+  .profile-details
+  .receipt
+  button {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-top: 0.5rem;
+  width: 15rem;
+  cursor: pointer;
+  height: 3.3rem;
+  padding: 0.2rem;
+  background: #101010;
+  border: none;
+  border-radius: 0.5rem;
+  color: #ffffff;
+}
+section.manage-payment
+  .paymentDetails
+  .card-container
+  .cardItem
+  .profile-details
+  .receipt
+  button
+  span {
+  height: 100%;
+  background: #ffffff;
+  width: 4rem;
+  border-radius: 0.3rem;
+  margin-right: 1rem;
+}
 @media screen and (max-width: 900px) {
   section.home .firstContainer {
     width: 29rem;
-    position: absolute;
+    position: fixed;
     left: -40rem;
     top: 0;
     z-index: 9999999;
@@ -1920,7 +2137,7 @@ section.setting .setting-card .details .item button:hover {
     margin: 0 1rem;
   }
   section.dashboard .overview {
-    padding: 2rem;
+    padding: 1rem;
   }
   section.section .header .title {
     font-size: 2rem;
@@ -1970,6 +2187,13 @@ section.setting .setting-card .details .item button:hover {
     text-align: center;
     margin: auto;
     line-height: 1.5;
+  }
+  section.dashboard .overview .boxesContainer{
+    flex-direction: column;
+    gap: 1rem;
+  }
+  section.dashboard .overview .boxesContainer .boxes{
+    margin: 0 !important;
   }
 }
 @media screen and (max-width: 440px) {

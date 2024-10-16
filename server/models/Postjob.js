@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 const postjobSchema = mongoose.Schema({
+  postedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user-details" || "admin-details",
+    require: true,
+  },
   name: {
     type: String,
     require: true,

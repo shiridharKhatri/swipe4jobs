@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Fa6icons, GiIcons } from "../assets/Icons/icons";
+import { GiIcons } from "../assets/Icons/icons";
 import Loader from "../tools/Loader";
 import { Context } from "../context/Context";
 
 export default function TrendingPost() {
-  const HOST = import.meta.env.VITE_HOST
+  const HOST = import.meta.env.VITE_HOST;
   let { fetchPost } = useContext(Context);
   const [loading, setLoading] = useState(false);
   const [isContentLoading, setIsContentLoading] = useState(true);
@@ -77,7 +77,10 @@ export default function TrendingPost() {
                   return (
                     <div key={e._id} className="job-card">
                       <div className="image">
-                        <img src={`${HOST}/image/${e.logo.filename}`} alt={e.name} />
+                        <img
+                          src={`${HOST}/image/${e.logo.filename}`}
+                          alt={e.name}
+                        />
                       </div>
                       <div className="details-section">
                         <div className="first-details">
@@ -85,7 +88,9 @@ export default function TrendingPost() {
                           <div className="tags items-group ">
                             <div className="tag-cont">
                               <span className="tag locTag">{e.state}</span>
-                              <span className="tag catTag">{e.position[0]}</span>
+                              <span className="tag catTag">
+                                {e.position[0]}
+                              </span>
                             </div>
                             <div className="type">
                               {e.schedule.map((e, ind) => {

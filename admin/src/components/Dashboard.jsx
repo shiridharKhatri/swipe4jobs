@@ -10,7 +10,11 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import Cookies from "js-cookie";
+import axios from "axios";
 import TopDetails from "./TopDetails";
+import { useEffect } from "react";
+import { useState } from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -22,23 +26,18 @@ ChartJS.register(
 );
 
 export default function Dashboard(props) {
+  const HOST = import.meta.env.VITE_HOST;
+  const ID = Cookies.get("id");
+  const TOKEN = Cookies.get("token");
+  const [allData, setAllData] = useState({});
+  const [analyticsData, setAnaData] = useState({ key: [], val: [] });
+
   const data = {
-    labels: [
-      "Accounting",
-      "Science",
-      "Wildlife",
-      "Full Stack",
-      "Website Apps",
-      "Energy",
-      "Retail Sales",
-      "Robotics",
-      "Hospitality",
-      "Others",
-    ],
+    labels: analyticsData?.key,
     datasets: [
       {
         label: "Overview",
-        data: [12, 43, 21, 1, 45, 32, 65, 7, 3, 20],
+        data: analyticsData?.val,
         backgroundColor: [
           "rgba(0, 123, 255, 0.6)",
           "rgba(32, 201, 151, 0.6)",
@@ -109,7 +108,32 @@ export default function Dashboard(props) {
       },
     },
   };
-
+  const fetchOverview = () => {
+    axios
+      .post(`${HOST}/api/analytics/overview/${ID}`, null, {
+        headers: {
+          "auth-token": TOKEN,
+        },
+      })
+      .then((res) => {
+        if (res.data.success === true) {
+          setAllData(res.data.data);
+          let positions = [];
+          let count = [];
+          for (let key in res.data.data.overview) {
+            positions.push(key);
+            count.push(res.data.data.overview[key]);
+          }
+          setAnaData({ key: positions, val: count });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    fetchOverview();
+  }, []);
   return (
     <section className="dashboard section">
       <TopDetails title="Welcome, Admin " navbar={props.navContainerRef} />
@@ -122,7 +146,7 @@ export default function Dashboard(props) {
               <span>
                 <MdIcons.MdOutlinePendingActions />
               </span>
-              345
+              {allData?.pending}
             </div>
           </div>
           <div className="boxes">
@@ -131,7 +155,7 @@ export default function Dashboard(props) {
               <span>
                 <MdIcons.MdOutlineDoneAll />
               </span>
-              65
+              {allData?.approved}
             </div>
           </div>
           <div className="boxes">
@@ -140,7 +164,7 @@ export default function Dashboard(props) {
               <span>
                 <MdIcons.MdOutlineWork />
               </span>
-              {345 + 65}
+              {allData?.total}
             </div>
           </div>
         </div>

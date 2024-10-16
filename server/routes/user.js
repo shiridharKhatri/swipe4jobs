@@ -107,11 +107,11 @@ routes.post(
       let verificationCode = generateCodeNumber();
       const { email, password } = req.body;
       let user = await User.findOne({ email });
-      if (!email) {
+      if (!user) {
         return res.status(401).json({
           success: false,
-          type: "email",
-          message: "Email or Password field is incorrect",
+          type: "user",
+          message: "User not found with given email",
         });
       }
 
@@ -222,12 +222,46 @@ routes.get("/auth/user/fetch/:adminId", adminAccess, async (req, res) => {
         .json({ success: false, message: "Only admin can fetch users data" });
     }
     let users = await User.find().select("-password");
-    
-    return res.status(200).json({ success: false, total: users.length, users });
+    if (!users) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No registered users found!" });
+    }
+    return res.status(200).json({ success: true, total: users.length, users });
   } catch (error) {
     return res
       .status(500)
       .json({ success: false, type: "server", message: error.message });
   }
 });
+
+routes.delete(
+  "/auth/user/remove/admin/:adminId/:userId",
+  adminAccess,
+  async (req, res) => {
+    try {
+      const { adminId, userId } = req.params;
+      if (String(adminId) !== String(req.admin.id)) {
+        return res
+          .status(401)
+          .json({ success: false, message: "Only admin can remove users" });
+      }
+      let user = await User.findById(userId);
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, message: "User not found with given id" });
+      }
+      await User.findByIdAndDelete(userId);
+      return res.status(200).json({
+        success: true,
+        message: `${user.name} got removed successfully`,
+      });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ success: false, type: "server", message: error.message });
+    }
+  }
+);
 module.exports = routes;

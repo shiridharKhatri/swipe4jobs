@@ -6,6 +6,8 @@ const moment = require("moment");
 const Postjob = require("../models/Postjob");
 const fs = require("fs");
 const adminAccess = require("../middleware/adminAccess");
+const userAccess = require("../middleware/userAccess");
+const User = require("../models/User");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./images");
@@ -46,7 +48,13 @@ const upload = multer({
   fileFilter: fileFilter,
 });
 
-routes.post("/post-job", (req, res) => {
+// for admin
+routes.post("/post-job/admin/:id", adminAccess, (req, res) => {
+  if (String(req.admin.id) !== String(req.params.id)) {
+    return res
+      .status(401)
+      .json({ success: false, message: "You're not allowed to post" });
+  }
   upload.single("logo")(req, res, async (err) => {
     if (err) {
       return res.status(400).json({ success: false, message: err.message });
@@ -86,6 +94,79 @@ routes.post("/post-job", (req, res) => {
       }
 
       await Postjob.create({
+        postedBy: req.admin.id,
+        name,
+        schedule,
+        state,
+        code,
+        city,
+        zip,
+        overview,
+        position,
+        isApproved: true,
+        approvedDate: moment().format("MMMM Do YYYY, h:mm:ss a"),
+        logo: req.file,
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Post has been successfully sent for review",
+      });
+    } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  });
+});
+
+// for user
+routes.post("/post-job/user/:id", userAccess, (req, res) => {
+  if (String(req.user.id) !== String(req.params.id)) {
+    return res
+      .status(401)
+      .json({ success: false, message: "Please login to post jobs." });
+  }
+  upload.single("logo")(req, res, async (err) => {
+    if (err) {
+      return res.status(400).json({ success: false, message: err.message });
+    }
+    try {
+      const { name, schedule, state, code, city, zip, overview, position } =
+        req.body;
+      const existingPost = await Postjob.findOne({
+        name,
+        position,
+        state,
+        city,
+        zip,
+      });
+
+      if (existingPost) {
+        fs.readdir("./images", (err, file) => {
+          if (err) {
+            console.log("Error reading file ./images");
+          } else {
+            file.forEach((file) => {
+              if (req.file !== undefined) {
+                if (file === req.file.filename) {
+                  const filePath = path.join("./images", file);
+                  fs.unlink(filePath, (err) => {
+                    if (err) {
+                      return;
+                    }
+                  });
+                }
+              }
+            });
+          }
+        });
+        return res.status(409).json({
+          success: false,
+          message: "Duplicate post: A job with similar details already exists.",
+        });
+      }
+
+      await Postjob.create({
+        postedBy: req.user.id,
         name,
         schedule,
         state,
@@ -106,6 +187,7 @@ routes.post("/post-job", (req, res) => {
     }
   });
 });
+
 routes.put("/post-job/edit/:id", adminAccess, async (req, res) => {
   upload.single("logo")(req, res, async (err) => {
     if (err) {
@@ -183,14 +265,20 @@ routes.post("/action/post/:id/:action", adminAccess, async (req, res) => {
   try {
     const { action, id } = req.params;
     const pendingPosts = await Postjob.find({ isApproved: false });
-
+    const fetchIndPost = await Postjob.findById(id);
     let postFound = false;
 
     if (action.toLowerCase() === "accept") {
+      let user = await User.findById(fetchIndPost.postedBy);
+      if (user) {
+        user.job_posted += 1;
+        user.save();
+      }
       pendingPosts.forEach((post) => {
         if (post.id === id) {
           postFound = true;
           post.isApproved = true;
+          post.approvedDate = moment().format("MMMM Do YYYY, h:mm:ss a");
           post.save();
         }
       });
@@ -297,13 +385,11 @@ routes.post("/action/post/:state", async (req, res) => {
           ) && e.state.toLowerCase() === state.toLowerCase()
         );
       });
-      return res
-        .status(200)
-        .json({
-          success: true,
-          total: searchedPost.length,
-          data: searchedPost,
-        });
+      return res.status(200).json({
+        success: true,
+        total: searchedPost.length,
+        data: searchedPost,
+      });
     }
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });

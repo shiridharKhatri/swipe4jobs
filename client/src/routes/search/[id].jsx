@@ -138,8 +138,8 @@ export default function SearchJobs() {
   const proceedOnClick = () => {
     if (Cookies.getItem("id") === user._id) {
       setIsPaymentProceeded(true);
-    }else{
-      navigate('/login')
+    } else {
+      navigate("/login");
     }
   };
   const checkoutOnClick = async () => {
@@ -151,7 +151,7 @@ export default function SearchJobs() {
 
       axios
         .post(
-          `${HOST}/api/payment/buy/search/limit`,
+          `${HOST}/api/payment/buy/search/limit/search`,
           {
             qty: selectedLimitQty,
           },
@@ -162,10 +162,9 @@ export default function SearchJobs() {
           }
         )
         .then(async (response) => {
-          const result = await stripe.redirectToCheckout({
+          await stripe.redirectToCheckout({
             sessionId: response.data.id,
           });
-          console.log(result);
         })
         .catch((error) => {
           console.log(error);
@@ -296,7 +295,7 @@ export default function SearchJobs() {
                 </button>
               </div>
               <div className="price">
-                ${(selectedLimitQty * 0.22).toFixed(2)}
+                ${(selectedLimitQty * 0.55).toFixed(2)}
               </div>
             </div>
 
@@ -323,114 +322,164 @@ export default function SearchJobs() {
           lastText="JOBS"
           byline=" Showcasing the Future of the Career Marketplace"
         />
+
+        {/* For Mobile version  */}
         <div className="searchFormSection mobile">
           <form action="">
             <input type="text" disabled />
-            <div className="state dd" onClick={() => menuItemsOnClick("state")}>
-              Select State{" "}
-              <span>
-                <Io5Icons.IoChevronDownOutline />
-              </span>
-            </div>
-            <div className="options" ref={stateRef}>
-              <div className="first">
-                {states.slice(0, 14).map((e, ind) => {
-                  return (
-                    <div className="item" key={ind}>
-                      {e}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="second">
-                {states.slice(14, 28).map((e, ind) => {
-                  return (
-                    <div className="item" key={ind}>
-                      {e}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="third">
-                {states.slice(28, 42).map((e, ind) => {
-                  return (
-                    <div className="item" key={ind}>
-                      {e}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="forth">
-                {states.slice(42, states.length).map((e, ind) => {
-                  return (
-                    <div className="item" key={ind}>
-                      {e}
-                    </div>
-                  );
-                })}
-              </div>
+            <div
+              style={
+                active.stateDropDown
+                  ? { color: "var(--primary-colour)", background: "#eaeffb" }
+                  : { color: "#101010", background: "transparent" }
+              }
+              className="state dd"
+              onClick={() => {
+                filerActive("state");
+              }}
+            >
+              {!textFieldInput.state ? "Select State" : textFieldInput.state}
+              {active.stateDropDown ? (
+                <span className="dropDownIcon">
+                  <Io5Icons.IoChevronUpOutline />
+                </span>
+              ) : (
+                <span className="dropDownIcon">
+                  <Io5Icons.IoChevronDownOutline />
+                </span>
+              )}
             </div>
             <div
-              className="position dd"
-              onClick={() => menuItemsOnClick("position")}
+              onMouseLeave={() => {
+                filerActive("state");
+              }}
+              style={
+                active.stateDropDown
+                  ? { transform: "scale(1)" }
+                  : { transform: "scale(0)" }
+              }
+              className="lists stateList options"
             >
-              Select 1, 2, or 3 Careers{" "}
-              <span>
-                <Io5Icons.IoChevronDownOutline />
-              </span>
-            </div>
-            <div className="options" ref={positionRef}>
               <div className="first">
-                {category.slice(0, 15).map((e, ind) => {
+                {states.map((e, index) => {
                   return (
-                    <div className="item" key={ind}>
-                      {e}
-                    </div>
+                    <ul
+                      key={index}
+                      style={{ listStyle: "none", display: "flex" }}
+                    >
+                      <li
+                        className="item"
+                        onClick={() => {
+                          stateValue(e);
+                        }}
+                        style={
+                          textFieldInput.state.toLowerCase() === e.toLowerCase()
+                            ? {
+                                background: "#ffffff",
+                                color: "#101010",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }
+                            : {
+                                background: "transparent",
+                                color: "#10101079",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }
+                        }
+                      >
+                        {textFieldInput.state.toLowerCase() ===
+                        e.toLowerCase() ? (
+                          <div className="dot"></div>
+                        ) : (
+                          ""
+                        )}
+                        {e}
+                      </li>
+                    </ul>
                   );
                 })}
               </div>
-              <div className="second">
-                {category.slice(15, 30).map((e, ind) => {
+            </div>
+
+            <div
+              onClick={() => {
+                filerActive("category");
+              }}
+              style={
+                active.categoryDropDown
+                  ? { color: "var(--primary-colour)", background: "#eaeffb" }
+                  : { color: "#101010", background: "transparent" }
+              }
+              className="filter categoryFiler position dd"
+              id="categoryFiler"
+            >
+              {textFieldInput.category.split("/").length > 3
+                ? textFieldInput.category.split("/").splice(0, 3).join("/") +
+                  ` + ${textFieldInput.category.split("/").length - 3}`
+                : textFieldInput.category}
+              {active.categoryDropDown ? (
+                <span className="dropDownIcon">
+                  <Io5Icons.IoChevronUpOutline />
+                </span>
+              ) : (
+                <span className="dropDownIcon">
+                  <Io5Icons.IoChevronDownOutline />
+                </span>
+              )}
+            </div>
+            <div
+              onMouseLeave={() => {
+                filerActive("category");
+              }}
+              style={
+                active.categoryDropDown
+                  ? { transform: "scale(1)" }
+                  : { transform: "scale(0)" }
+              }
+              className="lists categoryList options"
+            >
+              <div className="first">
+                {category.map((e, index) => {
                   return (
-                    <div className="item" key={ind}>
-                      {e}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="third">
-                {category.slice(30, 45).map((e, ind) => {
-                  return (
-                    <div className="item" key={ind}>
-                      {e}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="forth">
-                {category.slice(45, 55).map((e, ind) => {
-                  return (
-                    <div className="item" key={ind}>
-                      {e}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="fifth">
-                {category.slice(55, 65).map((e, ind) => {
-                  return (
-                    <div className="item" key={ind}>
-                      {e}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="sixth">
-                {category.slice(65, category.length).map((e, ind) => {
-                  return (
-                    <div className="item" key={ind}>
-                      {e}
-                    </div>
+                    <ul
+                      key={index}
+                      style={{ listStyle: "none", display: "flex" }}
+                    >
+                      <li
+                        onClick={() => {
+                          categoryValue(e.toLocaleLowerCase());
+                        }}
+                        style={
+                          selectedPosition.includes(e.toLowerCase())
+                            ? {
+                                background: "#ffffff",
+                                color: "#101010",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }
+                            : {
+                                background: "transparent",
+                                color: "#10101079",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }
+                        }
+                        className="item"
+                      >
+                        {selectedPosition.includes(e.toLowerCase()) ? (
+                          <div className="dot"></div>
+                        ) : (
+                          ""
+                        )}
+                        {e}
+                        {/* <span>{'0'}</span> */}
+                      </li>
+                    </ul>
                   );
                 })}
               </div>
@@ -444,6 +493,8 @@ export default function SearchJobs() {
             </button>
           </form>
         </div>
+
+        {/* For desktop version  */}
         <div className="searchFormSection desktop">
           <form action="" className="searchForm">
             <input
@@ -475,6 +526,7 @@ export default function SearchJobs() {
                 </span>
               )}
             </div>
+
             <div
               onClick={() => {
                 filerActive("category");
@@ -487,7 +539,12 @@ export default function SearchJobs() {
               className="filter categoryFiler"
               id="categoryFiler"
             >
-              <div className="placeholder">{textFieldInput.category}</div>
+              <div className="placeholder">
+                {textFieldInput.category.split("/").length > 3
+                  ? textFieldInput.category.split("/").splice(0, 3).join("/") +
+                    ` + ${textFieldInput.category.split("/").length - 3}`
+                  : textFieldInput.category}
+              </div>
 
               {active.categoryDropDown ? (
                 <span className="dropDownIcon">

@@ -5,8 +5,14 @@ import "../styles/component/Post.css";
 import "../styles/responsive/App.css";
 import ButtonLoader from "../tools/ButtonLoader";
 import Header from "../components/Header";
-import { states } from "../data/jsonData";
+import { states, category } from "../data/jsonData";
+import axios from "axios";
+import Cookies from "js-cookies";
 export default function Post() {
+  const HOST = import.meta.env.VITE_HOST;
+  const ID = Cookies.getItem("id");
+  const TOKEN = Cookies.getItem("token");
+
   // useStates
   const [isOptionActive, setIsOptionActive] = useState(false);
   const [characterCount, setCharacterCount] = useState(0);
@@ -20,18 +26,20 @@ export default function Post() {
   });
   const [suggestionValue, setSuggestionVal] = useState([]);
   const [imageValue, setImageValue] = useState();
-  const [checkedValue, setCheckedValue] = useState([]);
+  const [scheduleValue, setScheduleValue] = useState([]);
   const [status, setStatus] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [positionVal, setPositionVal] = useState("");
 
   // useRefs
   const imagePreviewRef = useRef(null);
   const popupMessage = useRef(null);
   const placeholderDrop = useRef(null);
+  const errorMessageRef = useRef(null);
 
   const getTypeValue = (e) => {
     let available = false;
-    let newCheckedValue = [...checkedValue];
+    let newCheckedValue = [...scheduleValue];
     newCheckedValue.forEach((el, index) => {
       if (el === e.target.name) {
         available = true;
@@ -44,7 +52,7 @@ export default function Post() {
     if (!available) {
       newCheckedValue.push(e.target.name);
     }
-    setCheckedValue(newCheckedValue);
+    setScheduleValue(newCheckedValue);
   };
 
   const inputChangeState = (e) => {
@@ -73,27 +81,81 @@ export default function Post() {
       }
     }
   };
-  const submitPostOnClick = (e) => {
+
+  const clearAllFields = (e) => {
+    setInputs({
+      entityName: "",
+      securityCode: "",
+      state: "",
+      city: "",
+      zip: "",
+      overview: "",
+    });
+    normalBorder();
+    removeImage();
+    setCharacterCount(0);
+  };
+  const submitPostOnClick = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const statuss = 200;
-    formValidation(inputs, checkedValue);
-    if (formValidation(inputs, checkedValue)) {
-      if (statuss === 200) {
-        setLoading(false);
-        setStatus("success");
-      } else {
-        setLoading(false);
-        setStatus("failure");
+    formValidation(inputs, scheduleValue);
+    if (formValidation(inputs, scheduleValue)) {
+      let formdata = new FormData();
+      formdata.append("name", inputs.entityName);
+      scheduleValue.forEach((schedule) => {
+        formdata.append("schedule[]", schedule);
+      });
+      formdata.append("state", inputs.state);
+      formdata.append("code", inputs.securityCode);
+      formdata.append("city", inputs.city);
+      formdata.append("zip", inputs.zip);
+      formdata.append("overview", inputs.overview);
+      formdata.append("position", positionVal);
+      formdata.append("logo", imageValue);
+
+      let bodyContent = formdata;
+      let reqOptions = {
+        url: `${HOST}/api/jobs/post-job/user/${ID}`,
+        method: "POST",
+        headers: { Accept: "*/*", "auth-token": TOKEN },
+        data: bodyContent,
+      };
+      try {
+        let response = await axios.request(reqOptions);
+        if (response.status === 200) {
+          if (response.data.success === true) {
+            clearAllFields();
+            setLoading(false);
+            setStatus("success");
+          } else {
+            setLoading(false);
+            setStatus("failure");
+          }
+
+          popupMessage.current.style.top = "3rem";
+        } else {
+          setLoading(false);
+          popupMessage.current.style.top = "-15rem";
+        }
+      } catch (error) {
+        if (error.response.status === 401) {
+          errorMessageRef.current.innerText = `Please log in to your account to post jobs. Thank you!`;
+          setLoading(false);
+          setStatus("failure");
+          popupMessage.current.style.top = "3rem";
+        }else if(error.response.status === 409){
+          errorMessageRef.current.innerText = `A similar job has already been posted from this account.`;
+          setLoading(false);
+          setStatus("failure");
+          popupMessage.current.style.top = "3rem";
+        }
       }
-      popupMessage.current.style.top = "3rem";
+      setTimeout(() => {
+        popupMessage.current.style.top = "-15rem";
+      }, [5000]);
     } else {
       setLoading(false);
-      popupMessage.current.style.top = "-15rem";
     }
-    setTimeout(() => {
-      popupMessage.current.style.top = "-15rem";
-    }, [5000]);
   };
   const optionsOnClick = () => {
     const typeOptions = document.getElementById("typeOptions");
@@ -138,21 +200,6 @@ export default function Post() {
     typeOptions.style.transform = "scale(0)";
   };
 
-  const clearAllFields = (e) => {
-    e.preventDefault();
-    setInputs({
-      entityName: "",
-      securityCode: "",
-      state: "",
-      city: "",
-      zip: "",
-      overview: "",
-    });
-    normalBorder();
-    removeImage();
-    setCharacterCount(0);
-  };
-
   useEffect(() => {
     window.document.title = "SWIPE 4 JOBS | Post";
   }, []);
@@ -179,7 +226,6 @@ export default function Post() {
   };
   const suggestionKeyDown = (e) => {
     if (e.key.toLowerCase() === "tab" || e.key.toLowerCase() === "enter") {
-      console.log("yes");
       setInputs((prev) => ({ ...prev, state: suggestionValue[0] }));
       setSuggestionVal([]);
     }
@@ -211,6 +257,10 @@ export default function Post() {
     setInputs((prev) => ({ ...prev, state: state }));
     setSuggestionVal([]);
   };
+
+  const positionValue = (position) => {
+    setPositionVal(position);
+  };
   return (
     <>
       <div className="popup-container">
@@ -232,7 +282,7 @@ export default function Post() {
               <div className="icon">
                 <MdIcons.MdError />
               </div>
-              <div className="message">
+              <div className="message" ref={errorMessageRef}>
                 Failed! Something went wrong try again later.
               </div>
             </div>
@@ -240,11 +290,11 @@ export default function Post() {
         </div>
       </div>
       <Header
-          firstText="SWIPE"
-          secondHeighlightText="4"
-          lastText="JOBS"
-          byline=" Showcasing the Future of the Career Marketplace"
-        />
+        firstText="SWIPE"
+        secondHeighlightText="4"
+        lastText="JOBS"
+        byline=" Showcasing the Future of the Career Marketplace"
+      />
       <div className="postHeaderText">POST</div>
       <section className="jobPosting">
         <div className="formSection">
@@ -295,142 +345,181 @@ export default function Post() {
                 />
                 <p id="invalidName"></p>
               </div>
-              <div className="labels positions">
-                <label htmlFor="positions">
-                  <span>
-                    <span className="requiredField">*</span> Schedule
-                  </span>
-                </label>
+              <div style={{ display: "flex" }} className="combineSection">
+                <div className="labels positions" id="schedule">
+                  <label htmlFor="positions">
+                    <span>
+                      <span className="requiredField">*</span> Schedule
+                    </span>
+                  </label>
 
-                <div className="selection">
-                  <div
-                    onClick={optionsOnClick}
-                    className="selectionPlaceholder"
-                    id="selectionPlaceholder"
-                  >
-                    {checkedValue.length === 0 ? (
-                      <span></span>
-                    ) : (
-                      <div className="type-tags">
-                        {checkedValue.map((e, index) => {
-                          return <span key={index}>{e}</span>;
-                        })}
-                      </div>
-                    )}
-                    {isOptionActive ? (
-                      <span style={{display:'flex'}}>
-                        <Io5Icons.IoChevronUpOutline />
-                      </span>
-                    ) : (
-                      <span style={{display:'flex'}}>
-                        <Io5Icons.IoChevronDownOutline />
-                      </span>
-                    )}
-                  </div>
-                  <p id="invalidChoice"></p>
-                  <div
-                    onMouseEnter={typeMouseEnter}
-                    onMouseLeave={typeMouseLeave}
-                    id="typeOptions"
-                    className="options"
-                  >
-                    <div className="checkOptions">
-                      <div className="checkBox fullTime">
-                        <div className="titleBox">Select a Maximum of 3</div>
-                        <label htmlFor="fullTime">
-                          <span
-                            style={
-                              checkedValue.includes("Full Time")
-                                ? { background: "#101010" }
-                                : { background: "transparent" }
-                            }
-                          ></span>
-                          Full Time
-                        </label>
-                        <input
-                          onChange={getTypeValue}
-                          type="checkbox"
-                          name="Full Time"
-                          id="fullTime"
-                        />
-                      </div>
-                      <div className="checkBox partTime">
-                        <label htmlFor="partTime">
-                          <span
-                            style={
-                              checkedValue.includes("Part Time")
-                                ? { background: "#101010" }
-                                : { background: "transparent" }
-                            }
-                          ></span>
-                          Part Time
-                        </label>
-                        <input
-                          onChange={getTypeValue}
-                          type="checkbox"
-                          name="Part Time"
-                          id="partTime"
-                        />
-                      </div>
-                      <div className="checkBox inHouse">
-                        <label htmlFor="inHouse">
-                          <span
-                            style={
-                              checkedValue.includes("In-House")
-                                ? { background: "#101010" }
-                                : { background: "transparent" }
-                            }
-                          ></span>
-                          In-House
-                        </label>
-                        <input
-                          onChange={getTypeValue}
-                          type="checkbox"
-                          name="In-House"
-                          id="inHouse"
-                        />
-                      </div>
-                      <div className="checkBox remote">
-                        <label htmlFor="remote">
-                          <span
-                            style={
-                              checkedValue.includes("Remote")
-                                ? { background: "#101010" }
-                                : { background: "transparent" }
-                            }
-                          ></span>
-                          Remote
-                        </label>
-                        <input
-                          onChange={getTypeValue}
-                          type="checkbox"
-                          name="Remote"
-                          id="remote"
-                        />
-                      </div>
-                      <div className="checkBox contract">
-                        <label htmlFor="contract">
-                          <span
-                            style={
-                              checkedValue.includes("Contract")
-                                ? { background: "#101010" }
-                                : { background: "transparent" }
-                            }
-                          ></span>
-                          Contract
-                        </label>
-                        <input
-                          onChange={getTypeValue}
-                          type="checkbox"
-                          name="Contract"
-                          id="contract"
-                        />
+                  <div className="selection">
+                    <div
+                      onClick={optionsOnClick}
+                      className="selectionPlaceholder"
+                      id="selectionPlaceholder"
+                    >
+                      {scheduleValue.length === 0 ? (
+                        <span></span>
+                      ) : (
+                        <div className="type-tags">
+                          {scheduleValue.map((e, index) => {
+                            return <span key={index}>{e}</span>;
+                          })}
+                        </div>
+                      )}
+                      {isOptionActive ? (
+                        <span style={{ display: "flex" }}>
+                          <Io5Icons.IoChevronUpOutline />
+                        </span>
+                      ) : (
+                        <span style={{ display: "flex" }}>
+                          <Io5Icons.IoChevronDownOutline />
+                        </span>
+                      )}
+                    </div>
+                    <p id="invalidChoice"></p>
+
+                    <div
+                      onMouseEnter={typeMouseEnter}
+                      onMouseLeave={typeMouseLeave}
+                      id="typeOptions"
+                      className="options"
+                    >
+                      <div className="checkOptions">
+                        <div className="checkBox fullTime">
+                          <div className="titleBox">Select a Maximum of 3</div>
+                          <label htmlFor="fullTime">
+                            <span
+                              style={
+                                scheduleValue.includes("Full Time")
+                                  ? { background: "#101010" }
+                                  : { background: "transparent" }
+                              }
+                            ></span>
+                            Full Time
+                          </label>
+                          <input
+                            onChange={getTypeValue}
+                            type="checkbox"
+                            name="Full Time"
+                            id="fullTime"
+                          />
+                        </div>
+                        <div className="checkBox partTime">
+                          <label htmlFor="partTime">
+                            <span
+                              style={
+                                scheduleValue.includes("Part Time")
+                                  ? { background: "#101010" }
+                                  : { background: "transparent" }
+                              }
+                            ></span>
+                            Part Time
+                          </label>
+                          <input
+                            onChange={getTypeValue}
+                            type="checkbox"
+                            name="Part Time"
+                            id="partTime"
+                          />
+                        </div>
+                        <div className="checkBox inHouse">
+                          <label htmlFor="inHouse">
+                            <span
+                              style={
+                                scheduleValue.includes("In-House")
+                                  ? { background: "#101010" }
+                                  : { background: "transparent" }
+                              }
+                            ></span>
+                            In-House
+                          </label>
+                          <input
+                            onChange={getTypeValue}
+                            type="checkbox"
+                            name="In-House"
+                            id="inHouse"
+                          />
+                        </div>
+                        <div className="checkBox remote">
+                          <label htmlFor="remote">
+                            <span
+                              style={
+                                scheduleValue.includes("Remote")
+                                  ? { background: "#101010" }
+                                  : { background: "transparent" }
+                              }
+                            ></span>
+                            Remote
+                          </label>
+                          <input
+                            onChange={getTypeValue}
+                            type="checkbox"
+                            name="Remote"
+                            id="remote"
+                          />
+                        </div>
+                        <div className="checkBox contract">
+                          <label htmlFor="contract">
+                            <span
+                              style={
+                                scheduleValue.includes("Contract")
+                                  ? { background: "#101010" }
+                                  : { background: "transparent" }
+                              }
+                            ></span>
+                            Contract
+                          </label>
+                          <input
+                            onChange={getTypeValue}
+                            type="checkbox"
+                            name="Contract"
+                            id="contract"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
+
+                  <p id="invalidpositions"></p>
                 </div>
 
-                <p id="invalidpositions"></p>
+                <div className="labels ">
+                  <label htmlFor="positions">
+                    <span>
+                      <span className="requiredField">*</span> Position
+                    </span>
+                  </label>
+                  <div
+                    className="selectionPlaceholder selectionPlaceholderPosition"
+                    id="selectionPlaceholderPosition"
+                  >
+                    <span>{positionVal}</span>
+                    <span style={{ display: "flex" }}>
+                      <Io5Icons.IoChevronDownOutline />
+                    </span>
+
+                    <div className="absoluteSelectionOptions">
+                      {category.map((e, index) => {
+                        return (
+                          <div
+                            style={
+                              positionVal.toLowerCase() === e.toLowerCase()
+                                ? { background: "#44445545" }
+                                : { background: "transparent" }
+                            }
+                            onClick={() => positionValue(e)}
+                            key={index}
+                            className="item"
+                          >
+                            {e}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="labels state">
@@ -525,7 +614,10 @@ export default function Post() {
                 <label htmlFor="summary">
                   {" "}
                   <span
-                    style={{ color: "var(--primary-colour)", fontSize: "1.8rem" }}
+                    style={{
+                      color: "var(--primary-colour)",
+                      fontSize: "1.8rem",
+                    }}
                     className="requiredField"
                   >
                     *

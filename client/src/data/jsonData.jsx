@@ -93,7 +93,7 @@ let category = [
   "Air Conditioning",
   "Appliance",
   "Architecture",
-  "Artificial Intel",
+  "Artificial Intelligent",
   "Assembly",
   "Attorney",
   "Auction House",

@@ -23,35 +23,6 @@ export default function Home() {
   const navContainerRef = useRef(null);
   const { id, routes } = useParams();
   let token = Cookies.get("token");
-  // const HOST = import.meta.env.VITE_HOST;
-  // const navigate = useNavigate();
-  // let adminId = Cookies.get("id");
-
-  // useEffect(() => {
-  //   const fetchAdmin = () => {
-  //     axios
-  //       .post(`${HOST}/auth/admin/existing/access/fetch-all`, null, {
-  //         headers: {
-  //           "auth-token": token,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         if (res.data.success === true) {
-  //           Array.from(res.data.adminData).forEach((admins) => {
-  //             if (admins._id !== adminId) {
-  //               Cookies.remove("token");
-  //               Cookies.remove("id");
-  //             }
-  //           });
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   };
-  //   fetchAdmin();
-  // });
-
   useEffect(() => {
     window.document.title = `Career Salient | Admin | ${routes}`;
   });

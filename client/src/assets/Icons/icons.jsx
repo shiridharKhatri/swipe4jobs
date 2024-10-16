@@ -24,12 +24,18 @@ import {
   FaMinus,
 } from "react-icons/fa";
 import { IoMdInformationCircle } from "react-icons/io";
-import { MdErrorOutline, MdError, MdDone  } from "react-icons/md";
+import {
+  MdErrorOutline,
+  MdError,
+  MdDone,
+  MdOutlineFileDownload,
+} from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { BiSolidGridAlt } from "react-icons/bi";
 import { CgMenuRight } from "react-icons/cg";
 import { ImCross } from "react-icons/im";
 import { RiSecurePaymentFill } from "react-icons/ri";
+import { BsClockHistory } from "react-icons/bs";
 const CgIcons = {
   CgMenuRight,
 };
@@ -82,8 +88,12 @@ const FaIcons = {
 const MdIcons = {
   MdErrorOutline,
   MdError,
-  MdDone 
+  MdDone,
+  MdOutlineFileDownload,
 };
+const BsIcons = {
+  BsClockHistory
+}
 export {
   Fa6icons,
   CiIcons,
@@ -97,4 +107,5 @@ export {
   CgIcons,
   ImIcons,
   RiIcons,
+  BsIcons
 };

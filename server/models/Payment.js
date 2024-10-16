@@ -6,6 +6,10 @@ const paymentSchema = mongoose.Schema({
     ref: "user-details",
     require: true,
   },
+  payment_id: {
+    type: String,
+    require: true,
+  },
   transactionId: {
     type: String,
     require: true,
@@ -25,7 +29,7 @@ const paymentSchema = mongoose.Schema({
   },
   paymentStatus: {
     type: String,
-    enum: ["pending", "completed", "failed"],
+    enum: ["pending", "complete", "failed"],
     default: "pending",
   },
   serviceType: {
@@ -46,7 +50,7 @@ const paymentSchema = mongoose.Schema({
       this.serviceType === "job_posting";
     },
   },
-  description: {
+  remarks: {
     type: String,
   },
   paymentDate: {

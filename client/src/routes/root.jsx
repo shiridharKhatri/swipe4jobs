@@ -9,12 +9,12 @@ export default function Root() {
 
   return (
     <>
-         <Header
-          firstText="SWIPE"
-          secondHeighlightText="4"
-          lastText="JOBS"
-          byline=" Showcasing the Future of the Career Marketplace"
-        />
+      <Header
+        firstText="SWIPE"
+        secondHeighlightText="4"
+        lastText="JOBS"
+        byline=" Showcasing the Future of the Career Marketplace"
+      />
       <TrendingPost />
       <Footer />
     </>
