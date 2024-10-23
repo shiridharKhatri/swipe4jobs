@@ -11,6 +11,7 @@ section.setting {
   justify-content: center;
   align-items: center;
 }
+
 section.setting .container {
   background: #292929;
   padding: 2rem;
@@ -18,6 +19,87 @@ section.setting .container {
   width: 70%;
   border-radius: 0.5rem;
   display: flex;
+  position: relative;
+}
+section.setting .confirmBox {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 0.5rem;
+  background: #1010100b;
+  backdrop-filter: blur(0.3rem);
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section.setting .confirmBox form {
+  display: flex;
+  flex-direction: column;
+}
+section.setting .changePassword .cardBox p {
+  margin: 0.5rem 0 1rem 0 !important;
+}
+section.setting .confirmBox form input {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  height: 3.5rem;
+  border: 0.15rem solid rgb(202, 202, 215);
+}
+section.setting .confirmBox .cardBox .showPasSec {
+  display: flex;
+  align-items: center;
+}
+section.setting .confirmBox .cardBox .showPasSec input {
+  margin-right: 0.5rem;
+}
+section.setting .confirmBox .cardBox .showPasSec label {
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+section.setting .confirmBox .cardBox {
+  width: 40rem;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+section.setting .confirmBox .cardBox h1 {
+  font-size: 2rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+section.setting .confirmBox .cardBox .btns {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+section.setting .confirmBox .cardBox .btns button {
+  padding: 1rem 2rem;
+  height: 3.7rem;
+  border: none;
+  margin-left: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  width: 11rem;
+}
+section.setting .confirmBox .cardBox .btns button:last-child {
+  background: #e25858;
+  color: #ffffff;
+}
+section.setting .confirmBox .cardBox .btns button:first-child:hover {
+  background: rgb(204, 204, 220);
+}
+section.setting .confirmBox .cardBox .btns button:last-child:hover {
+  background: #c13131;
+}
+section.setting .confirmBox .cardBox p {
+  font-size: 1.3rem;
+  margin: 0.5rem 0 3rem 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 section.setting .container .first-nav-section {
   width: 25rem;
@@ -51,6 +133,24 @@ section.setting .container .second-nav-section {
 section.setting .container .second-nav-section .body-sec {
   overflow-y: scroll;
   height: 48rem;
+}
+section.setting .container .second-nav-section .body-sec .noJobPostings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+section.setting .container .second-nav-section .body-sec .noJobPostings img {
+  height: 14rem;
+}
+section.setting .container .second-nav-section .body-sec .noJobPostings .text {
+  font-size: 1.8rem;
+  margin-top: 3rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #ffffff;
 }
 section.setting .container .second-nav-section .noPay {
   display: flex;
@@ -97,6 +197,7 @@ section.setting
   color: #ffffff;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  text-transform: capitalize;
 }
 section.setting .container .second-nav-section .body-sec .card-section button {
   font-size: 2.5rem;
@@ -210,60 +311,222 @@ section.setting .container .second-nav-section .body-sec .middle .item p {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   color: #ffffff;
 }
-section.setting .container .second-nav-section .body-sec .postContainer{
+section.setting .container .second-nav-section .body-sec .postContainer {
   padding: 2rem 0 2rem 2rem;
 }
-section.setting .container .second-nav-section .body-sec .postContainer .card
-{
+section.setting .container .second-nav-section .body-sec .postContainer .card {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1.5rem;
 }
-section.setting .container .second-nav-section .body-sec .postContainer .card .first img{
+section.setting
+  .container
+  .second-nav-section
+  .body-sec
+  .postContainer
+  .card
+  .first
+  img {
   height: 10rem;
   width: 10rem;
   background: #ffffff;
   margin-right: 1rem;
 }
-section.setting .container .second-nav-section .body-sec .postContainer .card .first.title{
+section.setting
+  .container
+  .second-nav-section
+  .body-sec
+  .postContainer
+  .card
+  .first.title {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1rem;
   color: #ffffff;
 }
-section.setting .container .second-nav-section .body-sec .postContainer .card .first{
+section.setting
+  .container
+  .second-nav-section
+  .body-sec
+  .postContainer
+  .card
+  .first {
   display: flex;
 }
 
-section.setting .container .second-nav-section .body-sec .postContainer .card .first .details .title{
+section.setting
+  .container
+  .second-nav-section
+  .body-sec
+  .postContainer
+  .card
+  .first
+  .details
+  .title {
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 1rem;
-  margin-top: .5rem;
+  margin-bottom: 0.7rem;
+  color: #ffffff;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+section.setting
+  .container
+  .second-nav-section
+  .body-sec
+  .postContainer
+  .card
+  .first
+  .details
+  .title
+  span {
+  font-size: 1.1rem;
+
+  padding: 1rem 1.5rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+  border-radius: 3rem;
+}
+section.setting
+  .container
+  .second-nav-section
+  .body-sec
+  .postContainer
+  .card
+  .first
+  .details
+  .title
+  span.pending {
+  background: #c7b70e;
+  color: #101010;
+}
+section.setting
+  .container
+  .second-nav-section
+  .body-sec
+  .postContainer
+  .card
+  .first
+  .details
+  .title
+  span.approved {
+  background: #18b218;
   color: #ffffff;
 }
-section.setting .container .second-nav-section .body-sec .postContainer .card .first .details .code{
+section.setting
+  .container
+  .second-nav-section
+  .body-sec
+  .postContainer
+  .card
+  .first
+  .details
+  .code {
   font-size: 1.3rem;
   color: #ffffff;
 }
-section.setting .container .second-nav-section .body-sec .postContainer .card .first .details .date{
+section.setting
+  .container
+  .second-nav-section
+  .body-sec
+  .postContainer
+  .card
+  .first
+  .details
+  .date {
   font-size: 1.3rem;
   color: #ffffff;
-  margin: .5rem 0;
+  margin: 0.5rem 0;
 }
-section.setting .container .second-nav-section .body-sec .postContainer .card .first .details .overview{
+section.setting
+  .container
+  .second-nav-section
+  .body-sec
+  .postContainer
+  .card
+  .first
+  .details
+  .overview {
   font-size: 1.5rem;
   color: #ffffff;
 }
-section.setting .container .second-nav-section .body-sec .postContainer .card .second{
+section.setting
+  .container
+  .second-nav-section
+  .body-sec
+  .postContainer
+  .card
+  .second {
   background: #e25858;
-    padding: .5rem 1rem;
-    height: fit-content;
-    font-size: 1.4rem;
-    border-radius: .5rem;
-    cursor: pointer;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  padding: 0.5rem 1rem;
+  height: fit-content;
+  font-size: 1.4rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section.setting .container .second-nav-section .setting {
+  padding: 2rem 0rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+section.setting .container .second-nav-section .setting ul {
+  list-style: none;
+}
+section.setting .container .second-nav-section .setting ul li {
+  margin-bottom: 1.5rem;
+}
+section.setting .container .second-nav-section .setting ul li .title {
+  font-size: 1.5rem;
+  color: #ffffff49;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: bold;
+}
+section.setting .container .second-nav-section .setting ul li .detail {
+  color: #ffffff;
+  font-size: 1.7rem;
+  margin-top: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+section.setting .container .second-nav-section .setting ul li .detail span {
+  display: flex;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+section.setting .container .second-nav-section .setting .buttons {
+  display: flex;
+  justify-content: right;
+  margin-top: 5rem;
+}
+section.setting .container .second-nav-section .setting .buttons button {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  height: 4rem;
+  margin-left: 1.5rem;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 0.5rem;
+}
+section.setting
+  .container
+  .second-nav-section
+  .setting
+  .buttons
+  button:last-child {
+  background: #e0464b;
+  color: #ffffff;
 }

@@ -18,7 +18,7 @@ section.mainLoader .loader {
   position: relative;
 }
 
-section.mainLoader .loader::after,
+/* section.mainLoader .loader::after,
 .loader::before,
 .loader .text::after,
 .loader .text::before {
@@ -31,7 +31,7 @@ section.mainLoader .loader::after,
   translate: -60px 500px;
   width: 5px;
   height: 5px;
-}
+} */
 
 section.mainLoader .loader::before {
   animation-delay: 3s;

@@ -123,8 +123,8 @@ export default function Root() {
     }
   };
   useEffect(() => {
-    const token = Cookies.get("token");
-    const id = Cookies.get("id");
+    const token = Cookies.get("admin-token");
+    const id = Cookies.get("admin-id");
     if (token) {
       navigate(`/home/authorized/${id}/dashboard`);
     }

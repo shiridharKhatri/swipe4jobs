@@ -70,7 +70,7 @@ export default function MPost(props) {
         `${url}/api/jobs/action/post/${id}/${action}`,
         null,
         {
-          headers: { "auth-token": Cookies.get("token") },
+          headers: { "auth-token": Cookies.get("admin-token") },
         }
       );
       if (res.data.success) {

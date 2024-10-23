@@ -8,6 +8,7 @@ const fs = require("fs");
 const adminAccess = require("../middleware/adminAccess");
 const userAccess = require("../middleware/userAccess");
 const User = require("../models/User");
+const PostConst = require("../models/PostConst");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./images");
@@ -119,7 +120,8 @@ routes.post("/post-job/admin/:id", adminAccess, (req, res) => {
 });
 
 // for user
-routes.post("/post-job/user/:id", userAccess, (req, res) => {
+routes.post("/post-job/user/:id", userAccess, async (req, res) => {
+  // let postConst = await PostConst.find();
   if (String(req.user.id) !== String(req.params.id)) {
     return res
       .status(401)
@@ -231,6 +233,7 @@ routes.put("/post-job/edit/:id", adminAccess, async (req, res) => {
     }
   });
 });
+
 routes.get("/post-job/fetch-all", async (req, res) => {
   try {
     const jobs = await Postjob.find();
@@ -396,4 +399,26 @@ routes.post("/action/post/:state", async (req, res) => {
   }
 });
 
+routes.post("/action/post/fetch/all/:id", userAccess, async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (String(req.user.id) !== String(id)) {
+      return res
+        .status(401)
+        .json({ success: false, message: "User access denied" });
+    }
+    let post = await Postjob.find({
+      postedBy: req.user.id,
+    });
+    if (!post) {
+      return res.status(404).json({
+        success: false,
+        message: "No post has been done from this account",
+      });
+    }
+    return res.status(200).json({ success: true, post });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+});
 module.exports = routes;

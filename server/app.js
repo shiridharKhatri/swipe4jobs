@@ -14,8 +14,7 @@ app.use("/api/jobs", require("./routes/post"));
 app.use("/user", require("./routes/user"));
 app.use("/api/payment", require("./routes/payment"));
 app.use("/api/analytics", require("./routes/analytics"));
-
-
+app.use("/api/postRules", require('./routes/postconst'))
 connectToDatabase(url)
   .then(() => {
     app.listen(PORT, () => {

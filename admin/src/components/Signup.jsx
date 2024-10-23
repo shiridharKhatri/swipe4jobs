@@ -93,7 +93,7 @@ export default function Signup(props) {
               },
               {
                 headers: {
-                  "auth-token": Cookies.get("token"),
+                  "auth-token": Cookies.get("admin-token"),
                 },
               }
             )

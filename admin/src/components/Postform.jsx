@@ -124,9 +124,9 @@ export default function Postform(props) {
     let bodyContent = formdata;
     if (id === "" || id.length <= 0) {
       let reqOptions = {
-        url: `${host}/api/jobs/post-job/admin/${Cookies.get("id")}`,
+        url: `${host}/api/jobs/post-job/admin/${Cookies.get("admin-id")}`,
         method: "POST",
-        headers: { Accept: "*/*", "auth-token": Cookies.get("token") },
+        headers: { Accept: "*/*", "auth-token": Cookies.get("admin-token") },
         data: bodyContent,
       };
       let respose = await axios.request(reqOptions);
@@ -143,7 +143,7 @@ export default function Postform(props) {
         url: `${host}/api/jobs/post-job/edit/${id}`,
         method: "PUT",
         headers: {
-          "auth-token": Cookies.get("token"),
+          "auth-token": Cookies.get("admin-token"),
         },
         data: bodyContent,
       };

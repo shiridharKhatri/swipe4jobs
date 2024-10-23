@@ -48,10 +48,12 @@ export default function SearchJobs() {
   };
 
   const stateValue = (state) => {
+    setData((prev) => ({ ...prev, loading: true }));
     setTextFieldInput((prev) => ({ ...prev, state }));
   };
 
   const categoryValue = (category) => {
+    setData((prev) => ({ ...prev, loading: true }));
     setSelectedPosition((prevSelectedPosition) => {
       const isPositionAvailable = prevSelectedPosition.some(
         (elem) => elem.toLowerCase() === category.toLowerCase()
@@ -119,24 +121,8 @@ export default function SearchJobs() {
     }
   };
 
-  const menuItemsOnClick = (filter) => {
-    if (filter === "state") {
-      stateRef.current.style.transform = "scale(1)";
-      positionRef.current.style.transform = "scale(0)";
-    } else {
-      stateRef.current.style.transform = "scale(0)";
-      positionRef.current.style.transform = "scale(1)";
-    }
-    if (filter === "position") {
-      positionRef.current.style.transform = "scale(1)";
-      stateRef.current.style.transform = "scale(0)";
-    } else {
-      positionRef.current.style.transform = "scale(0)";
-      stateRef.current.style.transform = "scale(1)";
-    }
-  };
   const proceedOnClick = () => {
-    if (Cookies.getItem("id") === user._id) {
+    if (Cookies.getItem("user-id") === user._id) {
       setIsPaymentProceeded(true);
     } else {
       navigate("/login");
@@ -144,11 +130,10 @@ export default function SearchJobs() {
   };
   const checkoutOnClick = async () => {
     const stripePromise = loadStripe(
-      "pk_test_51N9PpqHN8gClun86QpFl1XEmA8hptgmi8e9RxDEZrD4AUbTZEKIJWKoqSu4CIaR1xQApxtWRNDpIp7O5SJM5PrNX004Sx3IwFG"
+      import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
     );
     try {
       const stripe = await stripePromise;
-
       axios
         .post(
           `${HOST}/api/payment/buy/search/limit/search`,
@@ -157,7 +142,7 @@ export default function SearchJobs() {
           },
           {
             headers: {
-              "auth-token": Cookies.getItem("token"),
+              "auth-token": Cookies.getItem("user-token"),
             },
           }
         )
@@ -180,6 +165,7 @@ export default function SearchJobs() {
       setSelectedLimitQty((selectedLimitQty -= 1));
     }
   };
+
   useEffect(() => {
     window.document.title = "SWIPE 4 JOBS | Search";
   }, []);
@@ -226,6 +212,7 @@ export default function SearchJobs() {
         console.log(error);
       });
   }, [selectedPosition, textFieldInput.state]);
+
   useEffect(() => {
     fetchUser().then((res) => {
       if (res.success === true) {
@@ -234,6 +221,7 @@ export default function SearchJobs() {
       }
     });
   }, [fetchUser]);
+
   return (
     <>
       <div className="popup-alert" ref={alertPopup}>

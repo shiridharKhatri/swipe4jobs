@@ -111,7 +111,7 @@ routes.post(
         return res.status(401).json({
           success: false,
           type: "user",
-          message: "User not found with given email",
+          message: "User not found with given detail",
         });
       }
 
@@ -127,7 +127,8 @@ routes.post(
           user.email,
           user.name,
           verificationCode,
-          "Email verification code"
+          "Email verification code",
+          "It looks like you're not verified yet. Please copy the six-digit verification code below to complete the process and access our service."
         );
         await User.findByIdAndUpdate(
           user._id,
@@ -256,6 +257,128 @@ routes.delete(
       return res.status(200).json({
         success: true,
         message: `${user.name} got removed successfully`,
+      });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ success: false, type: "server", message: error.message });
+    }
+  }
+);
+
+routes.delete("/auth/user/remove/:userId", userAccess, async (req, res) => {
+  try {
+    const { userId } = req.params;
+    if (String(userId) !== String(req.user.id)) {
+      return res.status(401).json({
+        success: false,
+        message: "You don't have access to take action",
+      });
+    }
+    let user = await User.findById(userId);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No user found with given id" });
+    }
+    await User.findByIdAndDelete(userId);
+    return res
+      .status(200)
+      .json({ success: true, message: "Account deleted successfully!" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, type: "server", message: error.message });
+  }
+});
+
+routes.post("/auth/change/password/:id", userAccess, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { password, newPassword } = req.body;
+    if (String(id) !== String(req.user.id)) {
+      return res.status(401).json({
+        success: false,
+        type: "unauthorized",
+        message: "You dont access to change password",
+      });
+    }
+    let user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({
+        succes: false,
+        type: "notfound",
+        message: "User not found with given id",
+      });
+    }
+
+    if (!user.password) {
+      return res.status(500).json({
+        success: false,
+        type: "server",
+        message: "User password is not set in the database.",
+      });
+    }
+
+    let comparePassword = await bcrypt.compare(password, user.password);
+    if (!comparePassword) {
+      return res.status(401).json({
+        success: false,
+        type: "password",
+        message: "The entered password does not match the current password.",
+      });
+    }
+
+    let salt = await bcrypt.genSalt(10);
+    let hashedPassword = await bcrypt.hash(newPassword, salt);
+    await User.findByIdAndUpdate(
+      id,
+      { $set: { password: hashedPassword } },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Password has been changed successfully",
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, type: "server", message: error.message });
+  }
+});
+
+routes.post(
+  "/auth/user/reset/password/email/verificaion/:mail",
+  async (req, res) => {
+    try {
+      const { mail } = req.params;
+      let verificationCode = generateCodeNumber();
+      let user = await User.findOne({ email: mail });
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          type: "mail",
+          message: "No user found with the given email address",
+        });
+      }
+      verificationMail(
+        user.email,
+        user.name,
+        verificationCode,
+        "Email verification code",
+        "It seems like you’ve requested to reset your password. Please copy the six-digit verification code below to proceed and regain access to your account."
+      );
+      await User.findByIdAndUpdate(
+        user._id,
+        {
+          $set: { verificationCode: verificationCode, isVerified: false },
+        },
+        { new: true }
+      );
+      return res.status(200).json({
+        success: true,
+        message: "Verification code has been sent to your mail",
       });
     } catch (error) {
       return res

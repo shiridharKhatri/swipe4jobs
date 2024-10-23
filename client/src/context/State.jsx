@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
 import { Context } from "./Context";
 import axios from "axios";
 import Cookies from "js-cookies";
 function State({ children }) {
   const HOST = import.meta.env.VITE_HOST;
-
+  const ID = Cookies.getItem("user-id");
+  const TOKEN = Cookies.getItem("user-token");
   let fetchPost = async () => {
     try {
       const response = await axios.get(
@@ -18,13 +18,13 @@ function State({ children }) {
   };
 
   let fetchUser = async () => {
-    if (Cookies.getItem("token")) {
+    if (TOKEN) {
       try {
         const response = await axios.get(
           `${HOST}/user/auth/verification/fetch`,
           {
             headers: {
-              "auth-token": Cookies.getItem("token"),
+              "auth-token": TOKEN,
             },
           }
         );
@@ -34,9 +34,26 @@ function State({ children }) {
       }
     }
   };
-
+  let fetchUserPost = async () => {
+    if (TOKEN) {
+      try {
+        let response = await axios.post(
+          `${HOST}/api/jobs/action/post/fetch/all/${ID}`,
+          null,
+          {
+            headers: {
+              "auth-token": TOKEN,
+            },
+          }
+        );
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   return (
-    <Context.Provider value={{ fetchPost, fetchUser }}>
+    <Context.Provider value={{ fetchPost, fetchUser, fetchUserPost }}>
       {children}
     </Context.Provider>
   );

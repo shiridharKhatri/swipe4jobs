@@ -22,7 +22,7 @@ import Mpayment from "../components/Mpayment";
 export default function Home() {
   const navContainerRef = useRef(null);
   const { id, routes } = useParams();
-  let token = Cookies.get("token");
+  let token = Cookies.get("admin-token");
   useEffect(() => {
     window.document.title = `Career Salient | Admin | ${routes}`;
   });

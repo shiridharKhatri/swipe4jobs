@@ -6,8 +6,8 @@ export default function TopDetails(props) {
   const navigation = useNavigate();
   const [isMenuOn, setIsMenuOn] = useState(false);
   const logout = () => {
-    Cookies.remove("token");
-    Cookies.remove("id");
+    Cookies.remove("admin-token");
+    Cookies.remove("admin-id");
     navigation("/");
   };
   const menuOnClick = () => {

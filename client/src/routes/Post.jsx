@@ -10,8 +10,8 @@ import axios from "axios";
 import Cookies from "js-cookies";
 export default function Post() {
   const HOST = import.meta.env.VITE_HOST;
-  const ID = Cookies.getItem("id");
-  const TOKEN = Cookies.getItem("token");
+  const ID = Cookies.getItem("user-id");
+  const TOKEN = Cookies.getItem("user-token");
 
   // useStates
   const [isOptionActive, setIsOptionActive] = useState(false);

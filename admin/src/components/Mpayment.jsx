@@ -5,8 +5,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 export default function Mpayment(props) {
   const HOST = import.meta.env.VITE_HOST;
-  const ID = Cookies.get("id");
-  const TOKEN = Cookies.get("token");
+  const ID = Cookies.get("admin-id");
+  const TOKEN = Cookies.get("admin-token");
   const [paymentData, setPaymentData] = useState([]);
   const fetchPayment = () => {
     axios

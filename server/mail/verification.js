@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const verificationMail = async (email, name, code, subject) => {
+const verificationMail = async (email, name, code, subject, details) => {
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -199,7 +199,7 @@ const verificationMail = async (email, name, code, subject) => {
         <!--[if !mso]>-->
         <td class="t5" style="width:480px;">
         <!--<![endif]-->
-        <p class="t3" style="margin:0;Margin:0;font-family:Inter,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:28px;font-weight:500;font-style:normal;font-size:21px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">It looks like you&#39;re not verified yet. Please copy the six-digit verification code below to complete the process and access our service.</p></td>
+        <p class="t3" style="margin:0;Margin:0;font-family:Inter,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:28px;font-weight:500;font-style:normal;font-size:21px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">${details}</p></td>
         </tr></table>
         </td></tr><tr><td><div class="t8" style="mso-line-height-rule:exactly;mso-line-height-alt:30px;line-height:30px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="left">
         <table class="t10" role="presentation" cellpadding="0" cellspacing="0" style="Margin-right:auto;">

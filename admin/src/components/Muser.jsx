@@ -5,8 +5,8 @@ import Cookies from "js-cookie";
 import axios from "axios";
 export default function Muser(props) {
   const HOST = import.meta.env.VITE_HOST;
-  const ID = Cookies.get("id");
-  const TOKEN = Cookies.get("token");
+  const ID = Cookies.get("admin-id");
+  const TOKEN = Cookies.get("admin-token");
   let [data, setData] = useState([]);
   let [deletionProcess, setDeletionProcess] = useState({
     running: false,

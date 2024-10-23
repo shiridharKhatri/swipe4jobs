@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { CgIcons, ImIcons, Io5Icons } from "../assets/Icons/icons";
 import Cookies from "js-cookies";
 import Setting from "./Setting";
-export default function Navbar() {
+export default function Navbar(props) {
   const navLinks = useRef(null);
   let location = useLocation();
   const openMenuOnClick = () => {
@@ -23,6 +23,7 @@ export default function Navbar() {
         <div className="navigation-links">
           <div className="menuOption">
             <button
+            style={{color:props.menuColor}}
               aria-label="menu popups when clicked"
               onClick={openMenuOnClick}
             >
@@ -91,14 +92,14 @@ export default function Navbar() {
               </Link>
               {location.pathname === "/post-jobs" ? <span></span> : ""}
             </li>
-            {!Cookies.getItem("token") && (
+            {!Cookies.getItem("user-token") && (
               <li>
                 <Link to="/login" id="loginButton">
                   Login
                 </Link>
               </li>
             )}
-            {Cookies.getItem("token") && (
+            {Cookies.getItem("user-token") && (
               <li className="profile" style={{ position: "relative" }}>
                 <div id="profileButton" onClick={() => setIsSettingOn(true)}>
                   Profile

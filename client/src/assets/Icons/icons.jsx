@@ -36,6 +36,10 @@ import { CgMenuRight } from "react-icons/cg";
 import { ImCross } from "react-icons/im";
 import { RiSecurePaymentFill } from "react-icons/ri";
 import { BsClockHistory } from "react-icons/bs";
+import { TbEdit } from "react-icons/tb";
+const TbIcons = {
+  TbEdit
+}
 const CgIcons = {
   CgMenuRight,
 };
@@ -107,5 +111,6 @@ export {
   CgIcons,
   ImIcons,
   RiIcons,
-  BsIcons
+  BsIcons,
+  TbIcons
 };

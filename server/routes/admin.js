@@ -57,7 +57,7 @@ routes.post(
       "Password must be at least 6 characters long, with at least one uppercase letter and one special character."
     ).isStrongPassword(),
   ],
-  // adminAccess,
+  adminAccess,
   async (req, res) => {
     const error = validationResult(req);
     if (!error.isEmpty()) {

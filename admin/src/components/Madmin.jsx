@@ -20,7 +20,7 @@ export default function Madmin(props) {
         null,
         {
           headers: {
-            "auth-token": Cookies.get("token"),
+            "auth-token": Cookies.get("admin-token"),
           },
         }
       )
@@ -68,7 +68,7 @@ export default function Madmin(props) {
     axios
       .delete(`${HOST}/auth/admin/existing/delete/${id}`, {
         headers: {
-          "auth-token": Cookies.get("token"),
+          "auth-token": Cookies.get("admin-token"),
         },
       })
       .then((res) => {
@@ -114,7 +114,7 @@ export default function Madmin(props) {
       axios
         .post(`${HOST}/auth/admin/existing/access/fetch-all`, null, {
           headers: {
-            "auth-token": Cookies.get("token"),
+            "auth-token": Cookies.get("admin-token"),
           },
         })
         .then((res) => {

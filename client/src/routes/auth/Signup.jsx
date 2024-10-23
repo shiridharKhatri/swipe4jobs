@@ -1,8 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import MainButtonLoader from "../../tools/MainButtonLoader";
+import Cookies from "js-cookies";
 import axios from "axios";
+import ResetPw from "./reset-password/ResetPw";
 export default function Signup() {
   let navigate = useNavigate();
   const [inpVal, setInpVal] = useState({
@@ -124,10 +126,14 @@ export default function Signup() {
         });
     }
   };
-
+  useEffect(() => {
+    if (Cookies.getItem("user-token")) {
+      navigate("/");
+    }
+  });
   return (
     <>
-      <Navbar />
+      <Navbar menuColor="#101010" />
       <section className="signup auth">
         <div className="errorPopup" ref={errorPopup}></div>
         <div className="card">
@@ -190,6 +196,7 @@ export default function Signup() {
           </form>
         </div>
       </section>
+      {/* <ResetPw/> */}
     </>
   );
 }

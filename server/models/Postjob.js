@@ -49,6 +49,7 @@ const postjobSchema = mongoose.Schema({
   approvedDate: {
     type: String,
   },
+
   postedDate: {
     type: String,
     default: moment().format("MMMM Do YYYY, h:mm:ss a"),

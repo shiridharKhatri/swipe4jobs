@@ -48,7 +48,6 @@ routes.post("/buy/search/limit/:type", userAccess, async (req, res) => {
       quantity: qty,
     },
   });
-
   res.status(200).json({ id: session.id });
 });
 
@@ -86,7 +85,7 @@ routes.post(
         payment_id: `${user.name
           .trim()
           .split(" ")[0][0]
-          .toUpperCase()}_${Math.floor(Math.random() * 100000000)}`,
+          .toUpperCase()}_${Math.floor(Math.random() * 90000000) + 10000000}`,
         transactionId: event.data.object.id,
         amount: event.data.object.amount_total / 100,
         paymentStatus: event.data.object.status,

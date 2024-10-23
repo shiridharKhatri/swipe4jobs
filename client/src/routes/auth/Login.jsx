@@ -3,9 +3,11 @@ import Navbar from "../../components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookies";
 import axios from "axios";
+import ButtonLoader from "../../tools/ButtonLoader";
 export default function Login() {
   const [inpVal, setInpVal] = useState({ email: "", password: "" });
   const [remeberMeChecked, setRememberMeChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const HOST = import.meta.env.VITE_HOST;
   let navigate = useNavigate();
   let errorEmailRef = useRef(null);
@@ -65,6 +67,7 @@ export default function Login() {
     errorEmailRef.current.innerText = emailVal;
     errorPasswordRef.current.innerText = passwordVal;
     if (isValid) {
+      setIsLoading(true);
       axios
         .post(`${HOST}/user/auth/login`, {
           email: inpVal.email,
@@ -72,13 +75,15 @@ export default function Login() {
         })
         .then((response) => {
           if (response.data.success === true) {
-            Cookies.setItem("token", response.data.token);
-            Cookies.setItem("id", response.data.id);
+            setIsLoading(false);
+            Cookies.setItem("user-token", response.data.token);
+            Cookies.setItem("user-id", response.data.id);
             navigate("/");
+            window.location.reload();
           }
         })
         .catch((error) => {
-          console.log(error)
+          setIsLoading(false);
           if (
             error.status === 403 &&
             error.response.data.type === "verification"
@@ -105,13 +110,13 @@ export default function Login() {
     }
   };
   useEffect(() => {
-    if (Cookies.getItem("token")) {
+    if (Cookies.getItem("user-token")) {
       navigate("/");
     }
   });
   return (
     <>
-      <Navbar />
+      <Navbar menuColor="#101010" />
       <section className="login auth">
         <div className="errorPopup" ref={errorPopup}></div>
         <div className="card">
@@ -169,7 +174,8 @@ export default function Login() {
               <a href="">Forget password?</a>
             </div>
             <button type="button" onClick={loginOnClick}>
-              Login
+              {isLoading && <ButtonLoader />}
+              {!isLoading && "Login"}
             </button>
             <div className="no-account">
               Don't have an account? <Link to="/signup">Signup</Link>

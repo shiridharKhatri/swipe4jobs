@@ -16,9 +16,9 @@ export default function Status() {
                 <RxIcons.RxCross2 />
               </button>
               <div className="header">
-                <div class="main-container">
-                  <div class="check-container">
-                    <div class="check-background">
+                <div className="main-container">
+                  <div className="check-container">
+                    <div className="check-background">
                       <svg
                         viewBox="0 0 65 51"
                         fill="none"
@@ -33,7 +33,7 @@ export default function Status() {
                         />
                       </svg>
                     </div>
-                    <div class="check-shadow"></div>
+                    <div className="check-shadow"></div>
                   </div>
                 </div>
                 <div className="content">

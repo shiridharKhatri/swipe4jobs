@@ -27,8 +27,8 @@ ChartJS.register(
 
 export default function Dashboard(props) {
   const HOST = import.meta.env.VITE_HOST;
-  const ID = Cookies.get("id");
-  const TOKEN = Cookies.get("token");
+  const ID = Cookies.get("admin-id");
+  const TOKEN = Cookies.get("admin-token");
   const [allData, setAllData] = useState({});
   const [analyticsData, setAnaData] = useState({ key: [], val: [] });
 

@@ -13,7 +13,6 @@ import Signup from "./routes/auth/Signup";
 import Verification from "./routes/auth/verification/[id]";
 import Status from "./routes/payment-status/[status]";
 
-
 function App() {
   const router = createBrowserRouter([
     {
@@ -53,13 +52,13 @@ function App() {
       element: <Signup />,
     },
     {
-      path:'/verification/:id',
-      element:<Verification/>
+      path: "/verification/:id",
+      element: <Verification />,
     },
     {
-      path:'/status/:status',
-      element:<Status/>
-    }
+      path: "/status/:status",
+      element: <Status />,
+    },
   ]);
   return (
     <>

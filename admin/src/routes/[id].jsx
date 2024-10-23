@@ -49,8 +49,8 @@ export default function Verification() {
           code: Number(codeVal),
         })
         .then((res) => {
-          Cookies.set("token", res.data.token, { expires: 7 });
-          Cookies.set("id", id);
+          Cookies.set("admin-token", res.data.token, { expires: 7 });
+          Cookies.set("admin-id", id);
           navigate(`/home/authorized/${id}/dashboard`);
         })
         .catch((error) => {

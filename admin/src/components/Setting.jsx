@@ -1,36 +1,70 @@
-import React, { useEffect, useState } from "react";
-import { MdIcons, RiIcons } from "../assets/Icons/icons";
+import React, { useEffect, useRef, useState } from "react";
+import { Fa6icons, MdIcons, RiIcons } from "../assets/Icons/icons";
 import axios from "axios";
 import Cookies from "js-cookie";
 import TopDetails from "./TopDetails";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function Setting(props) {
   const HOST = import.meta.env.VITE_HOST;
+  const TOKEN = Cookies.get("admin-token");
+  const ID = Cookies.get("admin-id");
+  const saveChangesRef = useRef(null);
   const [adminData, setAdminData] = useState({});
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [isDeleteOptionOpen, setDeleteOptionOpen] = useState(false);
+  const [date, setDate] = useState({
+    start: "2024-10-01",
+    end: "2024-12-01",
+  });
   const navigation = useNavigate();
   const handleClose = () => {
     setDeleteOptionOpen(false);
   };
+  const dateValueOnChange = (e) => {
+    const { name, value } = e.target;
+    setDate({ ...date, [name]: value });
+    saveChangesRef.current.style.transform = "scale(1)";
+  };
+
   const openDeleteOption = () => {
     setDeleteOptionOpen(true);
   };
-  const id = Cookies.get("id");
   const deleteAccount = () => {
     axios
-      .delete(`${HOST}/auth/admin/existing/delete/${id}`, {
+      .delete(`${HOST}/auth/admin/existing/delete/${ID}`, {
         headers: {
-          "auth-token": Cookies.get("token"),
+          "auth-token": TOKEN,
         },
       })
       .then((res) => {
         if (res.data.success === true) {
-          Cookies.remove("token");
-          Cookies.remove("id");
+          Cookies.remove("admin-token");
+          Cookies.remove("admin-id");
           navigation("/");
           window.location.reload();
         }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const changeDate = () => {
+    axios
+      .put(
+        `${HOST}/api/postRules/post/rules/update/67133b8ac9b1f8fe80b3ee7c`,
+        {
+          start: date.start,
+          end: date.end,
+        },
+        {
+          headers: {
+            "auth-token": TOKEN,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
       })
       .catch((error) => {
         console.log(error);
@@ -42,7 +76,7 @@ export default function Setting(props) {
       axios
         .get(`${HOST}/auth/admin/existing/fetch`, {
           headers: {
-            "auth-token": Cookies.get("token"),
+            "auth-token": TOKEN,
           },
         })
         .then((res) => {
@@ -114,6 +148,36 @@ export default function Setting(props) {
                 </span>
               </div>
             </div>
+            <div className="item free-trial">
+              <div className="label">Free trial months</div>
+              <div className="box">
+                <div>
+                  From :{" "}
+                  <input
+                    onChange={dateValueOnChange}
+                    type="date"
+                    value={date.start}
+                    name="start"
+                    id="dateFrom"
+                  />
+                  To :{" "}
+                  <input
+                    onChange={dateValueOnChange}
+                    type="date"
+                    value={date.end}
+                    name="end"
+                    id="dateTo"
+                  />
+                </div>
+                <div
+                  onClick={changeDate}
+                  ref={saveChangesRef}
+                  className="saveChange"
+                >
+                  <Fa6icons.FaCheck />
+                </div>
+              </div>
+            </div>
             <div className="item role">
               <div className="label">Role</div>
               <div className="value">{adminData.admin?.role}</div>
@@ -133,10 +197,6 @@ export default function Setting(props) {
               </div>
             </div>
 
-            <div className="item control">
-              <div className="label">Control status</div>
-              <div className="value">Full control</div>
-            </div>
             <div className="item id">
               <div className="label">Admin id</div>
               <div className="value">{adminData.admin?._id}</div>

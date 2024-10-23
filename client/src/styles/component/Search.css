@@ -713,7 +713,9 @@ section.searchHeader .mobile form .itemsCollection {
     height: 5rem;
     border: 0.15rem solid #d0d0db;
     position: relative;
+    top: -1.5rem;
   }
+  
   section.searchHeader .mobile form button {
     font-size: 1.8rem;
     background: #101010;

@@ -23,6 +23,9 @@
     .headTitle-loader {
     width: 100% !important;
   }
+  section.setting .container {
+    width: 90% !important;
+  }
   footer .first-section {
     flex-direction: column-reverse;
     align-items: start;
@@ -48,7 +51,12 @@
 @media screen and (max-width: 720px) {
   header {
     height: 30rem;
-    background: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%);
+    background: radial-gradient(
+      circle at 24.1% 68.8%,
+      rgb(50, 50, 50) 0%,
+      rgb(0, 0, 0) 99.4%
+    );
+    margin-bottom: 2rem !important;
   }
   nav .menuOption {
     display: flex;
@@ -71,7 +79,7 @@
     border: none;
     font-size: 3.5rem;
     cursor: pointer;
-     color: #ffffff;
+    color: #ffffff;
   }
   nav .navigation-links ul li span {
     display: none;
@@ -88,14 +96,42 @@
     margin: 3rem;
     font-size: 2rem;
   }
-  #loginButton{
+  #loginButton {
     width: 90% !important;
   }
+
+  section.setting .container {
+    height: 100% !important;
+    width: 100% !important;
+    flex-direction: column;
+    padding: 1rem !important;
+  }
+  section.setting .container .first-nav-section {
+    flex-direction: row !important;
+    padding: 0 !important;
+    width: 100% !important;
+    align-items: center;
+    border-right: none !important;
+  }
+  section.setting .container .second-nav-section .header {
+    padding: 1rem !important;
+    border-top: 0.1rem solid #445 !important;
+  }
+  section.setting .container .first-nav-section ul {
+    display: flex;
+  }
+  section.setting .container .first-nav-section ul li {
+    margin: 2rem 1rem !important;
+  }
+  section.setting .container .second-nav-section {
+    width: 100% !important;
+  }
+
   header .head-container .text-section h1 {
     font-size: 3.5rem !important;
     color: #ffffff;
   }
-  header .head-container .text-section p{
+  header .head-container .text-section p {
     color: #ffffff;
   }
   section.trending-post-container {
@@ -194,12 +230,33 @@
   section.auth .errorPopup .error-card {
     min-width: 95%;
   }
+  #profileButton {
+    width: 90% !important;
+    height: 4.2rem !important;
+  }
   footer p.copyright {
     font-size: 1.1rem;
     margin-top: 1rem;
   }
   footer .first-section ul a {
     font-size: 1.1rem;
+  }
+}
+@media screen and (max-width: 560px) {
+  section.setting .container .first-nav-section ul {
+    overflow-x: scroll;
+  }
+  section.setting .container .first-nav-section ul::-webkit-scrollbar {
+    display: none;
+  }
+  section.setting .container .first-nav-section ul li {
+    font-size: 1.5rem !important;
+    height: 4rem;
+    margin: 0 !important;
+  }
+  .header {
+    height: 5rem !important;
+    margin-top: 3rem !important;
   }
 }
 @media screen and (max-width: 460px) {
@@ -232,7 +289,7 @@
     font-size: 3.7rem !important;
   }
   section.searchContainer {
-    margin: 5rem 1rem 13rem 1rem !important;
+    margin: 0rem 1rem 13rem 1rem !important;
   }
   section.searchContainer .defaultJobsContainer {
     display: flex !important;
@@ -253,7 +310,7 @@
     h1 {
     font-size: 2.2rem !important;
   }
-  section.jobPosting .formSection form .all-inputs .combineSection{
+  section.jobPosting .formSection form .all-inputs .combineSection {
     flex-direction: column;
     gap: 1rem;
   }
@@ -396,9 +453,7 @@
     p {
     font-size: 1.7rem !important;
   }
-  .header {
-    height: 27rem !important;
-  }
+
   section.trending-post-container
     .card-container
     .job-card
@@ -467,19 +522,16 @@
   section.notFound .text {
     font-size: 8rem !important;
   }
-  section.searchHeader .mobile .options .first{
+  section.searchHeader .mobile .options .first {
     grid-template-columns: repeat(3, 1fr) !important;
   }
   .popup-alert .card {
     width: 95% !important;
   }
-  .popup-alert .header{
+  .popup-alert .header {
     height: auto !important;
   }
-  #profileButton{
-    width: 90% !important;
-    height: 4.2rem !important;
-  }
+
   .loaderCard .cards-loader {
     flex-direction: column;
     height: auto !important;
