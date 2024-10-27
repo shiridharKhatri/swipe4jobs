@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import "../styles/component/Setting.css";
-import { BsIcons, ImIcons, MdIcons, TbIcons } from "../assets/Icons/icons";
+import {
+  BsIcons,
+  ImIcons,
+  LuIcons,
+  MdIcons,
+  TbIcons,
+} from "../assets/Icons/icons";
 import Cookies from "js-cookies";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -25,6 +31,7 @@ export default function Setting(props) {
   const valueOnClick = (e) => {
     setNavigation(e);
   };
+
   const logoutOnClick = () => {
     navigate("/");
     Cookies.removeItem("user-token");
@@ -285,6 +292,20 @@ export default function Setting(props) {
     };
     fetchUsers();
   }, [fetchUser]);
+
+  const deletePostOnClick = (id) => {
+    console.log(id);
+  };
+  useEffect(() => {
+    window.document.addEventListener("click", (e) => {
+      if (e.target) {
+        if (e.target.className.toLowerCase() === "setting") {
+          props.setIsSettingOn(false);
+        }
+      }
+    });
+  }, []);
+
   return (
     <section className="setting">
       <Popup
@@ -310,6 +331,12 @@ export default function Setting(props) {
           />
         )}
         <div className="first-nav-section">
+          <div
+            onClick={() => props.setIsSettingOn(false)}
+            className="cross-icon"
+          >
+            <LuIcons.LuArrowLeft /> <span>Go back</span>
+          </div>
           <ul>
             <li
               onClick={() => valueOnClick("profile")}
@@ -356,15 +383,53 @@ export default function Setting(props) {
             Logout
           </div>
         </div>
+        <div className="middle mobileView">
+          <ul>
+            <li
+              onClick={() => valueOnClick("profile")}
+              style={
+                navigation === "profile"
+                  ? { background: "#4a4a4b" }
+                  : { background: "transparent" }
+              }
+            >
+              Profile
+            </li>
+            <li
+              onClick={() => valueOnClick("payment")}
+              style={
+                navigation === "payment"
+                  ? { background: "#4a4a4b" }
+                  : { background: "transparent" }
+              }
+            >
+              Payment History
+            </li>
+            <li
+              onClick={() => valueOnClick("postings")}
+              style={
+                navigation === "postings"
+                  ? { background: "#4a4a4b" }
+                  : { background: "transparent" }
+              }
+            >
+              Postings
+            </li>
+            <li
+              onClick={() => valueOnClick("setting")}
+              style={
+                navigation === "setting"
+                  ? { background: "#4a4a4b" }
+                  : { background: "transparent" }
+              }
+            >
+              Setting
+            </li>
+          </ul>
+        </div>
         <div className="second-nav-section">
           <div className="header">
             <h2>{navigation.toUpperCase()}</h2>
-            <div
-              onClick={() => props.setIsSettingOn(false)}
-              className="cross-icon"
-            >
-              <ImIcons.ImCross />
-            </div>
           </div>
 
           {navigation === "profile" ? (
@@ -387,8 +452,8 @@ export default function Setting(props) {
                   {" "}
                   <div className="top">
                     <img
-                      src="https://ui-avatars.com/api/?name=Shiridhar khatri&bold=true&background=%23ffffff&uppercase=true&format=svg"
-                      alt="avatar"
+                      src={`https://ui-avatars.com/api/?name=${user.user?.name}&bold=true&background=%23ffffff&uppercase=true&format=svg`}
+                      alt={`${user.user?.name}`}
                     />
                     <div className="details">
                       <div className="name">{user.user?.name}</div>
@@ -527,7 +592,14 @@ export default function Setting(props) {
                             <div className="overview">{e.overview}</div>
                           </div>
                         </div>
-                        <div className="second">Delete</div>
+                        <div
+                          className="second"
+                          onClick={() => {
+                            deletePostOnClick(e._id);
+                          }}
+                        >
+                          Delete
+                        </div>
                       </div>
                     );
                   })}

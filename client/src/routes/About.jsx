@@ -89,6 +89,7 @@ export default function About() {
   return (
     <DndProvider backend={HTML5Backend}>
          <Header
+         post={'POST'}
           firstText="SWIPE"
           secondHeighlightText="4"
           lastText="JOBS"

@@ -86,7 +86,7 @@ export default function Verification() {
 
   return (
     <>
-      <Navbar />
+      <Navbar post={"POST"} />
       <section className="auth verification">
         <div className="errorPopup" ref={errorPopup}></div>
         <div className="card">

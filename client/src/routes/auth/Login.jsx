@@ -116,7 +116,7 @@ export default function Login() {
   });
   return (
     <>
-      <Navbar menuColor="#101010" />
+      <Navbar menuColor="#101010"  post={'POST'}/>
       <section className="login auth">
         <div className="errorPopup" ref={errorPopup}></div>
         <div className="card">

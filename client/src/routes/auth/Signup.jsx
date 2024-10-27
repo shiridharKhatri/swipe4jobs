@@ -133,7 +133,7 @@ export default function Signup() {
   });
   return (
     <>
-      <Navbar menuColor="#101010" />
+      <Navbar menuColor="#101010" post={"POST"} />
       <section className="signup auth">
         <div className="errorPopup" ref={errorPopup}></div>
         <div className="card">

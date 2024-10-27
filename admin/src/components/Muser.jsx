@@ -3,11 +3,13 @@ import TopDetails from "./TopDetails";
 import { BsIcons, IoIcons, RiIcons } from "../assets/Icons/icons";
 import Cookies from "js-cookie";
 import axios from "axios";
+import Loader from "./Loader";
 export default function Muser(props) {
   const HOST = import.meta.env.VITE_HOST;
   const ID = Cookies.get("admin-id");
   const TOKEN = Cookies.get("admin-token");
   let [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
   let [deletionProcess, setDeletionProcess] = useState({
     running: false,
     id: "",
@@ -21,6 +23,7 @@ export default function Muser(props) {
   };
 
   const fetchUser = () => {
+    setIsLoading(true)
     axios
       .get(`${HOST}/user/auth/user/fetch/${ID}`, {
         headers: {
@@ -29,6 +32,7 @@ export default function Muser(props) {
       })
       .then((response) => {
         if (response.data.success) {
+          setIsLoading(false)
           setData(response.data.users);
         }
       })
@@ -117,7 +121,8 @@ export default function Muser(props) {
       <section className=" admin-management  manage-user section">
         <div className="errorPopupsection" ref={errorPopupRef}></div>
         <TopDetails title="Users Management" navbar={props.navContainerRef} />
-        <div className="mainContainer">
+        {isLoading && <Loader/>} 
+        {!isLoading && <div className="mainContainer">
           <div className="headTitle">
             <div className="name htitile">Name</div>
             <div className="role htitile">Information</div>
@@ -125,7 +130,6 @@ export default function Muser(props) {
             <div className="action htitile">Action</div>
           </div>
           <div className="cards-container">
-            {/* Item section start */}
             {data.length <= 0 ? (
               <div className="user-not-found">
                 <img src="/userNotFound.png" alt="userNotFound" />
@@ -184,9 +188,10 @@ export default function Muser(props) {
                 })}
               </>
             )}
-            {/* Item section end */}
           </div>
-        </div>
+        </div>}
+
+        
       </section>
     </>
   );

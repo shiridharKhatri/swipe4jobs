@@ -4,6 +4,7 @@ import "../styles/App.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import ButtonLoader from "../components/ButtonLoader";
 export default function Root() {
   const navigate = useNavigate();
   const [inpValue, setValue] = useState({ email: "", password: "" });
@@ -14,7 +15,7 @@ export default function Root() {
   const passwordInputErrorMessageRef = useRef(null);
   const errorMessageRef = useRef(null);
   const [hiddenPas, setHiddenpas] = useState(true);
-
+  const [isLoading, setIsLoading] = useState(false);
   const host = import.meta.env.VITE_HOST;
   const togglePassword = () => {
     if (passwordInputRef.current.type === "password") {
@@ -63,6 +64,7 @@ export default function Root() {
       passwordContainerRef.current.style.border = ".15rem solid #ee0000";
       isValid = false;
       return;
+
     } else {
       passwordInputErrorMessageRef.current.innerText = ``;
       passwordContainerRef.current.style.background = "transparent";
@@ -82,7 +84,9 @@ export default function Root() {
         passwordContainerRef.current.style.border = ".15rem solid #d8dcd8";
       }
     }
+
     if (isValid) {
+      setIsLoading(true);
       axios
         .post(`${host}/auth/admin/existing/access`, {
           email: inpValue.email,
@@ -90,10 +94,12 @@ export default function Root() {
         })
         .then((res) => {
           if (res.data.success === true) {
+            setIsLoading(false);
             navigate(`/secure/admin-verification/${res.data.id}`);
           }
         })
         .catch((error) => {
+          setIsLoading(false);
           const errorMsg = document.getElementById("errorMsg");
 
           if (error.response.data.type === "attempts") {
@@ -122,6 +128,7 @@ export default function Root() {
         });
     }
   };
+
   useEffect(() => {
     const token = Cookies.get("admin-token");
     const id = Cookies.get("admin-id");
@@ -129,6 +136,7 @@ export default function Root() {
       navigate(`/home/authorized/${id}/dashboard`);
     }
   });
+  
   return (
     <>
       <section className="login">
@@ -197,6 +205,7 @@ export default function Root() {
                   fontSize: "1.8rem",
                   display: "flex",
                   cursor: "pointer",
+                  marginRight: "1rem",
                 }}
                 onClick={togglePassword}
               >
@@ -205,7 +214,7 @@ export default function Root() {
             </div>
             <p ref={passwordInputErrorMessageRef} className="errorInfo"></p>
             <button className="button-submit" onClick={loginOnClick}>
-              Sign In
+              {isLoading ? <ButtonLoader /> : "Log In "}
             </button>
           </form>
         </div>

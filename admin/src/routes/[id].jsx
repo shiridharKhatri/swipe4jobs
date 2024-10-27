@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import Loader from "../components/Loader";
 import NotfoundPage from "./NotfoundPage";
 import { MdIcons } from "../assets/Icons/icons";
+import ButtonLoader from "../components/ButtonLoader";
 export default function Verification() {
   const { id } = useParams();
   const codeInputErrorMessageRef = useRef(null);
@@ -13,6 +14,7 @@ export default function Verification() {
   const [codeVal, setCodeVal] = useState("");
   const [adminDetail, setAdminDetail] = useState({ id: "", email: "" });
   const [isLoading, setIsLoading] = useState(false);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
   const navigate = useNavigate();
   const url = import.meta.env.VITE_HOST;
   const codeValueOnChange = (e) => {
@@ -44,16 +46,19 @@ export default function Verification() {
       }
     }
     if (isValid) {
+      setIsButtonLoading(true);
       axios
         .post(`${url}/auth/admin/existing/access/verification/${id}`, {
           code: Number(codeVal),
         })
         .then((res) => {
+          setIsButtonLoading(false);
           Cookies.set("admin-token", res.data.token, { expires: 7 });
           Cookies.set("admin-id", id);
           navigate(`/home/authorized/${id}/dashboard`);
         })
         .catch((error) => {
+          setIsButtonLoading(false);
           if (error.response.data.type === "attempts") {
             errorMsg.innerHTML = error.response.data.message;
             errorMessageRef.current.style.top = "3rem";
@@ -153,7 +158,7 @@ export default function Verification() {
                       CANCEL
                     </button>
                     <button type="submit" onClick={verifyOnClick}>
-                      VERIFY
+                      {isButtonLoading ? <ButtonLoader /> : "VERIFY"}
                     </button>
                   </div>
                 </form>

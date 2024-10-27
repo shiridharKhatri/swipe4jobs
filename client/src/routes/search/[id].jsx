@@ -305,6 +305,7 @@ export default function SearchJobs() {
       </div>
       <section className="searchHeader">
         <Header
+          post={"POST"}
           firstText="SWIPE"
           secondHeighlightText="4"
           lastText="JOBS"

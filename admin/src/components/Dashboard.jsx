@@ -15,6 +15,7 @@ import axios from "axios";
 import TopDetails from "./TopDetails";
 import { useEffect } from "react";
 import { useState } from "react";
+import Loader from "./Loader";
 
 ChartJS.register(
   CategoryScale,
@@ -31,7 +32,7 @@ export default function Dashboard(props) {
   const TOKEN = Cookies.get("admin-token");
   const [allData, setAllData] = useState({});
   const [analyticsData, setAnaData] = useState({ key: [], val: [] });
-
+  const [isLoading, seIsLoading] = useState(true);
   const data = {
     labels: analyticsData?.key,
     datasets: [
@@ -109,6 +110,7 @@ export default function Dashboard(props) {
     },
   };
   const fetchOverview = () => {
+    seIsLoading(true);
     axios
       .post(`${HOST}/api/analytics/overview/${ID}`, null, {
         headers: {
@@ -117,6 +119,7 @@ export default function Dashboard(props) {
       })
       .then((res) => {
         if (res.data.success === true) {
+          seIsLoading(false);
           setAllData(res.data.data);
           let positions = [];
           let count = [];
@@ -137,41 +140,45 @@ export default function Dashboard(props) {
   return (
     <section className="dashboard section">
       <TopDetails title="Welcome, Admin " navbar={props.navContainerRef} />
-      <div className="overview">
-        <div className="title">Dashboard Overview</div>
-        <div className="boxesContainer">
-          <div className="boxes">
-            <div className="top">Pending post</div>
-            <div className="detail">
-              <span>
-                <MdIcons.MdOutlinePendingActions />
-              </span>
-              {allData?.pending}
+
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <div className="overview">
+          <div className="title">Dashboard Overview</div>
+          <div className="boxesContainer">
+            <div className="boxes">
+              <div className="top">Pending post</div>
+              <div className="detail">
+                <span>
+                  <MdIcons.MdOutlinePendingActions />
+                </span>
+                {allData?.pending}
+              </div>
+            </div>
+            <div className="boxes">
+              <div className="top">Approved post</div>{" "}
+              <div className="detail">
+                <span>
+                  <MdIcons.MdOutlineDoneAll />
+                </span>
+                {allData?.approved}
+              </div>
+            </div>
+            <div className="boxes">
+              <div className="top">Total post</div>
+              <div className="detail">
+                <span>
+                  <MdIcons.MdOutlineWork />
+                </span>
+                {allData?.total}
+              </div>
             </div>
           </div>
-          <div className="boxes">
-            <div className="top">Approved post</div>{" "}
-            <div className="detail">
-              <span>
-                <MdIcons.MdOutlineDoneAll />
-              </span>
-              {allData?.approved}
-            </div>
-          </div>
-          <div className="boxes">
-            <div className="top">Total post</div>
-            <div className="detail">
-              <span>
-                <MdIcons.MdOutlineWork />
-              </span>
-              {allData?.total}
-            </div>
+          <div className="graphContainer">
+            <Bar data={data} options={options} />
           </div>
         </div>
-        <div className="graphContainer">
-          <Bar data={data} options={options} />
-        </div>
-      </div>
+      )}
     </section>
   );
 }

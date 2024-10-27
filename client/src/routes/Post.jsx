@@ -143,7 +143,7 @@ export default function Post() {
           setLoading(false);
           setStatus("failure");
           popupMessage.current.style.top = "3rem";
-        }else if(error.response.status === 409){
+        } else if (error.response.status === 409) {
           errorMessageRef.current.innerText = `A similar job has already been posted from this account.`;
           setLoading(false);
           setStatus("failure");
@@ -290,6 +290,7 @@ export default function Post() {
         </div>
       </div>
       <Header
+        post={"POST"}
         firstText="SWIPE"
         secondHeighlightText="4"
         lastText="JOBS"

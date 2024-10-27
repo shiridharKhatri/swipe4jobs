@@ -4,6 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import TopDetails from "./TopDetails";
 import { useNavigate } from "react-router-dom";
+import Loader from "./Loader";
 export default function Setting(props) {
   const HOST = import.meta.env.VITE_HOST;
   const TOKEN = Cookies.get("admin-token");
@@ -16,6 +17,7 @@ export default function Setting(props) {
     start: "2024-10-01",
     end: "2024-12-01",
   });
+  const [isLoading, setIsLoading] = useState(true)
   const navigation = useNavigate();
   const handleClose = () => {
     setDeleteOptionOpen(false);
@@ -72,6 +74,7 @@ export default function Setting(props) {
   };
 
   useEffect(() => {
+    setIsLoading(true)
     const fetchAdmin = () => {
       axios
         .get(`${HOST}/auth/admin/existing/fetch`, {
@@ -80,6 +83,7 @@ export default function Setting(props) {
           },
         })
         .then((res) => {
+          setIsLoading(false)
           setAdminData(res.data);
         })
         .catch((error) => {
@@ -119,7 +123,8 @@ export default function Setting(props) {
       )}
       <section className="section setting">
         <TopDetails title="Setting" navbar={props.navContainerRef} />
-        <div className="setting-card">
+        {isLoading && <Loader/>}
+        {!isLoading && <div className="setting-card">
           <div className="details">
             <div className="item name">
               <div className="label">Name</div>
@@ -209,7 +214,7 @@ export default function Setting(props) {
               <button onClick={() => openDeleteOption()}>Delete account</button>
             </div>
           </div>
-        </div>
+        </div>}
       </section>
     </>
   );

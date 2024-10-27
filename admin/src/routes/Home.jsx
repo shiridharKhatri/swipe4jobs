@@ -15,7 +15,6 @@ import Mpost from "../components/Mpost";
 import Madmin from "../components/Madmin";
 import Analytics from "../components/Analytics";
 import Setting from "../components/Setting";
-import axios from "axios";
 import Muser from "../components/Muser";
 import Mpayment from "../components/Mpayment";
 
@@ -24,8 +23,11 @@ export default function Home() {
   const { id, routes } = useParams();
   let token = Cookies.get("admin-token");
   useEffect(() => {
-    window.document.title = `Career Salient | Admin | ${routes}`;
+    window.document.title = `Swipe4Jobs | Admin | ${routes}`;
   });
+  const closeNav = () => {
+    navContainerRef.current.style.left = "-40rem";
+  };
   return (
     <>
       {!token && <NotfoundPage isVisible={true} />}
@@ -36,9 +38,8 @@ export default function Home() {
             <div className="header">
               <div style={{ display: "flex" }} className="head-logo">
                 <img src="/favicon.svg" alt="logo" />
-                <span>alient</span>
               </div>
-              <div className="close">
+              <div className="close" onClick={closeNav}>
                 <Io5Icons.IoCloseSharp />
               </div>
             </div>
@@ -162,9 +163,9 @@ export default function Home() {
             ) : routes === "setting" ? (
               <Setting navContainerRef={navContainerRef} />
             ) : routes === "manage-users" ? (
-              <Muser />
+              <Muser navContainerRef={navContainerRef}/>
             ) : routes === "manage-payment" ? (
-              <Mpayment />
+              <Mpayment navContainerRef={navContainerRef}/>
             ) : (
               <NotfoundPage
                 isVisible={false}

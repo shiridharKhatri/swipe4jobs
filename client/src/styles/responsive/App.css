@@ -26,6 +26,20 @@
   section.setting .container {
     width: 90% !important;
   }
+  header {
+    height: 83rem;
+  }
+  header .head-container {
+    flex-direction: column;
+    margin-top: 8rem;
+  }
+  header .head-container .text-section {
+    align-items: center;
+  }
+  header .head-container .text-section p {
+    text-align: center;
+  }
+
   footer .first-section {
     flex-direction: column-reverse;
     align-items: start;
@@ -50,36 +64,32 @@
 
 @media screen and (max-width: 720px) {
   header {
-    height: 30rem;
-    background: radial-gradient(
-      circle at 24.1% 68.8%,
-      rgb(50, 50, 50) 0%,
-      rgb(0, 0, 0) 99.4%
-    );
     margin-bottom: 2rem !important;
+    height: 80rem;
   }
   nav .menuOption {
     display: flex;
   }
   nav .navigation-links ul {
     position: fixed;
-    left: 0;
-    width: 100%;
+    right: -80rem;
+    width: 35rem;
     height: 100%;
     top: 0;
     z-index: 99999;
     flex-direction: column;
     justify-content: center;
     background: #ffffff;
-    transition: 0.2s ease;
-    transform: scale(0);
+    transition: 0.3s ease;
   }
   nav .menuOption button {
     background: transparent;
     border: none;
     font-size: 3.5rem;
     cursor: pointer;
-    color: #ffffff;
+  }
+  header .head-container {
+    margin-top: 3rem;
   }
   nav .navigation-links ul li span {
     display: none;
@@ -105,34 +115,58 @@
     width: 100% !important;
     flex-direction: column;
     padding: 1rem !important;
+    border-radius: 0 !important;
   }
   section.setting .container .first-nav-section {
     flex-direction: row !important;
-    padding: 0 !important;
+    padding: 1rem 1rem 2rem 1rem !important;
     width: 100% !important;
     align-items: center;
     border-right: none !important;
+  }
+  section.setting .container .second-nav-section .body-sec .top {
+    margin: 1rem 0 1rem 0rem !important;
   }
   section.setting .container .second-nav-section .header {
     padding: 1rem !important;
     border-top: 0.1rem solid #445 !important;
   }
   section.setting .container .first-nav-section ul {
-    display: flex;
+    display: none;
   }
-  section.setting .container .first-nav-section ul li {
-    margin: 2rem 1rem !important;
+  section.setting .container .second-nav-section .body-sec {
+    border-top: 0.1rem solid #445;
+  }
+  section.setting .container .second-nav-section .body-sec .loader {
+    height: 50rem !important;
+  }
+  section.setting
+    .container
+    .second-nav-section
+    .body-sec
+    .postContainer
+    .card {
+    margin-bottom: 2.5rem !important;
+  }
+  section.setting .container .mobileView {
+    display: flex;
+    margin-bottom: 1rem !important;
+  }
+  section.setting .container .mobileView ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+  }
+  #logout {
+    height: 3.4rem !important;
+  }
+  section.setting .container .mobileView ul li {
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+    color: #ffffff;
   }
   section.setting .container .second-nav-section {
     width: 100% !important;
-  }
-
-  header .head-container .text-section h1 {
-    font-size: 3.5rem !important;
-    color: #ffffff;
-  }
-  header .head-container .text-section p {
-    color: #ffffff;
   }
   section.trending-post-container {
     padding: 0rem 1rem 5rem 1rem;
@@ -234,6 +268,9 @@
     width: 90% !important;
     height: 4.2rem !important;
   }
+  section.setting .container .second-nav-section .header {
+    display: none !important;
+  }
   footer p.copyright {
     font-size: 1.1rem;
     margin-top: 1rem;
@@ -243,20 +280,93 @@
   }
 }
 @media screen and (max-width: 560px) {
-  section.setting .container .first-nav-section ul {
-    overflow-x: scroll;
-  }
-  section.setting .container .first-nav-section ul::-webkit-scrollbar {
-    display: none;
-  }
-  section.setting .container .first-nav-section ul li {
-    font-size: 1.5rem !important;
-    height: 4rem;
-    margin: 0 !important;
-  }
   .header {
     height: 5rem !important;
     margin-top: 3rem !important;
+  }
+  header .head-container .job-slider .card img {
+    height: 9rem;
+    width: 9rem;
+  }
+  header .head-container .job-slider .card {
+    width: 30rem !important;
+    height: 32rem !important;
+  }
+  .swiper {
+    width: 30rem !important;
+    height: 32rem !important;
+  }
+  header .head-container .job-slider {
+    width: fit-content !important;
+    height: 43rem !important;
+  }
+  header .head-container {
+    overflow: hidden !important;
+  }
+  header {
+    height: 73rem !important;
+  }
+  header .head-container .job-slider .card .headSec .status {
+    font-size: 1.2rem !important;
+  }
+  section.setting .container .first-nav-section {
+    padding: 1rem 1rem 2rem 0rem !important;
+  }
+  section.setting .container .second-nav-section .body-sec .card-section {
+    flex-direction: column !important;
+    margin: 1rem 0 1rem 0rem !important;
+  }
+  section.setting .container .second-nav-section .body-sec .card-section .item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  section.setting
+    .container
+    .second-nav-section
+    .body-sec
+    .card-section
+    button {
+    width: 100% !important;
+    background: #ffffff !important;
+    color: #101010 !important;
+    padding: 0.5rem !important;
+    margin-top: 2rem !important;
+  }
+  section.setting
+    .container
+    .second-nav-section
+    .body-sec
+    .postContainer
+    .card {
+    flex-direction: column;
+  }
+  section.setting .container .second-nav-section .body-sec .postContainer {
+    padding: 2rem 1rem 1rem 1rem !important;
+  }
+  section.setting
+    .container
+    .second-nav-section
+    .body-sec
+    .postContainer
+    .card
+    .second {
+    margin-top: 1rem;
+    height: 3rem !important;
+  }
+  section.setting .container .second-nav-section .body-sec {
+    height: auto !important;
+  }
+  section.setting .container .second-nav-section {
+    overflow-y: scroll;
+  }
+  section.setting .container .second-nav-section::-webkit-scrollbar {
+    display: none;
+  }
+  section.setting .confirmBox .cardBox {
+    width: 95% !important;
   }
 }
 @media screen and (max-width: 460px) {
@@ -405,7 +515,28 @@
   header .head-container {
     margin-top: 2rem !important;
   }
-
+  section.setting
+    .container
+    .second-nav-section
+    .body-sec
+    .postContainer
+    .card
+    .first {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  section.setting
+    .container
+    .second-nav-section
+    .body-sec
+    .postContainer
+    .card
+    .first
+    img {
+    height: 100% !important;
+    width: 100% !important;
+    margin-right: 0rem;
+  }
   section.trending-post-container
     .card-container
     .job-card

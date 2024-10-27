@@ -5,11 +5,13 @@ import { BsIcons, Io5Icons } from "../assets/Icons/icons";
 import { useNavigate } from "react-router-dom";
 import Signup from "./Signup";
 import TopDetails from "./TopDetails";
+import Loader from "./Loader";
 export default function Madmin(props) {
   const navigate = useNavigate();
   const HOST = import.meta.env.VITE_HOST;
   const [adminData, setAdminData] = useState([]);
   const [removeAdmin, setRemoveAdmin] = useState({ id: "", isOpen: false });
+  const [isLoading, setIsLoading] = useState(true);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const errorPopupRef = useRef(null);
   const roles = ["Admin", "Modiator", "Editor"];
@@ -111,6 +113,7 @@ export default function Madmin(props) {
   };
   useEffect(() => {
     const fetchAllAdmin = () => {
+      setIsLoading(true);
       axios
         .post(`${HOST}/auth/admin/existing/access/fetch-all`, null, {
           headers: {
@@ -118,6 +121,7 @@ export default function Madmin(props) {
           },
         })
         .then((res) => {
+          setIsLoading(false);
           setAdminData(res.data);
         })
         .catch((error) => {
@@ -168,131 +172,136 @@ export default function Madmin(props) {
       <section className="admin-management section">
         <div className="errorPopupsection" ref={errorPopupRef}></div>
         <TopDetails title="Manage admin" navbar={props.navContainerRef} />
-        <div className="mainContainer">
-          <div className="headTitle">
-            <div className="name htitile">Name</div>
-            <div className="role htitile">
-              Admin role{" "}
-              <span className="help">
-                <Io5Icons.IoHelp />
-                <div className="tooltip">
-                  <div className="admin tips-card">
-                    <span className="mainPoint">ADMIN </span>
-                    <span className="text">
-                      Admin has full access to the dashboard, can manage all
-                      posts, manage admins, view all analytics, and change site
-                      settings.
-                    </span>
+        {isLoading && <Loader />}
+        {!isLoading && (
+          <div className="mainContainer">
+            <div className="headTitle">
+              <div className="name htitile">Name</div>
+              <div className="role htitile">
+                Admin role{" "}
+                <span className="help">
+                  <Io5Icons.IoHelp />
+                  <div className="tooltip">
+                    <div className="admin tips-card">
+                      <span className="mainPoint">ADMIN </span>
+                      <span className="text">
+                        Admin has full access to the dashboard, can manage all
+                        posts, manage admins, view all analytics, and change
+                        site settings.
+                      </span>
+                    </div>
+                    <div className="modiator tips-card">
+                      <span className="mainPoint">MODIATOR</span>
+                      <span className="text">
+                        Moderator can view the dashboard, approve or edit posts,
+                        view analytics, but has no access to admin management or
+                        settings.
+                      </span>
+                    </div>
+                    <div className="editor tips-card">
+                      <span className="mainPoint">EDITOR</span>
+                      <span className="text">
+                        Editor can view posts on the dashboard, create or edit
+                        posts, but has no access to admin management, analytics,
+                        or settings.
+                      </span>
+                    </div>
                   </div>
-                  <div className="modiator tips-card">
-                    <span className="mainPoint">MODIATOR</span>
-                    <span className="text">
-                      Moderator can view the dashboard, approve or edit posts,
-                      view analytics, but has no access to admin management or
-                      settings.
-                    </span>
-                  </div>
-                  <div className="editor tips-card">
-                    <span className="mainPoint">EDITOR</span>
-                    <span className="text">
-                      Editor can view posts on the dashboard, create or edit
-                      posts, but has no access to admin management, analytics,
-                      or settings.
-                    </span>
-                  </div>
-                </div>
-              </span>
-            </div>
+                </span>
+              </div>
 
-            <div className="action htitile">Action</div>
-          </div>
-          <div className="cards-container">
-            {/* Item section start */}
-            {adminData.adminData?.map((el) => {
-              return (
-                <div key={el._id} className="item">
-                  <div className="first">
-                    <div className="name">{el.name}</div>
-                    <p>{el.email}</p>
-                  </div>
-                  <div className="second">
-                    <div
-                      className="tags"
-                      style={
-                        el.role.toLowerCase() === "admin"
-                          ? { background: "#003366", fontWeight: "bold" }
-                          : el.role.toLowerCase() === "modiator"
-                          ? { background: "#FFA500", fontWeight: "bold" }
-                          : { background: "#4CAF50", fontWeight: "bold" }
-                      }
-                    >
-                      {el.role}
+              <div className="action htitile">Action</div>
+            </div>
+            <div className="cards-container">
+              {adminData.adminData?.map((el) => {
+                return (
+                  <div key={el._id} className="item">
+                    <div className="first">
+                      <div className="name">{el.name}</div>
+                      <p>{el.email}</p>
                     </div>
-                  </div>
-                  <div className="third">
-                    <div className="select">
-                      <div className="selected" data-default="All">
-                        <span>Change role</span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="1em"
-                          viewBox="0 0 512 512"
-                          className="arrow"
-                        >
-                          <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
-                        </svg>
-                      </div>
-                      <div className="options">
-                        {roles.map((e, index) => {
-                          return (
-                            <div key={index} title="option-1">
-                              <input id="option-1" name="option" type="radio" />
-                              <label
-                                onClick={() => roleOnChange(el._id, e)}
-                                className="option"
-                              >
-                                {e}
-                              </label>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    {el._id === props.id ? (
+                    <div className="second">
                       <div
-                        className="setting"
-                        onClick={() =>
-                          navigate(`/home/authorized/${props.id}/setting`)
+                        className="tags"
+                        style={
+                          el.role.toLowerCase() === "admin"
+                            ? { background: "#003366", fontWeight: "bold" }
+                            : el.role.toLowerCase() === "modiator"
+                            ? { background: "#FFA500", fontWeight: "bold" }
+                            : { background: "#4CAF50", fontWeight: "bold" }
                         }
                       >
-                        <Io5Icons.IoSettingsSharp />
+                        {el.role}
                       </div>
-                    ) : (
-                      <div
-                        className="delete-admin"
-                        onClick={() => deleteAdminProcess(el._id)}
-                      >
-                        <BsIcons.BsPersonFillX />
+                    </div>
+                    <div className="third">
+                      <div className="select">
+                        <div className="selected" data-default="All">
+                          <span>Change role</span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="1em"
+                            viewBox="0 0 512 512"
+                            className="arrow"
+                          >
+                            <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
+                          </svg>
+                        </div>
+                        <div className="options">
+                          {roles.map((e, index) => {
+                            return (
+                              <div key={index} title="option-1">
+                                <input
+                                  id="option-1"
+                                  name="option"
+                                  type="radio"
+                                />
+                                <label
+                                  onClick={() => roleOnChange(el._id, e)}
+                                  className="option"
+                                >
+                                  {e}
+                                </label>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
-                    )}
+                      {el._id === props.id ? (
+                        <div
+                          className="setting"
+                          onClick={() =>
+                            navigate(`/home/authorized/${props.id}/setting`)
+                          }
+                        >
+                          <Io5Icons.IoSettingsSharp />
+                        </div>
+                      ) : (
+                        <div
+                          className="delete-admin"
+                          onClick={() => deleteAdminProcess(el._id)}
+                        >
+                          <BsIcons.BsPersonFillX />
+                        </div>
+                      )}
+                    </div>
                   </div>
+                );
+              })}
+              <div
+                onClick={() => signupOpenOnClick(true)}
+                className="item register-admin"
+              >
+                <div>
+                  <span>
+                    <Io5Icons.IoPersonAdd />
+                  </span>{" "}
+                  Register new admin
                 </div>
-              );
-            })}
-            {/* Item section end */}
-            <div
-              onClick={() => signupOpenOnClick(true)}
-              className="item register-admin"
-            >
-              <div>
-                <span>
-                  <Io5Icons.IoPersonAdd />
-                </span>{" "}
-                Register new admin
               </div>
             </div>
           </div>
-        </div>
+        )}
       </section>
     </>
   );

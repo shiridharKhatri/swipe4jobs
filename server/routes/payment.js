@@ -82,10 +82,9 @@ routes.post(
       );
       await Payment.create({
         userId: metaDataObj.userId,
-        payment_id: `${user.name
-          .trim()
-          .split(" ")[0][0]
-          .toUpperCase()}_${Math.floor(Math.random() * 90000000) + 10000000}`,
+        payment_id: `${user.name.trim().split(" ")[0][0].toUpperCase()}_${
+          Math.floor(Math.random() * 90000000) + 10000000
+        }`,
         transactionId: event.data.object.id,
         amount: event.data.object.amount_total / 100,
         paymentStatus: event.data.object.status,
@@ -123,22 +122,24 @@ routes.post("/details/fetch/:id", adminAccess, async (req, res) => {
     let data = [];
     for (const elems of payment) {
       let user = await User.findById(elems.userId);
-      data.push({
-        id: elems._id,
-        userId: user._id,
-        name: user.name,
-        email: user.email,
-        paymentId: elems._id,
-        transId: elems.transactionId,
-        paymentMethod: elems.paymentMethod,
-        amount: elems.amount,
-        currency: elems.currency,
-        paymentStatus: elems.paymentStatus,
-        serviceType: elems.serviceType,
-        search_limit: elems.search_limit,
-        remarks: elems.remarks,
-        paymentDate: elems.paymentDate,
-      });
+      if (user) {
+        data.push({
+          id: elems.id,
+          userId: user.id,
+          name: user.name,
+          email: user.email,
+          paymentId: elems.id,
+          transId: elems.transactionId,
+          paymentMethod: elems.paymentMethod,
+          amount: elems.amount,
+          currency: elems.currency,
+          paymentStatus: elems.paymentStatus,
+          serviceType: elems.serviceType,
+          search_limit: elems.search_limit,
+          remarks: elems.remarks,
+          paymentDate: elems.paymentDate,
+        });
+      }
     }
     return res.status(200).json({ success: true, data });
   } catch (error) {

@@ -7,13 +7,13 @@ export default function Navbar(props) {
   const navLinks = useRef(null);
   let location = useLocation();
   const openMenuOnClick = () => {
-    navLinks.current.style.transform = "scale(1)";
+    navLinks.current.style.right = "0";
   };
 
   const [isSettingOn, setIsSettingOn] = useState(false);
   const { id } = useParams();
   const closeNavLink = () => {
-    navLinks.current.style.transform = "scale(0)";
+    navLinks.current.style.right = "-80rem";
   };
 
   return (
@@ -23,7 +23,7 @@ export default function Navbar(props) {
         <div className="navigation-links">
           <div className="menuOption">
             <button
-            style={{color:props.menuColor}}
+              style={{ color: props.menuColor }}
               aria-label="menu popups when clicked"
               onClick={openMenuOnClick}
             >
@@ -43,7 +43,7 @@ export default function Navbar(props) {
                 }
                 to="/"
               >
-                Trending
+                Home
               </Link>
               {location.pathname === "/" ? <span></span> : ""}
             </li>
@@ -79,19 +79,21 @@ export default function Navbar(props) {
                 ""
               )}
             </li>
-            <li>
-              <Link
-                style={
-                  location.pathname === "/post-jobs"
-                    ? { color: "#101010" }
-                    : { color: "rgb(127, 127, 127)" }
-                }
-                to="/post-jobs"
-              >
-                Post
-              </Link>
-              {location.pathname === "/post-jobs" ? <span></span> : ""}
-            </li>
+            {props.post && (
+              <li>
+                <Link
+                  style={
+                    location.pathname === "/post-jobs"
+                      ? { color: "#101010" }
+                      : { color: "rgb(127, 127, 127)" }
+                  }
+                  to="/post-jobs"
+                >
+                  {props.post}
+                </Link>
+                {location.pathname === "/post-jobs" ? <span></span> : ""}
+              </li>
+            )}
             {!Cookies.getItem("user-token") && (
               <li>
                 <Link to="/login" id="loginButton">
@@ -100,7 +102,7 @@ export default function Navbar(props) {
               </li>
             )}
             {Cookies.getItem("user-token") && (
-              <li className="profile" style={{ position: "relative" }}>
+              <li onClick={closeNavLink} className="profile" style={{ position: "relative" }}>
                 <div id="profileButton" onClick={() => setIsSettingOn(true)}>
                   Profile
                 </div>

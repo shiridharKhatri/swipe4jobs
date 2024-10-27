@@ -29,6 +29,7 @@ import {
   MdError,
   MdDone,
   MdOutlineFileDownload,
+  MdAccessTime
 } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { BiSolidGridAlt } from "react-icons/bi";
@@ -37,6 +38,10 @@ import { ImCross } from "react-icons/im";
 import { RiSecurePaymentFill } from "react-icons/ri";
 import { BsClockHistory } from "react-icons/bs";
 import { TbEdit } from "react-icons/tb";
+import { LuArrowLeft } from "react-icons/lu";
+const LuIcons = {
+  LuArrowLeft
+}
 const TbIcons = {
   TbEdit
 }
@@ -94,6 +99,7 @@ const MdIcons = {
   MdError,
   MdDone,
   MdOutlineFileDownload,
+  MdAccessTime 
 };
 const BsIcons = {
   BsClockHistory
@@ -112,5 +118,6 @@ export {
   ImIcons,
   RiIcons,
   BsIcons,
-  TbIcons
+  TbIcons,
+  LuIcons
 };
