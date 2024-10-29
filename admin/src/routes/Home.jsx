@@ -7,18 +7,27 @@ import {
   MdIcons,
   RiIcons,
 } from "../assets/Icons/icons";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import NotfoundPage from "./NotfoundPage";
 import Dashboard from "../components/Dashboard";
 import Mpost from "../components/Mpost";
 import Madmin from "../components/Madmin";
-import Analytics from "../components/Analytics";
 import Setting from "../components/Setting";
 import Muser from "../components/Muser";
 import Mpayment from "../components/Mpayment";
+import { useContext } from "react";
+import { Context } from "../context/Context";
 
 export default function Home() {
+  const {
+    fetchOveriew,
+    fetchJobs,
+    handelPostAction,
+    handelJobPosting,
+    fetchAllAdmin,
+  } = useContext(Context);
+
   const navContainerRef = useRef(null);
   const { id, routes } = useParams();
   let token = Cookies.get("admin-token");
@@ -28,6 +37,11 @@ export default function Home() {
   const closeNav = () => {
     navContainerRef.current.style.left = "-40rem";
   };
+  // useEffect(() => {
+  //   fetchJobs().then((res) => {
+  //     console.log(res);
+  //   });
+  // }, [fetchJobs]);
   return (
     <>
       {!token && <NotfoundPage isVisible={true} />}
@@ -122,21 +136,6 @@ export default function Home() {
               <li>
                 <Link
                   style={
-                    routes === "analytics"
-                      ? { background: "rgb(60 73 92)" }
-                      : { background: "transparent" }
-                  }
-                  to={`/home/authorized/${id}/analytics`}
-                >
-                  <span>
-                    <MdIcons.MdAnalytics />
-                  </span>
-                  Analytics
-                </Link>
-              </li>
-              <li>
-                <Link
-                  style={
                     routes === "setting"
                       ? { background: "rgb(60 73 92)" }
                       : { background: "transparent" }
@@ -153,19 +152,29 @@ export default function Home() {
           </div>
           <div className="secondContainer">
             {routes === "dashboard" ? (
-              <Dashboard navContainerRef={navContainerRef} />
+              <Dashboard
+                fetchOveriew={fetchOveriew}
+                navContainerRef={navContainerRef}
+              />
             ) : routes === "manage-post" ? (
-              <Mpost navContainerRef={navContainerRef} />
+              <Mpost
+                handelPostAction={handelPostAction}
+                fetchJobs={fetchJobs}
+                handelJobPosting={handelJobPosting}
+                navContainerRef={navContainerRef}
+              />
             ) : routes === "manage-admin" ? (
-              <Madmin id={id} navContainerRef={navContainerRef} />
-            ) : routes === "analytics" ? (
-              <Analytics navContainerRef={navContainerRef} />
+              <Madmin
+                fetchAllAdmin={fetchAllAdmin}
+                id={id}
+                navContainerRef={navContainerRef}
+              />
             ) : routes === "setting" ? (
               <Setting navContainerRef={navContainerRef} />
             ) : routes === "manage-users" ? (
-              <Muser navContainerRef={navContainerRef}/>
+              <Muser navContainerRef={navContainerRef} />
             ) : routes === "manage-payment" ? (
-              <Mpayment navContainerRef={navContainerRef}/>
+              <Mpayment navContainerRef={navContainerRef} />
             ) : (
               <NotfoundPage
                 isVisible={false}

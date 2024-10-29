@@ -111,6 +111,8 @@ export default function Madmin(props) {
   const signupOpenOnClick = (isOpen) => {
     setIsSignupOpen(isOpen);
   };
+
+  
   useEffect(() => {
     const fetchAllAdmin = () => {
       setIsLoading(true);

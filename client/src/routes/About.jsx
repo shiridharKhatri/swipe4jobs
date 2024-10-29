@@ -34,44 +34,38 @@ function DraggableItem({ item, index, moveItem }) {
 export default function About() {
   const [items, setItems] = useState([
     {
-      title: "Search Requirements",
-      info: "To search for postings anytime after they display on the Trending page, users shall click Search and include their originating Zip Code.",
+      title: "Usage",
+      info: "By accessing or interacting with this website, you are agreeing to abide by all conditions included in our Terms of Use. ",
     },
     {
-      title: "Privacy and Security",
+      title: "Privacy & Security",
       info: (
         <>
-          Details are found on the{" "}
+          Details regarding Privacy and Security are outlined in our{" "}
           <Link to="/terms-of-use" aria-label="Terms of use link">
             Terms of Use
           </Link>{" "}
-          page.
         </>
       ),
     },
     {
-      title: "Approval",
-      info: "Postings must adhere to traditional family values.",
+      title: "Posting Administration",
+      info: " The administrators of the website, for whatever reason they see fit, and without any prior notice whatsoever, reserve the right to disallow, modify, edit or delete any Posting. ",
     },
     {
-      title: "Posting Order",
-      info: "Newest postings will display first.",
-    },
-    {
-      title: "Duration",
-      info: "Approved postings will display for 5 weeks.",
-    },
-    {
-      title: "October 01 and Beyond Posting Rate",
-      info: "Jobs posted from October 01, 2024, will be at the $28 rate. The same Detail procedures implemented for Free Postings shall be utilized.",
-    },
-    {
-      title: "Posting Notes",
-      info: "Posting Modifications are not permitted. Unlike most other online Job Search services, SWIPE 4 JOBS offers a premium service at a highly reduced rate. Savings are facilitated by limiting Postings to those familiar with the Posting process, and will not make modifications. Our typical Users include Owners, Managers, and Human Resource Professionals.",
+      title: "Posting Overview ",
+      info: `We do not provide advice on how to format or structure a Job Posting.  Unlike most other online Job Search services, 
+      Swipe 4 Jobs offers a premium service at an extremely reduced rate. Savings are facilitated by limiting Postings to those 
+      familiar with the Posting process   Our typical Users include Owners, Managers, and Human Resource Professionals.   
+      Beginning February 01, 2025, the rate for a 5 week posting will  be $28.  Depending on specific third party pricing plans, 
+      this could represent an immediate savings of well over $300. `,
     },
     {
       title: "Free Postings",
-      info: "For the months of August and September only, we are offering a Referral special. Employers are requested to notify 5 or more others in their network regarding our Referral special. Your FREE posting will include up to 2 pages on your Electronic Letterhead stationery. Your FREE posting will also include your entity-designated logo (a $50 value). Your FREE Posting commences on the Post page.",
+      info: `
+      For the entire months of December and January, one Free posting is available to new and existing clients. 
+      Your Free posting will include up to 2 pages on your Electronic Letterhead stationery. 
+      Your Free posting will additionally include your full color entity-designated logo.`,
     },
   ]);
 
@@ -88,13 +82,7 @@ export default function About() {
 
   return (
     <DndProvider backend={HTML5Backend}>
-         <Header
-         post={'POST'}
-          firstText="SWIPE"
-          secondHeighlightText="4"
-          lastText="JOBS"
-          byline=" Showcasing the Future of the Career Marketplace"
-        />
+      <Header post={"POST"} />
       <div className="aboutHeaderText">ABOUT</div>
       <section className="about-container">
         {items.map((item, index) => (

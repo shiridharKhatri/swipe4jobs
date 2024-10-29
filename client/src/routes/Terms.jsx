@@ -6,12 +6,7 @@ import Header from "../components/Header";
 export default function Terms() {
   return (
     <>
-       <Header
-          firstText="SWIPE"
-          secondHeighlightText="4"
-          lastText="JOBS"
-          byline=" Showcasing the Future of the Career Marketplace"
-        />
+      <Header />
       <section
         style={{ padding: "0 0 3rem 0" }}
         className="terms-of-use-section"
@@ -122,8 +117,7 @@ export default function Terms() {
           <p>
             To engage in any other conduct that restricts or inhibits anyone’s
             use or enjoyment of the Site, or which, as determined by us, may
-            harm SWIPE 4 JOBS, or users of the Site or expose them to
-            liability.
+            harm SWIPE 4 JOBS, or users of the Site or expose them to liability.
           </p>
           <p className="bold">
             <b>Additionally, you agree not to</b>
@@ -242,20 +236,19 @@ export default function Terms() {
             No waiver by SWIPE 4 JOBS of any term or condition set forth in
             these Terms of Use shall be deemed a further or continuing waiver of
             such term or condition or a waiver of any other term or condition,
-            and any failure of SWIPE 4 JOBS to assert a right or provision
-            under these Terms of Use shall not constitute a waiver of such right
-            or provision.If any provision of these Terms of Use is held by a
-            court or other tribunal of competent jurisdiction to be invalid,
-            illegal or unenforceable for any reason, such provision shall be
-            eliminated or limited to the minimum extent such that the remaining
-            provisions of the Terms of Use will continue in full force and
-            effect.
+            and any failure of SWIPE 4 JOBS to assert a right or provision under
+            these Terms of Use shall not constitute a waiver of such right or
+            provision.If any provision of these Terms of Use is held by a court
+            or other tribunal of competent jurisdiction to be invalid, illegal
+            or unenforceable for any reason, such provision shall be eliminated
+            or limited to the minimum extent such that the remaining provisions
+            of the Terms of Use will continue in full force and effect.
             <br />
             Entire agreement. The Terms of Use constitute the sole and entire
-            agreement between you and SWIPE 4 JOBS with respect to the Site
-            and supersede all prior and contemporaneous understandings,
-            agreements, representations and warranties, both written and oral,
-            with respect to the Site.
+            agreement between you and SWIPE 4 JOBS with respect to the Site and
+            supersede all prior and contemporaneous understandings, agreements,
+            representations and warranties, both written and oral, with respect
+            to the Site.
           </p>
           <p className="bold">
             <b>Privacy Policy</b>

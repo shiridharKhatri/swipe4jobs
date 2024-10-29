@@ -234,7 +234,7 @@ routes.put("/post-job/edit/:id", adminAccess, async (req, res) => {
   });
 });
 
-routes.get("/post-job/fetch-all", async (req, res) => {
+routes.post("/post-job/fetch-all", adminAccess ,async (req, res) => {
   try {
     const jobs = await Postjob.find();
     if (!jobs) {

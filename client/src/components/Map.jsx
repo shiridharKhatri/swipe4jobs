@@ -3,8 +3,8 @@ import tt from "@tomtom-international/web-sdk-maps";
 import axios from "axios";
 const Map = ({ cityName }) => {
   const mapElement = useRef(null);
-  const apiKey = "Ig5yHU6qEGaK3zlUvI9OMQVNbtZZJD9A";
-  const openCageApi = `09a3967230a641fa85a6a993ce6b5e41`;
+  const tomtomApiKey = import.meta.env.VITE_TOM_TOM_API_KEY;
+  const openCageApi = import.meta.env.VITE_OPEN_CAGE_API;
   const mapRef = useRef(null);
   useEffect(() => {
     const fetchCoordinates = () => {
@@ -19,7 +19,7 @@ const Map = ({ cityName }) => {
 
               if (!mapRef.current) {
                 mapRef.current = tt.map({
-                  key: apiKey,
+                  key: tomtomApiKey,
                   container: mapElement.current,
                   center: [lng, lat],
                   zoom: 10,
@@ -48,7 +48,7 @@ const Map = ({ cityName }) => {
         mapRef.current = null;
       }
     };
-  }, [cityName, apiKey]);
+  }, [cityName]);
   return (
     <div
       ref={mapElement}

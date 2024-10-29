@@ -289,13 +289,7 @@ export default function Post() {
           )}
         </div>
       </div>
-      <Header
-        post={"POST"}
-        firstText="SWIPE"
-        secondHeighlightText="4"
-        lastText="JOBS"
-        byline=" Showcasing the Future of the Career Marketplace"
-      />
+      <Header post={"POST"} />
       <div className="postHeaderText">POST</div>
       <section className="jobPosting">
         <div className="formSection">

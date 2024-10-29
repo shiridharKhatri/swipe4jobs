@@ -8,12 +8,7 @@ export default function Root() {
   }, []);
   return (
     <>
-      <Header
-        firstText="SWIPE"
-        secondHeighlightText="4"
-        lastText="JOBS"
-        byline="The easiest and fastest method to secure a career"
-      />
+      <Header post={"POST"} />
       <TrendingPost />
       <Footer />
     </>

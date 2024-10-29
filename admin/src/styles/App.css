@@ -1010,7 +1010,7 @@ section.section .manage-section .side-action .menu span {
 }
 
 .popupCard .form form .selected {
-  background-color: #b1b1c5;
+  background-color: #e4e4f0;
   padding: 5px;
   margin-bottom: 3px;
   border-radius: 5px;
@@ -1059,7 +1059,7 @@ section.section .manage-section .side-action .menu span {
   border: 0.1rem solid #101010;
   font-weight: bold;
   background: transparent;
-  height: 4rem;
+  height: 3.7rem;
 }
 .popupCard .form form .btns button:nth-child(2) {
   background: #101010;
@@ -2008,6 +2008,7 @@ section.manage-payment
   font-size: 1.4rem;
   font-weight: bold;
   text-transform: uppercase;
+  margin-bottom: 1rem;
 }
 section.manage-payment
   .paymentDetails
@@ -2016,7 +2017,7 @@ section.manage-payment
   .profile-details
   .det {
   font-size: 1.4rem;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   color: #101010a6;
@@ -2033,21 +2034,7 @@ section.manage-payment
   .det {
   margin-top: 0.3rem;
 }
-section.manage-payment
-  .paymentDetails
-  .card-container
-  .cardItem
-  .profile-details
-  .method
-  span {
-  color: #ffffffff !important;
-  background: #5167fc;
-  height: 1.8rem;
-  padding: 0.5rem 2rem;
-  margin: 0.5rem 0 0 0;
-  border-radius: 0.5rem;
-  font-size: 1.2rem !important;
-}
+
 section.manage-payment
   .paymentDetails
   .card-container
@@ -2075,14 +2062,7 @@ section.manage-payment
   margin-top: 0.5rem;
 }
 section.manage-payment .paymentDetails .card-container .cardItem .status span {
-  font-size: 1.3rem;
-  background: #198754;
-  padding: 0.5rem 2rem;
-  height: 2rem;
-  border-radius: 0.3rem;
-  font-weight: bold;
-  color: #ffffff !important;
-  margin-top: 0.5rem;
+  color: #198754 !important;
 }
 
 section.manage-payment
@@ -2323,33 +2303,33 @@ section.manage-payment
   section.admin-management .mainContainer {
     padding: 2rem 1rem;
   }
-  .popupCard .form form{
+  .popupCard .form form {
     display: flex;
     flex-direction: column;
   }
-  .popupCard .form form .toptitle{
+  .popupCard .form form .toptitle {
     width: 100%;
   }
-  .popupCard .form form input{
+  .popupCard .form form input {
     width: 100%;
   }
-  .popupCard .form form .select{
+  .popupCard .form form .select {
     width: 100%;
   }
-  .popupCard .form form textarea{
+  .popupCard .form form textarea {
     width: 100%;
   }
-  .popupCard .form form .toptitle{
+  .popupCard .form form .toptitle {
     margin-bottom: 0;
   }
-  .popupCard .form form .btns{
+  .popupCard .form form .btns {
     width: 100%;
     margin-top: 0rem;
   }
-  .popupCard .form form .btns button{
+  .popupCard .form form .btns button {
     border-radius: 1rem;
   }
-  .popupCard .form form .options{
+  .popupCard .form form .options {
     z-index: 9999999;
   }
 }

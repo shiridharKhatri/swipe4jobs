@@ -1,5 +1,4 @@
 import { MdIcons } from "../assets/Icons/icons";
-
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -11,12 +10,11 @@ import {
   Legend,
 } from "chart.js";
 import Cookies from "js-cookie";
-import axios from "axios";
 import TopDetails from "./TopDetails";
 import { useEffect } from "react";
 import { useState } from "react";
 import Loader from "./Loader";
-
+import { useNavigate } from "react-router-dom";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -25,14 +23,33 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-export default function Dashboard(props) {
-  const HOST = import.meta.env.VITE_HOST;
-  const ID = Cookies.get("admin-id");
-  const TOKEN = Cookies.get("admin-token");
+export default function Dashboard({ navContainerRef, fetchOveriew }) {
+  let navigate = useNavigate();
   const [allData, setAllData] = useState({});
   const [analyticsData, setAnaData] = useState({ key: [], val: [] });
   const [isLoading, seIsLoading] = useState(true);
+
+  useEffect(() => {
+    seIsLoading(true);
+    fetchOveriew().then((res) => {
+      if (res.success === true) {
+        seIsLoading(false);
+        setAllData(res.data);
+        let positions = [];
+        let count = [];
+        for (let key in res.data.overview) {
+          positions.push(key);
+          count.push(res.data.overview[key]);
+        }
+        setAnaData({ key: positions, val: count });
+      } else {
+        Cookies.remove("admin-id");
+        Cookies.remove("admin-token");
+        navigate("/");
+      }
+    });
+  }, [fetchOveriew]);
+
   const data = {
     labels: analyticsData?.key,
     datasets: [
@@ -109,37 +126,9 @@ export default function Dashboard(props) {
       },
     },
   };
-  const fetchOverview = () => {
-    seIsLoading(true);
-    axios
-      .post(`${HOST}/api/analytics/overview/${ID}`, null, {
-        headers: {
-          "auth-token": TOKEN,
-        },
-      })
-      .then((res) => {
-        if (res.data.success === true) {
-          seIsLoading(false);
-          setAllData(res.data.data);
-          let positions = [];
-          let count = [];
-          for (let key in res.data.data.overview) {
-            positions.push(key);
-            count.push(res.data.data.overview[key]);
-          }
-          setAnaData({ key: positions, val: count });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  useEffect(() => {
-    fetchOverview();
-  }, []);
   return (
     <section className="dashboard section">
-      <TopDetails title="Welcome, Admin " navbar={props.navContainerRef} />
+      <TopDetails title="Welcome, Admin " navbar={navContainerRef} />
 
       {isLoading && <Loader />}
       {!isLoading && (

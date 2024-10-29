@@ -304,13 +304,7 @@ export default function SearchJobs() {
         )}
       </div>
       <section className="searchHeader">
-        <Header
-          post={"POST"}
-          firstText="SWIPE"
-          secondHeighlightText="4"
-          lastText="JOBS"
-          byline=" Showcasing the Future of the Career Marketplace"
-        />
+        <Header post={"POST"} />
 
         {/* For Mobile version  */}
         <div className="searchFormSection mobile">

@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
+import React, { useState, useEffect } from "react";
 import {
   AiIcons,
-  BsIcons,
   Fa6icons,
   Io5Icons,
   IoIcons,
@@ -14,7 +11,7 @@ import Loader from "./Loader";
 import ButtonLoader from "./ButtonLoader";
 import TopDetails from "./TopDetails";
 
-const url = import.meta.env.VITE_HOST;
+const URL = import.meta.env.VITE_HOST;
 
 const STATUSES = {
   ALL: "all",
@@ -28,7 +25,12 @@ const ACTIONS = {
   DELETE: "delete",
 };
 
-export default function MPost(props) {
+export default function MPost({
+  navContainerRef,
+  fetchJobs,
+  handelPostAction,
+  handelJobPosting,
+}) {
   const [selected, setSelected] = useState({ status: "", id: "" });
   const [status, setStatus] = useState(STATUSES.ALL);
   const [jobs, setJobs] = useState([]);
@@ -43,12 +45,11 @@ export default function MPost(props) {
   });
   const [isButtonLoading, setIsButtonLoading] = useState(false);
 
-  const fetchJobs = useCallback(() => {
+  useEffect(() => {
     setLoadingStatus((prev) => ({ ...prev, success: false }));
-    axios
-      .get(`${url}/api/jobs/post-job/fetch-all`)
+    fetchJobs()
       .then((res) => {
-        setJobs(res.data.jobs || []);
+        setJobs(res.jobs || []);
         setLoadingStatus({ success: true, status: 200 });
       })
       .catch((error) => {
@@ -57,27 +58,18 @@ export default function MPost(props) {
           status: error.status === 404 ? 404 : error.status === 500 ? 500 : 403,
         });
       });
-  }, []);
-
-  useEffect(() => {
-    fetchJobs();
   }, [fetchJobs]);
 
   const handleAction = async (id, action) => {
     setIsButtonLoading(true);
     try {
-      const res = await axios.post(
-        `${url}/api/jobs/action/post/${id}/${action}`,
-        null,
-        {
-          headers: { "auth-token": Cookies.get("admin-token") },
+      handelPostAction(id, action).then((res) => {
+        if (res.success === true) {
+          handleClose();
+          setIsButtonLoading(false);
+          window.location.reload();
         }
-      );
-      if (res.data.success) {
-        handleClose();
-        setIsButtonLoading(false);
-        fetchJobs();
-      }
+      });
     } catch (error) {
       setIsButtonLoading(false);
       console.error(error);
@@ -148,9 +140,11 @@ export default function MPost(props) {
     <div key={job._id} className="postCard">
       <img
         src={
-          !job.logo?.filename || job.logo?.filename === "undefined " || job.logo.filename === "none" 
+          !job.logo?.filename ||
+          job.logo?.filename === "undefined " ||
+          job.logo.filename === "none"
             ? `/no-image.svg`
-            : `${url}/image/${job.logo?.filename}`
+            : `${URL}/image/${job.logo?.filename}`
         }
         alt={job.name}
       />
@@ -243,7 +237,7 @@ export default function MPost(props) {
     <>
       {renderConfirmationPopup()}
       <section className="post-management section">
-        <TopDetails title="Post Management" navbar={props.navContainerRef} />
+        <TopDetails title="Post Management" navbar={navContainerRef} />
         <div className="manage-section">
           <div className="container">
             <div className="tabs">
@@ -305,10 +299,16 @@ export default function MPost(props) {
         </div>
       </section>
       {editMode.add && (
-        <Postform close={handleClose} title="Post Jobs" type="post" />
+        <Postform
+          handelJobPosting={handelJobPosting}
+          close={handleClose}
+          title="Post Jobs"
+          type="post"
+        />
       )}
       {editMode.edit && (
         <Postform
+          handelJobPosting={handelJobPosting}
           close={handleClose}
           title="Edit Post"
           data={editMode.data}

@@ -1,27 +1,31 @@
 import React, { useState } from "react";
 import { Io5Icons } from "../assets/Icons/icons";
-import axios from "axios";
 import ButtonLoader from "./ButtonLoader";
-import Cookies from "js-cookie";
-export default function Postform(props) {
+export default function Postform({
+  data,
+  handelJobPosting,
+  title,
+  type,
+  close,
+}) {
   const [selectedPosition, setSelectedPosition] = useState([]);
   const [selectSchedule, setSelectedSchedule] = useState([]);
-  const host = import.meta.env.VITE_HOST;
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [val, setValue] = useState({
-    name: !props.data ? "" : props.data.name,
-    code: !props.data ? "" : props.data.code,
-    state: !props.data ? "" : props.data.state,
-    city: !props.data ? "" : props.data.city,
-    zip: !props.data ? "" : props.data.zip,
-    overview: !props.data ? "" : props.data.overview,
+    name: !data ? "" : data.name,
+    code: !data ? "" : data.code,
+    state: !data ? "" : data.state,
+    city: !data ? "" : data.city,
+    zip: !data ? "" : data.zip,
+    overview: !data ? "" : data.overview,
   });
 
   const [otherValue, setOtherVal] = useState({
-    position: !props.data ? ["Select position"] : props.data.position,
-    schedule: !props.data ? ["Select schedule"] : props.data.schedule,
+    position: !data ? ["Select position"] : data.position,
+    schedule: !data ? ["Select schedule"] : data.schedule,
     image: null,
   });
+
   const POSITIONS = [
     "Accounting",
     "Actuary",
@@ -102,9 +106,11 @@ export default function Postform(props) {
     const { name, value } = e.target;
     setValue({ ...val, [name]: value });
   };
+
   const imageOnChange = (e) => {
     setOtherVal((prev) => ({ ...prev, image: e.target.files[0] }));
   };
+
   const jobPosting = async (id) => {
     setIsButtonLoading(true);
     let formdata = new FormData();
@@ -122,14 +128,7 @@ export default function Postform(props) {
     });
     formdata.append("logo", otherValue.image);
     let bodyContent = formdata;
-    if (id === "" || id.length <= 0) {
-      let reqOptions = {
-        url: `${host}/api/jobs/post-job/admin/${Cookies.get("admin-id")}`,
-        method: "POST",
-        headers: { Accept: "*/*", "auth-token": Cookies.get("admin-token") },
-        data: bodyContent,
-      };
-      let respose = await axios.request(reqOptions);
+    handelJobPosting(id, bodyContent).then((respose) => {
       if (respose.status === 200) {
         if (respose.data.success === true) {
           setIsButtonLoading(false);
@@ -138,33 +137,16 @@ export default function Postform(props) {
       } else {
         setIsButtonLoading(false);
       }
-    } else if (id.length > 2 || id !== "") {
-      let reqOptions = {
-        url: `${host}/api/jobs/post-job/edit/${id}`,
-        method: "PUT",
-        headers: {
-          "auth-token": Cookies.get("admin-token"),
-        },
-        data: bodyContent,
-      };
-      let respose = await axios.request(reqOptions);
-      if (respose.status === 200) {
-        if (respose.data.success === true) {
-          setIsButtonLoading(false);
-          window.location.reload();
-        }
-      } else {
-        setIsButtonLoading(false);
-      }
-    }
+    });
   };
+
   return (
     <div className="popupCard">
       <div className="form">
         <form className="card" action="">
           <div className="toptitle">
-            <span className="postTitle">{props.title}</span>
-            <span onClick={props.close} className="closeIcon">
+            <span className="postTitle">{title}</span>
+            <span onClick={close} className="closeIcon">
               <Io5Icons.IoCloseSharp />
             </span>
           </div>
@@ -313,17 +295,15 @@ export default function Postform(props) {
           ></textarea>
 
           <div className="btns">
-            <button onClick={props.close} type="button">
+            <button onClick={close} type="button">
               CANCEL
             </button>
             <button
-              onClick={() => jobPosting(!props.data ? "" : props.data._id)}
+              onClick={() => jobPosting(!data ? "" : data._id)}
               type="button"
             >
               {isButtonLoading && <ButtonLoader />}
-              {!isButtonLoading && (
-                <>{props.type === "post" ? "POST" : "EDIT"} </>
-              )}
+              {!isButtonLoading && <>{type === "post" ? "POST" : "EDIT"} </>}
             </button>
           </div>
         </form>
