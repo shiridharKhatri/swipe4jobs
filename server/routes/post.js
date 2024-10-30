@@ -166,7 +166,19 @@ routes.post("/post-job/user/:id", userAccess, async (req, res) => {
           message: "Duplicate post: A job with similar details already exists.",
         });
       }
-
+      let user = await User.findById(req.user.id);
+      if (user.posting_limit <= 0) {
+        return res.status(402).json({
+          success: false,
+          message: "To post more than one job, a payment is required",
+        });
+      } else {
+        await User.findByIdAndUpdate(
+          req.user.id,
+          { $set: { posting_limit: user.posting_limit - 1 } },
+          { new: true }
+        );
+      }
       await Postjob.create({
         postedBy: req.user.id,
         name,
@@ -234,7 +246,7 @@ routes.put("/post-job/edit/:id", adminAccess, async (req, res) => {
   });
 });
 
-routes.post("/post-job/fetch-all", adminAccess ,async (req, res) => {
+routes.post("/post-job/fetch-all", adminAccess, async (req, res) => {
   try {
     const jobs = await Postjob.find();
     if (!jobs) {

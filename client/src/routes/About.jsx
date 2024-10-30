@@ -4,6 +4,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import "../styles/component/About.css";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
+import Heading from "../components/Heading";
 
 const ItemType = "ITEM";
 
@@ -82,7 +83,7 @@ export default function About() {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <Header post={"POST"} />
+      <Heading title={'About Us'}/>
       <div className="aboutHeaderText">ABOUT</div>
       <section className="about-container">
         {items.map((item, index) => (

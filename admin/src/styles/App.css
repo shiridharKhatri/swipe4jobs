@@ -834,6 +834,24 @@ section.section .manage-section .side-action .menu span {
   position: relative;
   box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.068);
 }
+.card .feedback{
+  width: 100%;
+  margin-top: -1rem;
+}
+.card .feedback textarea{
+  width: 100%;
+  padding: 1rem;
+  border: .15rem solid #d1d1da;
+  outline: none;
+  border-radius: .5rem;
+}
+.card .feedback .title{
+  font-size: 1.5rem;
+  margin-bottom: .5rem;
+  font-weight: 500;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #333333;
+}
 .card-content {
   width: 100%;
   height: fit-content;
@@ -992,6 +1010,15 @@ section.section .manage-section .side-action .menu span {
   border: 0.14rem solid #b1b1c5;
   border-radius: 0.5rem;
   font-weight: bold;
+  width: 100%;
+}
+.popupCard .form form p{
+  color: #ff0000;
+  margin: .2rem 0 0 .5rem;
+  font-weight: bold;
+}
+.popupCard .form form  .textarea{
+  grid-column-start: span 2;
 }
 .popupCard .form form textarea {
   padding: 1rem;
@@ -999,7 +1026,8 @@ section.section .manage-section .side-action .menu span {
   border: 0.14rem solid #b1b1c5;
   border-radius: 0.5rem;
   font-weight: bold;
-  grid-column-start: span 2;
+
+  width: 100%;
 }
 .popupCard .form form .select {
   width: auto;
@@ -2302,6 +2330,9 @@ section.manage-payment
   }
   section.admin-management .mainContainer {
     padding: 2rem 1rem;
+  }
+  .popupCard .form form .inp{
+    width: 100%;
   }
   .popupCard .form form {
     display: flex;

@@ -8,6 +8,7 @@ import Header from "../components/Header";
 import { states, category } from "../data/jsonData";
 import axios from "axios";
 import Cookies from "js-cookies";
+import Heading from "../components/Heading";
 export default function Post() {
   const HOST = import.meta.env.VITE_HOST;
   const ID = Cookies.getItem("user-id");
@@ -122,6 +123,7 @@ export default function Post() {
       };
       try {
         let response = await axios.request(reqOptions);
+
         if (response.status === 200) {
           if (response.data.success === true) {
             clearAllFields();
@@ -138,6 +140,7 @@ export default function Post() {
           popupMessage.current.style.top = "-15rem";
         }
       } catch (error) {
+        console.log(error.status);
         if (error.response.status === 401) {
           errorMessageRef.current.innerText = `Please log in to your account to post jobs. Thank you!`;
           setLoading(false);
@@ -145,6 +148,11 @@ export default function Post() {
           popupMessage.current.style.top = "3rem";
         } else if (error.response.status === 409) {
           errorMessageRef.current.innerText = `A similar job has already been posted from this account.`;
+          setLoading(false);
+          setStatus("failure");
+          popupMessage.current.style.top = "3rem";
+        } else if (error.response.status === 402) {
+          errorMessageRef.current.innerText = error.response.data.message;
           setLoading(false);
           setStatus("failure");
           popupMessage.current.style.top = "3rem";
@@ -289,7 +297,8 @@ export default function Post() {
           )}
         </div>
       </div>
-      <Header post={"POST"} />
+      {/* <Header post={"POST"} /> */}
+      <Heading title={"post jobs"} />
       <div className="postHeaderText">POST</div>
       <section className="jobPosting">
         <div className="formSection">

@@ -14,6 +14,7 @@ import Header from "../../components/Header";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../../context/Context";
+import Heading from "../../components/Heading";
 export default function SearchJobs() {
   const { fetchUser } = useContext(Context);
   const HOST = import.meta.env.VITE_HOST;
@@ -304,7 +305,8 @@ export default function SearchJobs() {
         )}
       </div>
       <section className="searchHeader">
-        <Header post={"POST"} />
+        {/* <Header post={"POST"} /> */}
+        <Heading title={'Search Jobs'}/>
 
         {/* For Mobile version  */}
         <div className="searchFormSection mobile">

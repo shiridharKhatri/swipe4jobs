@@ -1,6 +1,7 @@
 import { Context } from "./Context";
 import axios from "axios";
 import Cookies from "js-cookies";
+import { useEffect } from "react";
 function State({ children }) {
   const HOST = import.meta.env.VITE_HOST;
   const ID = Cookies.getItem("user-id");
@@ -50,6 +51,16 @@ function State({ children }) {
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+  let fetchFreeTrialDate = async () => {
+    try {
+      let response = await axios.get(
+        `${HOST}/api/postRules/post/rules/date/fetch`
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
     }
   };
   return (

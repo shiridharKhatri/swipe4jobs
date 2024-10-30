@@ -25,6 +25,10 @@ const userSchema = mongoose.Schema({
     type: Number,
     default: 3,
   },
+  posting_limit: {
+    type: Number,
+    default: 1,
+  },
   job_posted: {
     type: Number,
     default: 0,

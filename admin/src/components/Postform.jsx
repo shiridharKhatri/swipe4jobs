@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Io5Icons } from "../assets/Icons/icons";
 import ButtonLoader from "./ButtonLoader";
+import { useRef } from "react";
 export default function Postform({
   data,
   handelJobPosting,
@@ -25,6 +26,9 @@ export default function Postform({
     schedule: !data ? ["Select schedule"] : data.schedule,
     image: null,
   });
+
+  const inpRef = useRef([]);
+  const inpErrorRef = useRef([]);
 
   const POSITIONS = [
     "Accounting",
@@ -112,34 +116,88 @@ export default function Postform({
   };
 
   const jobPosting = async (id) => {
-    setIsButtonLoading(true);
-    let formdata = new FormData();
-    formdata.append("name", val.name);
-    selectSchedule.forEach((schedule) => {
-      formdata.append("schedule[]", schedule);
-    });
-    formdata.append("state", val.state);
-    formdata.append("code", val.code);
-    formdata.append("city", val.city);
-    formdata.append("zip", val.zip);
-    formdata.append("overview", val.overview);
-    selectedPosition.forEach((position) => {
-      formdata.append("position[]", position);
-    });
-    formdata.append("logo", otherValue.image);
-    let bodyContent = formdata;
-    handelJobPosting(id, bodyContent).then((respose) => {
-      if (respose.status === 200) {
-        if (respose.data.success === true) {
-          setIsButtonLoading(false);
-          window.location.reload();
-        }
-      } else {
-        setIsButtonLoading(false);
-      }
-    });
-  };
+    let isValid = true;
 
+    let formValidation = (value, inputRef, type) => {
+      if (value === "") {
+        inputRef.style.border = `.14rem solid #ff0000`;
+        inputRef.style.background = `#ff000026`;
+        isValid = false;
+        return "Input field must not be empty";
+      } else if ((type === "code" && value.length > 3) || value.length < 3) {
+        inputRef.style.border = `.14rem solid #ff0000`;
+        inputRef.style.background = `#ff000026`;
+        isValid = false;
+        return "Security code must be of 3 digit";
+      } else {
+        inputRef.style.border = `0.14rem solid #b1b1c5`;
+        inputRef.style.background = `transparent`;
+        return "";
+      }
+    };
+
+    if (selectSchedule.length <= 0) {
+      isValid = false;
+      inpErrorRef.current.scheduleError.innerText =
+        "Please select atleast one schedule";
+    } else {
+      inpErrorRef.current.scheduleError.innerText = "";
+    }
+    if (selectedPosition.length <= 0) {
+      isValid = false;
+      inpErrorRef.current.positionError.innerText =
+        "Please select atleast one position";
+    } else {
+      inpErrorRef.current.positionError.innerText = "";
+    }
+
+    let name = formValidation(val.name, inpRef.current.name, "name");
+    let code = formValidation(val.code, inpRef.current.code, "code");
+    let state = formValidation(val.state, inpRef.current.state, "state");
+    let city = formValidation(val.city, inpRef.current.city, "city");
+    let zip = formValidation(val.zip, inpRef.current.zip, "zip");
+    let overview = formValidation(
+      val.overview,
+      inpRef.current.overview,
+      "overview"
+    );
+
+    inpErrorRef.current.nameError.innerText = name;
+    inpErrorRef.current.codeError.innerText = code;
+    inpErrorRef.current.stateError.innerText = state;
+    inpErrorRef.current.cityError.innerText = city;
+    inpErrorRef.current.zipError.innerText = zip;
+    inpErrorRef.current.overviewError.innerText = overview;
+
+    if (isValid) {
+      setIsButtonLoading(true);
+      let formdata = new FormData();
+      formdata.append("name", val.name);
+      selectSchedule.forEach((schedule) => {
+        formdata.append("schedule[]", schedule);
+      });
+      formdata.append("state", val.state);
+      formdata.append("code", val.code);
+      formdata.append("city", val.city);
+      formdata.append("zip", val.zip);
+      formdata.append("overview", val.overview);
+      selectedPosition.forEach((position) => {
+        formdata.append("position[]", position);
+      });
+      formdata.append("logo", otherValue.image);
+      let bodyContent = formdata;
+      handelJobPosting(id, bodyContent).then((respose) => {
+        if (respose.status === 200) {
+          if (respose.data.success === true) {
+            setIsButtonLoading(false);
+            window.location.reload();
+          }
+        } else {
+          setIsButtonLoading(false);
+        }
+      });
+    }
+  };
   return (
     <div className="popupCard">
       <div className="form">
@@ -150,44 +208,28 @@ export default function Postform({
               <Io5Icons.IoCloseSharp />
             </span>
           </div>
-          <input
-            onChange={valueOnChange}
-            value={val.name}
-            name="name"
-            type="text"
-            placeholder="Entity name"
-          />
-          <input
-            onChange={valueOnChange}
-            value={val.code}
-            name="code"
-            type="text"
-            placeholder="Enter security code"
-          />
-          <input
-            onChange={valueOnChange}
-            value={val.state}
-            name="state"
-            type="text"
-            placeholder="Enter state"
-          />
-          <input
-            onChange={valueOnChange}
-            value={val.city}
-            name="city"
-            type="text"
-            placeholder="Enter city"
-          />
-          <input
-            onChange={valueOnChange}
-            value={val.zip}
-            name="zip"
-            type="text"
-            placeholder="Enter zip code"
-          />
+
+          {["name", "code", "state", "city", "zip"].map((field, index) => {
+            return (
+              <div key={index} className="inp">
+                <input
+                  ref={(el) => (inpRef.current[field] = el)}
+                  onChange={valueOnChange}
+                  value={val[field]}
+                  name={field}
+                  type="text"
+                  placeholder={`Enter ${field}`}
+                />
+                <p
+                  ref={(el) => (inpErrorRef.current[`${field}Error`] = el)}
+                  className="errorMessage"
+                ></p>
+              </div>
+            );
+          })}
 
           {/* Positions Dropdown */}
-          <div className="select POSITIONS">
+          <div className="select POSITIONS inp">
             <div
               className="selected"
               data-default="All Positions"
@@ -230,10 +272,14 @@ export default function Postform({
                 </div>
               ))}
             </div>
+            <p
+              ref={(el) => (inpErrorRef.current[`positionError`] = el)}
+              className="errorMessage"
+            ></p>
           </div>
 
           {/* Job Types Dropdown */}
-          <div className="select job-type">
+          <div className="select job-type inp">
             <div
               className="selected"
               data-default="All Types"
@@ -276,6 +322,10 @@ export default function Postform({
                 </div>
               ))}
             </div>
+            <p
+              ref={(el) => (inpErrorRef.current[`scheduleError`] = el)}
+              className="errorMessage"
+            ></p>
           </div>
           <div className="fileUpload">
             <input type="file" id="file" hidden onChange={imageOnChange} />
@@ -286,13 +336,21 @@ export default function Postform({
               </span>
             </label>
           </div>
-          <textarea
-            onChange={valueOnChange}
-            value={val.overview}
-            name="overview"
-            id="overview"
-            placeholder="Enter overview"
-          ></textarea>
+
+          <div className="textarea inp">
+            <textarea
+              ref={(el) => (inpRef.current["overview"] = el)}
+              onChange={valueOnChange}
+              value={val.overview}
+              name="overview"
+              id="overview"
+              placeholder="Enter overview"
+            ></textarea>
+            <p
+              ref={(el) => (inpErrorRef.current[`overviewError`] = el)}
+              className="errorMessage"
+            ></p>
+          </div>
 
           <div className="btns">
             <button onClick={close} type="button">

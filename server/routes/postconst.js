@@ -45,4 +45,17 @@ routes.put("/post/rules/update/:id", adminAccess, async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 });
+routes.get("/post/rules/date/fetch", async (req, res) => {
+  try {
+    let date = await PostConst.findById("67133b8ac9b1f8fe80b3ee7c");
+    if (!date) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Date not available with give id" });
+    }
+    res.status(200).json({ success: true, date });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+});
 module.exports = routes;

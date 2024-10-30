@@ -79,21 +79,21 @@ export default function Navbar(props) {
                 ""
               )}
             </li>
-            {props.post && (
-              <li>
-                <Link
-                  style={
-                    location.pathname === "/post-jobs"
-                      ? { color: "#101010" }
-                      : { color: "rgb(127, 127, 127)" }
-                  }
-                  to="/post-jobs"
-                >
-                  {props.post}
-                </Link>
-                {location.pathname === "/post-jobs" ? <span></span> : ""}
-              </li>
-            )}
+
+            <li>
+              <Link
+                style={
+                  location.pathname === "/post-jobs"
+                    ? { color: "#101010" }
+                    : { color: "rgb(127, 127, 127)" }
+                }
+                to="/post-jobs"
+              >
+                Post
+              </Link>
+              {location.pathname === "/post-jobs" ? <span></span> : ""}
+            </li>
+
             {!Cookies.getItem("user-token") && (
               <li>
                 <Link to="/login" id="loginButton">
@@ -102,7 +102,11 @@ export default function Navbar(props) {
               </li>
             )}
             {Cookies.getItem("user-token") && (
-              <li onClick={closeNavLink} className="profile" style={{ position: "relative" }}>
+              <li
+                onClick={closeNavLink}
+                className="profile"
+                style={{ position: "relative" }}
+              >
                 <div id="profileButton" onClick={() => setIsSettingOn(true)}>
                   Profile
                 </div>
