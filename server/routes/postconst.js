@@ -40,12 +40,13 @@ routes.put("/post/rules/update/:id", adminAccess, async (req, res) => {
     );
     return res
       .status(200)
-      .json({ success: true, message: "Date updated successfully" });
+      .json({ success: true, message: "Date updated successfully", postRule });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
 });
-routes.get("/post/rules/date/fetch", async (req, res) => {
+
+routes.post("/post/rules/date/fetch", adminAccess, async (req, res) => {
   try {
     let date = await PostConst.findById("67133b8ac9b1f8fe80b3ee7c");
     if (!date) {

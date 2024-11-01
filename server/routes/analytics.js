@@ -1,9 +1,10 @@
 const adminAccess = require("../middleware/adminAccess");
 const express = require("express");
 const Postjob = require("../models/Postjob");
+const Admin = require("../models/Admin");
 const routes = express.Router();
 
-routes.post("/overview/:id", adminAccess, async (req, res) => {
+routes.post("/overview", adminAccess, async (req, res) => {
   try {
     let jobs = await Postjob.find();
     if (!jobs) {
@@ -11,11 +12,11 @@ routes.post("/overview/:id", adminAccess, async (req, res) => {
         .status(404)
         .json({ success: false, message: "Job postings not found" });
     }
-    if (String(req.admin.id) !== String(req.params.id)) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Only admin can access overview" });
+    let admin = await Admin.findById(req.admin.id)
+    if(!admin){
+      return res.status(401).json({success:false, message:"Admin not found with given id"})
     }
+
     let positions = [];
     let pending = await Postjob.find({ isApproved: false });
     let approved = await Postjob.find({ isApproved: true });

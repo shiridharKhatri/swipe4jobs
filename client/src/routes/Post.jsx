@@ -133,7 +133,9 @@ export default function Post() {
             setLoading(false);
             setStatus("failure");
           }
-
+          setTimeout(() => {
+            setStatus("");
+          }, 5000);
           popupMessage.current.style.top = "3rem";
         } else {
           setLoading(false);

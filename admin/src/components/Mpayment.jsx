@@ -6,14 +6,13 @@ import Cookies from "js-cookie";
 import Loader from "./Loader";
 export default function Mpayment(props) {
   const HOST = import.meta.env.VITE_HOST;
-  const ID = Cookies.get("admin-id");
   const TOKEN = Cookies.get("admin-token");
   const [isLoading, setIsLoading] = useState(true);
   const [paymentData, setPaymentData] = useState([]);
   const fetchPayment = () => {
     setIsLoading(true);
     axios
-      .post(`${HOST}/api/payment/details/fetch/${ID}`, null, {
+      .post(`${HOST}/api/payment/details/fetch`, null, {
         headers: {
           "auth-token": TOKEN,
         },

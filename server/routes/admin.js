@@ -6,6 +6,7 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const rateLimit = require("express-rate-limit");
 const adminAccess = require("../middleware/adminAccess");
+const adminVerification = require("../mail/adminVerification");
 const secret = process.env.JWT_SECRET_ADMIN;
 
 const loginLimiter = rateLimit({
@@ -116,7 +117,12 @@ routes.post("/admin/existing/access", loginLimiter, async (req, res) => {
     }
 
     const verificationCode = codeGenerator();
-
+    adminVerification(
+      email,
+      admin.name,
+      verificationCode,
+      "Admin verification code"
+    );
     await Admin.findByIdAndUpdate(admin.id, {
       $set: { verificationCode, isVerified: false },
     });
@@ -255,6 +261,7 @@ routes.post(
     }
   }
 );
+
 routes.delete("/admin/existing/delete/:id", adminAccess, async (req, res) => {
   try {
     const { id } = req.params;

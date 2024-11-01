@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import TopDetails from "./TopDetails";
 import { useNavigate } from "react-router-dom";
 import Loader from "./Loader";
+import ButtonLoader from "./ButtonLoader";
 export default function Setting(props) {
   const HOST = import.meta.env.VITE_HOST;
   const TOKEN = Cookies.get("admin-token");
@@ -13,11 +14,12 @@ export default function Setting(props) {
   const [adminData, setAdminData] = useState({});
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [isDeleteOptionOpen, setDeleteOptionOpen] = useState(false);
+  const [isBtnLoading, setIsBtnLoading] = useState(false);
   const [date, setDate] = useState({
     start: "2024-10-01",
     end: "2024-12-01",
   });
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigate();
   const handleClose = () => {
     setDeleteOptionOpen(false);
@@ -52,6 +54,7 @@ export default function Setting(props) {
   };
 
   const changeDate = () => {
+    setIsBtnLoading(true);
     axios
       .put(
         `${HOST}/api/postRules/post/rules/update/67133b8ac9b1f8fe80b3ee7c`,
@@ -66,7 +69,35 @@ export default function Setting(props) {
         }
       )
       .then((res) => {
-        console.log(res);
+        if (res.data.success === true) {
+          setIsBtnLoading(false);
+          setDate({
+            start: res.data.postRule.free_posting.start,
+            end: res.data.postRule.free_posting.end,
+          });
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        setIsBtnLoading(false);
+        console.log(error);
+      });
+  };
+
+  const fetchStartEndFreeDate = () => {
+    axios
+      .post(`${HOST}/api/postRules/post/rules/date/fetch`, null, {
+        headers: {
+          "auth-token": TOKEN,
+        },
+      })
+      .then((res) => {
+        if (res.data.success === true) {
+          setDate({
+            start: res.data.date.free_posting.start,
+            end: res.data.date.free_posting.end,
+          });
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -74,7 +105,11 @@ export default function Setting(props) {
   };
 
   useEffect(() => {
-    setIsLoading(true)
+    fetchStartEndFreeDate();
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
     const fetchAdmin = () => {
       axios
         .get(`${HOST}/auth/admin/existing/fetch`, {
@@ -83,7 +118,7 @@ export default function Setting(props) {
           },
         })
         .then((res) => {
-          setIsLoading(false)
+          setIsLoading(false);
           setAdminData(res.data);
         })
         .catch((error) => {
@@ -123,98 +158,88 @@ export default function Setting(props) {
       )}
       <section className="section setting">
         <TopDetails title="Setting" navbar={props.navContainerRef} />
-        {isLoading && <Loader/>}
-        {!isLoading && <div className="setting-card">
-          <div className="details">
-            <div className="item name">
-              <div className="label">Name</div>
-              <div className="value">
-                {adminData.admin?.name}
-                <span>
-                  <MdIcons.MdOutlineEdit />
-                </span>
+        {isLoading && <Loader />}
+        {!isLoading && (
+          <div className="setting-card">
+            <div className="details">
+              <div className="item name">
+                <div className="label">Name</div>
+                <div className="value">{adminData.admin?.name}</div>
               </div>
-            </div>
-            <div className="item email">
-              <div className="label">Email</div>
-              <div className="value">
-                {adminData.admin?.email}
-                <span>
-                  <MdIcons.MdOutlineEdit />
-                </span>
+              <div className="item email">
+                <div className="label">Email</div>
+                <div className="value">{adminData.admin?.email}</div>
               </div>
-            </div>
-            <div className="item password">
-              <div className="label">Password</div>
-              <div className="value">
-                xxxxxxxxx{" "}
-                <span>
-                  <MdIcons.MdOutlineEdit />
-                </span>
+              <div className="item password">
+                <div className="label">Password</div>
+                <div className="value">xxxxxxxxx </div>
               </div>
-            </div>
-            <div className="item free-trial">
-              <div className="label">Free trial months</div>
-              <div className="box">
-                <div>
-                  From :{" "}
-                  <input
-                    onChange={dateValueOnChange}
-                    type="date"
-                    value={date.start}
-                    name="start"
-                    id="dateFrom"
-                  />
-                  To :{" "}
-                  <input
-                    onChange={dateValueOnChange}
-                    type="date"
-                    value={date.end}
-                    name="end"
-                    id="dateTo"
-                  />
-                </div>
-                <div
-                  onClick={changeDate}
-                  ref={saveChangesRef}
-                  className="saveChange"
-                >
-                  <Fa6icons.FaCheck />
+              <div className="item free-trial">
+                <div className="label">Free trial months</div>
+                <div className="box">
+                  <div>
+                    From :{" "}
+                    <input
+                      onChange={dateValueOnChange}
+                      type="date"
+                      value={date.start}
+                      name="start"
+                      id="dateFrom"
+                    />
+                    To :{" "}
+                    <input
+                      onChange={dateValueOnChange}
+                      type="date"
+                      value={date.end}
+                      name="end"
+                      id="dateTo"
+                    />
+                  </div>
+                  <div
+                    onClick={changeDate}
+                    ref={saveChangesRef}
+                    className="saveChange"
+                  >
+                    {!isBtnLoading && <Fa6icons.FaCheck />}
+                    {isBtnLoading && <ButtonLoader />}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="item role">
-              <div className="label">Role</div>
-              <div className="value">{adminData.admin?.role}</div>
-            </div>
-            <div className="item verified">
-              <div className="label">Account status</div>
-              <div className="value">
-                {adminData.admin?.isVerified === true ? (
-                  <>
-                    {" "}
-                    Verified &nbsp;
-                    <RiIcons.RiVerifiedBadgeFill />
-                  </>
-                ) : (
-                  "Not verified"
-                )}
+              <div className="item role">
+                <div className="label">Role</div>
+                <div className="value">{adminData.admin?.role}</div>
               </div>
-            </div>
+              <div className="item verified">
+                <div className="label">Account status</div>
+                <div className="value">
+                  {adminData.admin?.isVerified === true ? (
+                    <>
+                      {" "}
+                      Verified &nbsp;
+                      <RiIcons.RiVerifiedBadgeFill />
+                    </>
+                  ) : (
+                    "Not verified"
+                  )}
+                </div>
+              </div>
 
-            <div className="item id">
-              <div className="label">Admin id</div>
-              <div className="value">{adminData.admin?._id}</div>
-            </div>
-            <div className="item createdDate">
-              <div className="label">Account created date</div>
-              <div className="value">{adminData.admin?.createdDate}</div>
-            </div>
-            <div className="item delete">
-              <button onClick={() => openDeleteOption()}>Delete account</button>
+              <div className="item id">
+                <div className="label">Admin id</div>
+                <div className="value">{adminData.admin?._id}</div>
+              </div>
+              <div className="item createdDate">
+                <div className="label">Account created date</div>
+                <div className="value">{adminData.admin?.createdDate}</div>
+              </div>
+              <div className="item delete">
+                <button onClick={() => openDeleteOption()}>
+                  Delete account
+                </button>
+              </div>
             </div>
           </div>
-        </div>}
+        )}
       </section>
     </>
   );

@@ -10,15 +10,11 @@ export default function State({ children }) {
   //   Route to fetch overview
   const fetchOveriew = async () => {
     try {
-      let response = await axios.post(
-        `${HOST}/api/analytics/overview/${ID}`,
-        null,
-        {
-          headers: {
-            "auth-token": TOKEN,
-          },
-        }
-      );
+      let response = await axios.post(`${HOST}/api/analytics/overview`, null, {
+        headers: {
+          "auth-token": TOKEN,
+        },
+      });
       console.log(response);
       return response.data;
     } catch (error) {
@@ -45,11 +41,13 @@ export default function State({ children }) {
   };
 
   // Handel approve job and reject job
-  const handelPostAction = async (postID, action) => {
+  const handelPostAction = async (postID, action, reason) => {
     try {
       const response = await axios.post(
         `${HOST}/api/jobs/action/post/${postID}/${action}`,
-        null,
+        {
+          reason: reason,
+        },
         {
           headers: { "auth-token": TOKEN },
         }

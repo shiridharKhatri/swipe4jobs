@@ -9,6 +9,7 @@ const { body, validationResult } = require("express-validator");
 const verificationMail = require("../mail/verification");
 const userAccess = require("../middleware/userAccess");
 const adminAccess = require("../middleware/adminAccess");
+const Admin = require("../models/Admin");
 
 const loginLimiter = rateLimit({
   windowMs: 5 * 60 * 1000,
@@ -214,13 +215,13 @@ routes.get("/auth/verification/fetch", userAccess, async (req, res) => {
   }
 });
 
-routes.get("/auth/user/fetch/:adminId", adminAccess, async (req, res) => {
+routes.get("/auth/user/fetch", adminAccess, async (req, res) => {
   try {
-    const { adminId } = req.params;
-    if (String(adminId) !== String(req.admin.id)) {
+    let admin = await Admin.findById(req.admin.id);
+    if (!admin) {
       return res
         .status(401)
-        .json({ success: false, message: "Only admin can fetch users data" });
+        .json({ succes: false, message: "You can't access this end point" });
     }
     let users = await User.find().select("-password");
     if (!users) {
@@ -237,16 +238,11 @@ routes.get("/auth/user/fetch/:adminId", adminAccess, async (req, res) => {
 });
 
 routes.delete(
-  "/auth/user/remove/admin/:adminId/:userId",
+  "/auth/user/remove/admin/:userId",
   adminAccess,
   async (req, res) => {
     try {
-      const { adminId, userId } = req.params;
-      if (String(adminId) !== String(req.admin.id)) {
-        return res
-          .status(401)
-          .json({ success: false, message: "Only admin can remove users" });
-      }
+      const { userId } = req.params;
       let user = await User.findById(userId);
       if (!user) {
         return res

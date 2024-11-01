@@ -305,8 +305,7 @@ export default function SearchJobs() {
         )}
       </div>
       <section className="searchHeader">
-        {/* <Header post={"POST"} /> */}
-        <Heading title={'Search Jobs'}/>
+        <Heading title={"Search Jobs"} />
 
         {/* For Mobile version  */}
         <div className="searchFormSection mobile">

@@ -6,6 +6,7 @@ import Setting from "./Setting";
 export default function Navbar(props) {
   const navLinks = useRef(null);
   let location = useLocation();
+  let navBarRef = useRef(null);
   const openMenuOnClick = () => {
     navLinks.current.style.right = "0";
   };
@@ -16,9 +17,26 @@ export default function Navbar(props) {
     navLinks.current.style.right = "-80rem";
   };
 
+  useEffect(() => {
+    const handleScroll = (e) => {
+      const scrollY = window.scrollY;
+      if (scrollY > 100) {
+        navBarRef.current.style.background = "#ffffff";
+      } else {
+        navBarRef.current.style.background = "transparent";
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
-      <nav>
+      <nav ref={navBarRef}>
         <div className="search-bar"></div>
         <div className="navigation-links">
           <div className="menuOption">

@@ -44,7 +44,11 @@ export default function MPost({
     status: 500,
   });
   const [isButtonLoading, setIsButtonLoading] = useState(false);
-
+  const [reason, setReason] = useState("");
+  const reasonValOnChange = (e) => {
+    setReason(e.target.value);
+  };
+  console.log(reason)
   useEffect(() => {
     setLoadingStatus((prev) => ({ ...prev, success: false }));
     fetchJobs()
@@ -63,7 +67,7 @@ export default function MPost({
   const handleAction = async (id, action) => {
     setIsButtonLoading(true);
     try {
-      handelPostAction(id, action).then((res) => {
+      handelPostAction(id, action, reason).then((res) => {
         if (res.success === true) {
           handleClose();
           setIsButtonLoading(false);
@@ -112,10 +116,19 @@ export default function MPost({
             <p className="card-heading">{config.title}</p>
             <p className="card-description">{config.description}</p>
           </div>
-          {selected.status === ACTIONS.REJECT && <div className="feedback">
-            <div className="title">Reason for rejection</div>
-            <textarea type="text" name="reject" id="reject" placeholder="Feedback here"/>
-          </div>}
+          {selected.status === ACTIONS.REJECT && (
+            <div className="feedback">
+              <div className="title">Reason for rejection</div>
+              <textarea
+                type="text"
+                name="reject"
+                id="reject"
+                placeholder="Feedback here"
+                onChange={reasonValOnChange}
+                value={reason}
+              />
+            </div>
+          )}
           <div className="card-button-wrapper">
             <button
               onClick={handleClose}

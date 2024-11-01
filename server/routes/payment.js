@@ -6,7 +6,7 @@ const User = require("../models/User");
 const adminAccess = require("../middleware/adminAccess");
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const routes = express.Router();
-const PDFDocument = require("pdfkit");
+const Admin = require("../models/Admin");
 routes.post("/buy/search/limit/:type", userAccess, async (req, res) => {
   let user = await User.findById(req.user.id);
   if (!user) {
@@ -16,7 +16,6 @@ routes.post("/buy/search/limit/:type", userAccess, async (req, res) => {
   }
 
   const { qty } = req.body;
-
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: [
@@ -103,14 +102,14 @@ routes.post(
   }
 );
 
-routes.post("/details/fetch/:id", adminAccess, async (req, res) => {
+routes.post("/details/fetch", adminAccess, async (req, res) => {
   try {
     let adminId = req.admin.id;
-    let { id } = req.params;
-    if (String(adminId) !== String(id)) {
+    let admin = await Admin.findById(adminId);
+    if (!admin) {
       return res.status(401).json({
         success: false,
-        message: "You don't have access to see payment",
+        message: "You don't have access to this end points",
       });
     }
     let payment = await Payment.find();
@@ -149,83 +148,6 @@ routes.post("/details/fetch/:id", adminAccess, async (req, res) => {
   }
 });
 
-routes.get("/details/bill/download/:id", adminAccess, async (req, res) => {
-  const user = {
-    _id: "12345",
-    name: "John Doe",
-    email: "john.doe@example.com",
-  };
-
-  const elems = {
-    _id: "payment_67890",
-    transactionId: "txn_123456",
-    paymentMethod: "Credit Card",
-    amount: "100.00",
-    currency: "USD",
-    paymentStatus: "Completed",
-    serviceType: "Monthly Subscription",
-    description: "Monthly Subscription Fee for Premium Service",
-    paymentDate: new Date().toLocaleDateString(),
-  };
-
-  const doc = new PDFDocument();
-
-  res.setHeader("Content-disposition", "attachment; filename=receipt.pdf");
-  res.setHeader("Content-type", "application/pdf");
-  doc.pipe(res);
-
-  doc.rect(0, 0, doc.page.width, 150).fill("#007ACC");
-  doc
-    .fillColor("#FFFFFF")
-    .fontSize(30)
-    .text("Payment Receipt", { align: "center", baseline: "middle" });
-
-  doc.moveDown(2);
-
-  doc
-    .fillColor("#333333")
-    .fontSize(14)
-    .text("User Details", { underline: true });
-  doc.moveDown(0.5);
-  doc.fillColor("#555555").fontSize(12).text(`Name: ${user.name}`);
-  doc.text(`Email: ${user.email}`);
-  doc.moveDown(1);
-
-  doc
-    .fillColor("#333333")
-    .fontSize(14)
-    .text("Payment Details", { underline: true });
-  doc.moveDown(0.5);
-  doc
-    .fillColor("#555555")
-    .text(`Payment ID: ${elems._id}`)
-    .text(`Transaction ID: ${elems.transactionId}`)
-    .text(`Payment Method: ${elems.paymentMethod}`)
-    .text(`Amount: ${elems.currency} ${elems.amount}`)
-    .text(`Status: ${elems.paymentStatus}`)
-    .text(`Service Type: ${elems.serviceType}`)
-    .text(`Description: ${elems.description}`)
-    .text(`Payment Date: ${elems.paymentDate}`);
-
-  doc.moveDown(1.5);
-
-  doc
-    .fillColor("#007ACC")
-    .fontSize(16)
-    .text("Thank you for your payment!", { align: "center" });
-  doc.moveDown(0.5);
-
-  doc
-    .fillColor("#999999")
-    .fontSize(10)
-    .text(
-      "This receipt is generated automatically and does not require a signature.",
-      { align: "center" }
-    );
-
-  doc.end();
-});
-
 routes.get("/details/history/:id", userAccess, async (req, res) => {
   try {
     const { id } = req.params;
@@ -235,12 +157,20 @@ routes.get("/details/history/:id", userAccess, async (req, res) => {
         .json({ success: false, message: "Id doesn't match" });
     }
     let paymentDetails = await Payment.find({ userId: req.user.id });
+    let user = await User.findById(req.user.id).select("-password");
     if (!paymentDetails) {
       return res
         .status(404)
         .json({ success: false, message: "No payment has been made till now" });
     }
-    res.status(200).json({ success: true, data: paymentDetails });
+    res.status(200).json({
+      success: true,
+      data: paymentDetails,
+      user: {
+        name: user.name,
+        email: user.email,
+      },
+    });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }

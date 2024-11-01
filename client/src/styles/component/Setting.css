@@ -75,6 +75,7 @@ section.setting .confirmBox .cardBox .btns {
   display: flex;
   justify-content: end;
   align-items: center;
+  margin-top: 3rem;
 }
 section.setting .confirmBox .cardBox .btns button {
   padding: 1rem 2rem;
@@ -117,10 +118,10 @@ section.setting .container .first-nav-section .cross-icon {
   cursor: pointer;
   transition: 0.2s ease;
 }
-section.setting .container .first-nav-section .cross-icon  span{
-  margin-left: .5rem;
+section.setting .container .first-nav-section .cross-icon span {
+  margin-left: 0.5rem;
 }
-section.setting .container .first-nav-section .cross-icon:hover{
+section.setting .container .first-nav-section .cross-icon:hover {
   text-decoration: underline;
 }
 section.setting .container .first-nav-section ul {
@@ -468,24 +469,6 @@ section.setting
   .overview {
   font-size: 1.5rem;
   color: #ffffff;
-}
-section.setting
-  .container
-  .second-nav-section
-  .body-sec
-  .postContainer
-  .card
-  .second {
-  background: #e25858;
-  padding: 0.5rem 1rem;
-  height: fit-content;
-  font-size: 1.4rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 section.setting .container .second-nav-section .setting {
   padding: 2rem 0rem 1rem 2rem;

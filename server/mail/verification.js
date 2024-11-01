@@ -266,8 +266,6 @@ const verificationMail = async (email, name, code, subject, details) => {
         </html>
         `,
     });
-
-    console.log("Message sent: %s", info);
   } catch (error) {
     console.error("Error sending email:", error);
   }

@@ -8,12 +8,15 @@ import {
   TbIcons,
 } from "../assets/Icons/icons";
 import Cookies from "js-cookies";
+import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../context/Context";
 import MainButtonLoader from "../tools/MainButtonLoader";
 import ButtonLoader from "../tools/ButtonLoader";
 import Popup from "../tools/Popup";
+import Invoice from "./Invoice";
+
 export default function Setting(props) {
   let navigate = useNavigate();
   const HOST = import.meta.env.VITE_HOST;
@@ -27,6 +30,20 @@ export default function Setting(props) {
   let [paymentData, setPamentData] = useState({ data: [], success: false });
   const [user, setUser] = useState({ user: {}, success: false });
   const [loader, setLoader] = useState({ deleteConfirmation: false });
+  const [invoiceData, setInvoiceData] = useState({
+    success: false,
+    data: {
+      id: "",
+      purchaseDate: "",
+      name: "",
+      email: "",
+      paymentMethod: "",
+      product: "",
+      price: "",
+      total: "",
+    },
+  });
+  const invoiceRef = useRef(null);
 
   const valueOnClick = (e) => {
     setNavigation(e);
@@ -254,12 +271,28 @@ export default function Setting(props) {
       })
       .then((res) => {
         if (res.data.success === true) {
-          setPamentData({ data: res.data.data, success: true });
+          setPamentData({ data: res.data, success: true });
         }
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const downloadOnCLick = (details) => {
+    setInvoiceData({
+      success: true,
+      data: {
+        id: details.payment_id,
+        purchaseDate: details.paymentDate,
+        name: paymentData.data.user.name,
+        email: paymentData.data.user.email,
+        paymentMethod: details.paymentMethod,
+        product: details.serviceType + " +" + details.search_limit,
+        price: details.amount,
+        total: details.amount,
+      },
+    });
   };
   useEffect(() => {
     fetchPayment();
@@ -293,21 +326,43 @@ export default function Setting(props) {
     fetchUsers();
   }, [fetchUser]);
 
-  const deletePostOnClick = (id) => {
-    console.log(id);
-  };
   useEffect(() => {
     window.document.addEventListener("click", (e) => {
       if (e.target) {
-        if (e.target.className.toLowerCase() === "setting") {
+        if (e.target.className === "setting") {
           props.setIsSettingOn(false);
         }
       }
     });
   }, []);
-
+  useEffect(() => {
+    window.addEventListener("click", (e) => {
+      if(e.target.className === 'invoice'){
+        setInvoiceData({
+          success: false,
+          data: {
+            id: "",
+            purchaseDate: "",
+            name: "",
+            email: "",
+            paymentMethod: "",
+            product: "",
+            price: "",
+            total: "",
+          },
+        })
+      }
+    });
+  }, []);
   return (
     <section className="setting">
+      {invoiceData.success && (
+        <Invoice
+          invoiceRef={invoiceRef}
+          currentDate={moment().format("LL")}
+          paymentData={invoiceData.data}
+        />
+      )}
       <Popup
         background="#1aa06d"
         message="Your password has been successfully changed."
@@ -509,7 +564,7 @@ export default function Setting(props) {
                     </div>
                   ) : (
                     <div className="body-sec">
-                      {paymentData.data?.map((e) => {
+                      {paymentData.data?.data.map((e) => {
                         return (
                           <div key={e._id} className="card-section">
                             <div className="item">
@@ -530,7 +585,7 @@ export default function Setting(props) {
                               <p>Amount paid</p>
                               <h3>${e.amount}</h3>
                             </div>
-                            <button>
+                            <button onClick={() => downloadOnCLick(e)}>
                               <MdIcons.MdOutlineFileDownload />
                             </button>
                           </div>
@@ -591,14 +646,6 @@ export default function Setting(props) {
                             </div>
                             <div className="overview">{e.overview}</div>
                           </div>
-                        </div>
-                        <div
-                          className="second"
-                          onClick={() => {
-                            deletePostOnClick(e._id);
-                          }}
-                        >
-                          Delete
                         </div>
                       </div>
                     );

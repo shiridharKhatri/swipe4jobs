@@ -2,7 +2,7 @@ section.status .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60rem;
+  height: 100vh;
 }
 section.status .card {
   overflow: hidden;
@@ -16,22 +16,22 @@ section.status .card {
 }
 
 section.status .dismiss {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    color: black;
-    border: 2px solid #d1d5db;
-    font-size: 1.5rem;
-    font-weight: 300;
-    width: 30px;
-    height: 30px;
-    border-radius: 7px;
-    transition: 0.3s ease;
-    cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  color: black;
+  border: 2px solid #d1d5db;
+  font-size: 1.5rem;
+  font-weight: 300;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  transition: 0.3s ease;
+  cursor: pointer;
 }
 
 section.status .dismiss:hover {
@@ -93,8 +93,8 @@ section.status .header {
 
 @keyframes animateContainer {
   0% {
-    opacity: .2;
-    transform: scale(.2);
+    opacity: 0.2;
+    transform: scale(0.2);
     box-shadow: 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset,
       0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset;
   }
@@ -170,7 +170,6 @@ section.status .image {
   transition: 0.6s ease;
 }
 
-
 section.status .content {
   margin-top: 2.5rem;
   text-align: center;
@@ -182,18 +181,20 @@ section.status .title {
   font-weight: bold;
   line-height: 1.5rem;
   text-transform: uppercase;
-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 section.status .message {
-    margin-top: 1.5rem;
-    color: #595b5f;
-    font-size: 1.5rem;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin-top: 1.5rem;
+  color: #595b5f;
+  font-size: 1.5rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 section.status .actions {
-    margin: 3rem .5rem .5rem .5rem;
+  margin: 3rem 0.5rem 0.5rem 0.5rem;
 }
 
 section.status .history {

@@ -9,6 +9,7 @@ const adminAccess = require("../middleware/adminAccess");
 const userAccess = require("../middleware/userAccess");
 const User = require("../models/User");
 const PostConst = require("../models/PostConst");
+const postRejectionMessage = require("../mail/postRejection");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./images");
@@ -167,17 +168,26 @@ routes.post("/post-job/user/:id", userAccess, async (req, res) => {
         });
       }
       let user = await User.findById(req.user.id);
-      if (user.posting_limit <= 0) {
-        return res.status(402).json({
-          success: false,
-          message: "To post more than one job, a payment is required",
-        });
-      } else {
-        await User.findByIdAndUpdate(
-          req.user.id,
-          { $set: { posting_limit: user.posting_limit - 1 } },
-          { new: true }
-        );
+      let freePostingDate = await PostConst.findById(
+        "67133b8ac9b1f8fe80b3ee7c"
+      );
+      let { start, end } = freePostingDate.free_posting;
+      let freeStartDate = new Date(start);
+      let freeEndDate = new Date(end);
+      let currentDate = new Date();
+      if (!(currentDate >= freeStartDate && currentDate <= freeEndDate)) {
+        if (user.posting_limit <= 0) {
+          return res.status(402).json({
+            success: false,
+            message: "To post more than one job, a payment is required",
+          });
+        } else {
+          await User.findByIdAndUpdate(
+            req.user.id,
+            { $set: { posting_limit: user.posting_limit - 1 } },
+            { new: true }
+          );
+        }
       }
       await Postjob.create({
         postedBy: req.user.id,
@@ -278,6 +288,7 @@ routes.get("/post-job/fetch-approved", async (req, res) => {
 
 routes.post("/action/post/:id/:action", adminAccess, async (req, res) => {
   try {
+    let { reason } = req.body;
     const { action, id } = req.params;
     const pendingPosts = await Postjob.find({ isApproved: false });
     const fetchIndPost = await Postjob.findById(id);
@@ -336,7 +347,20 @@ routes.post("/action/post/:id/:action", adminAccess, async (req, res) => {
             });
           }
         });
-
+        let user = await User.findById(fetchIndPost.postedBy);
+        if (user) {
+          postRejectionMessage(
+            user.email,
+            user.name,
+            "Post rejection",
+            reason,
+            {
+              name: fetchIndPost.name,
+              location: `${fetchIndPost.state} | ${fetchIndPost.city} | ${fetchIndPost.zip}`,
+              date: fetchIndPost.postedDate,
+            }
+          );
+        }
         await Postjob.findByIdAndDelete(id);
         return res.status(200).json({
           success: true,

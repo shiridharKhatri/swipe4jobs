@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Header from "../components/Header";
 import TrendingPost from "../components/TrendingPost";
 import Footer from "../components/Footer";

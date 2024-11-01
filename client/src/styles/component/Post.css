@@ -42,7 +42,12 @@ section.jobPosting .formSection form .labels .selectionPlaceholder {
   margin-top: 0.3rem;
   position: relative;
 }
-section.jobPosting .formSection form .labels .selectionPlaceholder span:first-child{
+section.jobPosting
+  .formSection
+  form
+  .labels
+  .selectionPlaceholder
+  span:first-child {
   font-weight: bold;
 }
 section.jobPosting
@@ -110,7 +115,7 @@ section.jobPosting .formSection form .labels input {
   width: 100%;
   padding: 1rem;
   margin-top: 0.3rem;
-  border: 0.15rem solid rgb(177 177 193);
+  border: 0.15rem solid #d5d5d5;
   border-radius: 0;
   color: #101010;
   height: 4rem;
@@ -323,7 +328,7 @@ section.jobPosting .formSection form .textArea label {
 }
 section.jobPosting .formSection form .textArea .textarea {
   height: 10.8rem;
-  border: 0.15rem solid rgb(177 177 193);
+  border: 0.15rem solid #d5d5d5;
   padding: 0.5rem;
   margin-top: 0.7rem;
 }
@@ -335,12 +340,10 @@ section.jobPosting .formSection form .textArea textarea {
   height: 6.8rem;
   resize: none;
   border: none;
-  border-bottom: 0.1rem solid #9a9aa0;
+  border-bottom: 0.1rem solid #d5d5d5;
   font-weight: bold;
 }
-/* section.jobPosting .formSection form .textArea textarea:focus {
-  border: 0.1rem solid #101010;
-} */
+
 section.jobPosting .formSection form .textArea .notice {
   display: flex;
   justify-content: left;
@@ -542,7 +545,7 @@ section.jobPosting .formSection form .drop-container {
   align-items: center;
   padding: 1rem;
   border-radius: 0;
-  border: 0.15rem solid rgb(177 177 193);
+  border: 0.15rem solid #d5d5d5;
   color: #444;
   cursor: pointer;
   transition: 0.3s ease;
@@ -671,7 +674,7 @@ section.jobPosting .formSection form #file-input::button:hover {
   display: flex;
   align-items: center;
   color: #ffffff;
-  background: #EF665B;
+  background: #ef665b;
   width: 40rem;
   backdrop-filter: blur(2rem);
   height: 4rem;

@@ -6,10 +6,9 @@ import axios from "axios";
 import Loader from "./Loader";
 export default function Muser(props) {
   const HOST = import.meta.env.VITE_HOST;
-  const ID = Cookies.get("admin-id");
   const TOKEN = Cookies.get("admin-token");
   let [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   let [deletionProcess, setDeletionProcess] = useState({
     running: false,
     id: "",
@@ -23,16 +22,16 @@ export default function Muser(props) {
   };
 
   const fetchUser = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     axios
-      .get(`${HOST}/user/auth/user/fetch/${ID}`, {
+      .get(`${HOST}/user/auth/user/fetch`, {
         headers: {
           "auth-token": TOKEN,
         },
       })
       .then((response) => {
         if (response.data.success) {
-          setIsLoading(false)
+          setIsLoading(false);
           setData(response.data.users);
         }
       })
@@ -42,7 +41,7 @@ export default function Muser(props) {
   };
   const deleteOnClick = (id) => {
     axios
-      .delete(`${HOST}/user/auth/user/remove/admin/${ID}/${id}`, {
+      .delete(`${HOST}/user/auth/user/remove/admin/${id}`, {
         headers: {
           "auth-token": TOKEN,
         },
@@ -121,77 +120,77 @@ export default function Muser(props) {
       <section className=" admin-management  manage-user section">
         <div className="errorPopupsection" ref={errorPopupRef}></div>
         <TopDetails title="Users Management" navbar={props.navContainerRef} />
-        {isLoading && <Loader/>} 
-        {!isLoading && <div className="mainContainer">
-          <div className="headTitle">
-            <div className="name htitile">Name</div>
-            <div className="role htitile">Information</div>
+        {isLoading && <Loader />}
+        {!isLoading && (
+          <div className="mainContainer">
+            <div className="headTitle">
+              <div className="name htitile">Name</div>
+              <div className="role htitile">Information</div>
 
-            <div className="action htitile">Action</div>
-          </div>
-          <div className="cards-container">
-            {data.length <= 0 ? (
-              <div className="user-not-found">
-                <img src="/userNotFound.png" alt="userNotFound" />
-                <p>No registered user found!</p>
-              </div>
-            ) : (
-              <>
-                {data?.map((e) => {
-                  return (
-                    <div key={e._id} className="item">
-                      <div className="first">
-                        <div className="name">
-                          {e.name}
-                          {e.isVerified === true ? (
-                            <span className="verification">
-                              <RiIcons.RiVerifiedBadgeFill />
+              <div className="action htitile">Action</div>
+            </div>
+            <div className="cards-container">
+              {data.length <= 0 ? (
+                <div className="user-not-found">
+                  <img src="/userNotFound.png" alt="userNotFound" />
+                  <p>No registered user found!</p>
+                </div>
+              ) : (
+                <>
+                  {data?.map((e) => {
+                    return (
+                      <div key={e._id} className="item">
+                        <div className="first">
+                          <div className="name">
+                            {e.name}
+                            {e.isVerified === true ? (
+                              <span className="verification">
+                                <RiIcons.RiVerifiedBadgeFill />
+                              </span>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                          <div className="time">
+                            <span>
+                              <IoIcons.IoMdTime />
                             </span>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                        <div className="time">
-                          <span>
-                            <IoIcons.IoMdTime />
-                          </span>
-                          {e.accountCreatedDate}
-                        </div>
-                        <p>{e.email}</p>
-                      </div>
-                      <div className="second">
-                        <div
-                          className="tags user-tags"
-                          style={{
-                            background: "transparent",
-                            color: "#101010",
-                          }}
-                        >
-                          <div className="limit items">
-                            Search limit : <span>{e.search_limit}</span>
+                            {e.accountCreatedDate}
                           </div>
-                          <div className="posts items">
-                            Total posted : {e.job_posted}
+                          <p>{e.email}</p>
+                        </div>
+                        <div className="second">
+                          <div
+                            className="tags user-tags"
+                            style={{
+                              background: "transparent",
+                              color: "#101010",
+                            }}
+                          >
+                            <div className="limit items">
+                              Search limit : <span>{e.search_limit}</span>
+                            </div>
+                            <div className="posts items">
+                              Total posted : {e.job_posted}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="third">
-                        <div
-                          className="delete-admin"
-                          onClick={() => deleteUserProcess(e._id)}
-                        >
-                          <BsIcons.BsPersonFillX />
+                        <div className="third">
+                          <div
+                            className="delete-admin"
+                            onClick={() => deleteUserProcess(e._id)}
+                          >
+                            <BsIcons.BsPersonFillX />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </>
-            )}
+                    );
+                  })}
+                </>
+              )}
+            </div>
           </div>
-        </div>}
-
-        
+        )}
       </section>
     </>
   );
